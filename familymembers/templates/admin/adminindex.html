@@ -1,0 +1,446 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block content %}    
+
+<style>
+.card-single {
+    /* Add styles for card layout */
+    /* ... */
+
+    /* Add transition for smooth zoom effect */
+    transition: transform 0.3s;
+}
+
+.card-single:hover {
+    /* Apply zoom effect on hover */
+    transform: scale(1.1);
+}
+
+
+
+table {
+  width: 100%; /* Set the width of the table to 100% */
+}
+.customers .card-body .table-responsive {
+  max-width: 100%; /* Set your desired maximum width */
+  overflow-x: auto; /* Add horizontal scroll if needed */
+}
+.customers .card-body {
+  max-width: 350px; /* Set the maximum width for the Enquiries section */
+}
+
+
+/* Add this style for the hover effect */
+table tbody tr:hover {
+  background-color: #f5f5f5;
+ 
+}
+
+/* Style for the link container */
+.link-container {
+  display: inline-block;
+  padding: 1px 2px;
+  background-color: #3d6a95;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.link-container:hover {
+  background-color: #2b3348;
+}
+
+.recent-grid {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-gap: 2rem; /* Adjust the gap between the two grids */
+  grid-template-columns: 75% auto; /* Adjust the width of each grid */
+}
+
+
+/* ----------------------button style */
+
+/* Style for the delete button */
+/* Style for the delete button */
+.delete-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: auto; /* Set width to auto to match the width of the content */
+  height: auto; /* Set height to auto to match the height of the content */
+  padding: 0; /* Remove padding to make the button size match the content */
+  color: #3d6a95;
+}
+
+.delete-button i {
+  width: 100%; /* Set the width of the icon to 100% */
+  height: 100%; /* Set the height of the icon to 100% */
+}
+
+.delete-button:hover {
+  color: #cd0c0c; /* Change color on hover */
+}
+/* Style for the button spacing */
+.button-spacing {
+  margin-right: 10px; /* Adjust the margin to add appropriate spacing */
+}
+.approve-button {
+    background-color: #007bff; /* Blue color */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: transform 0.2s; /* Add transition for smooth hover effect */
+}
+
+/* Hover effect */
+.approve-button:hover {
+    transform: scale(1.1); /* Increase button size on hover */
+    background-color: #3d6a95;
+}
+.uppercase-text {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .sidebar-menu{
+          overflow: auto;
+        }
+/* ----------------------------------------------------------- */
+
+
+</style>
+    
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar"> 
+      <div class="sidebar-brand">
+        <h2><span class="las la-user-circle"></span><span>ZMCA</span></h2>
+
+      </div>
+      
+      <div class="sidebar-menu">
+        <ul>
+          <li>
+            <a href="{% url 'adminindex' %}" class="active"><span class="fas fa-home"></span>
+            <span>Home</span></a>
+          </li>
+          <!-- <li>
+            <a href="{% url 'adminindex' %}"><span class="fas fa-home"></span>
+            <span></span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'members_view' %}"><span class="las la-home"></span>
+              <span>Families</span></a>
+          <li>
+            <a href="{% url 'committe' %}"><span class="las la-users"></span>
+            <span>Committee Members</span></a>
+          </li>
+          <li>
+            <a href="{% url 'fam_view' %}">
+            <span class="fas fa-id-badge"></span>
+            <span>Membership</span></a>
+          </li>
+          
+          <li>
+            <a href="{% url 'enquiry_list' %}"><span class="fas fa-envelope"></span>
+            <span>Enqueries</span></a>
+            <!-- <ul class="submenu">
+              <li></li>
+              <li><a href="{% url 'allenquiry_list' %}"><span class="fas fa-envelope"></span><span>(All)</span></a></li>            
+           -->
+           </ul>
+          </li>
+          <li>
+            <a href="{% url 'bloodgroupadmin' %}">
+              <span class="fas fa-tint" style="color: red;"></span>
+            <span>Blood Group</span></a>
+          </li>
+          <li>
+            <a href="{% url 'birthdaydetails1' %}">
+              <span class="fas fa-birthday-cake"></span>
+            <span>Birthday</span></a>
+          </li>
+
+          </li>
+          <li>
+            <a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-image"></span>
+            <span>Gallery</span></a>
+            <ul class="submenu">
+              <!-- <li></li>
+              <li><a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Add Gallery</a></li>
+              <li><a href="{% url 'galleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Gallery</a></li> -->
+         
+          
+           </ul>
+           <li>
+            <a href="{% url 'addhomegallery' %}"><span class="fa-solid fa-image"></span>
+            <span>Home Gallery</span></a>
+           
+              </ul>
+          </li>
+          <li>
+            <a href="{% url 'admin_services_posts' %}"><span class="fa fa-bell"></span>
+            <span>Service Requests</span></a>
+          </li>
+          <li>
+            <a href="{% url 'addblogview' %}"><span class="las la-blog"></span>
+            <span>Blog</span></a>
+          </li>
+          <li>
+            <a href="{% url 'eventview' %}"><span class="fa fa-bell"></span>
+            <span>Events</span></a>
+          </li>
+         
+        </ul>
+      </div>
+
+    </div>
+    <!-- --------end link---------- -->
+    <div class="main-content">
+      <header>
+           
+        <h2> 
+          <label for="nav-toggle">
+            <span class="las la-bars"></span>
+          </label>       
+        ZMCA Admin
+        </h2>
+      <!-- Add this div to contain the search input -->
+      <div class="search-wrapper">
+        <form method="GET" action="{% url 'adminindex' %}">
+            <span class="las la-search"></span>
+            <input type="search" id="searchInput" name="q" placeholder="Search here" value="{{ request.GET.q|default_if_none:'' }}"/>
+        </form>
+      </div>
+
+        <div class="user-wrapper">
+          <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+        
+          <div>
+            <!-- <h4>ZMCA</h4> -->
+            <h4>        <a href="{% url 'logout' %}" style="font-size: 16px;"> <i class="fa-solid fa-right-from-bracket"></i></a>
+            </h4>
+            <small>Super Admin</small>
+
+          </div>
+
+          
+        </div>
+
+      </header>
+      <!-- ----------end header---------- -->
+      <main>
+        <div class="cards">
+          <!-- -----singlecardbeg---- -->
+          <div class="card-single">
+            <div>
+              <h1>{{ t }}</h1>
+              <span>Members</span>
+            </div>
+            <div>
+              <span class="las la-users"></span>
+            </div>
+          </div>
+          <!-- -----singlecardend---- -->
+          <div class="card-single">
+            <div>
+              <h1>{{tf}}</h1>
+              <span>Families</span>
+            </div>
+            <div>
+              <span class="las la-home"></span>
+            </div>
+          </div>
+
+          <div class="card-single">
+            <div>
+              <h1>{{c}}</h1>
+              <span>Committee Members</span>
+            </div>
+            <div>
+              <span class="las la-users"></span>
+            </div>
+          </div>
+
+          <div class="card-single">
+            <div>
+              <h1>{{ecount}}</h1>
+              <span>Enquiries</span>
+            </div>
+            <div>
+              <span class="las la-comment"></span>
+            </div>
+          </div> 
+        </div>
+
+        <!-- -------------------endcards------------- -->
+<div class="recent-grid">
+  <div class="projects">
+    <div class="card" style="width: 130%;">
+      <div class="card-header">
+        <h3> <span class="las la-users" style="color: #3d6a95;"></span> &nbsp;New Families Awaiting Approval :{{uac}}</h3>
+        <!-- <button>See all<span class="las la-arrow-right"></span></button> -->
+
+      </div>
+      <div class="card-body" >
+        <div class="table-responsive">
+          <table width="100%">
+            <thead style="background-color:#3d6a95;">
+              <tr>
+                <td style="color: #fff;" class="uppercase-text">Id</td>
+                <td style="color: #fff;" class="uppercase-text">Name</td>
+                <td style="color: #fff;" class="uppercase-text">Family</td>
+                <td style="color: #fff;" class="uppercase-text">Email</td>
+                <td style="color: #fff;" class="uppercase-text">Contact</td>
+                <td style="color: #fff;" class="uppercase-text">Action</td>
+              </tr>
+            </thead>
+            <tbody> 
+              {% for m in user_profiles %}
+              <tr>
+                
+                <td >{{ forloop.counter }}</td>
+                  <td class="uppercase-text">{{ m.firstname }} {{ m.lastname }}</td>
+                  <td class="uppercase-text">{{ m.familyname }}</td>
+                  <td style="font-weight: bold;">{{ m.email }}</td>
+                  <td style="font-weight: bold;" >{{ m.phonenumber }}</td>
+
+                  <td class="uppercase-text">
+                    {% if m.status == 1 %} 
+                      <!-- <a href="{% url 'approvefamily' m.id %}" class="link-container"> 
+                        <span>Approve</span> 
+                      </a> -->
+                      <form method="post" action="{% url 'approvefamily' m.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="approve-button" onclick="return confirm('Are you sure you want to Approve this Family?')">
+                            APPROVE
+                        </button>
+                    </form>
+                    
+                      <!-- Add spacing between the buttons -->
+                      <span class="button-spacing">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      <form method="post" action="{% url 'deletefamily' f_id=m.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this Family?')">
+                          <i class="fa-solid fa-trash" style="font-size: 24px;"></i>
+                        </button>
+                      </form>
+                    {% endif %}
+                  </td>             
+                  
+              </tr>
+          {% endfor %}
+  
+            </tbody>
+  
+          </table>
+        </div>
+   
+      </div>
+      
+
+
+    </div>
+
+  </div>
+  <!-- <div class="customers">
+    <div class="card">
+      <div class="card-header">
+        <h3>Enquiries</h3>
+        <button>
+        <a href="{% url 'enquiry_list' %}" style="color: #fff;">
+          See all<span class="las la-arrow-right" style="color: #fff;"></span>
+      </a></button>
+      </div>
+      <div class="card-body">
+        {% for message in enquiry %}
+      
+        <div class="customer">
+          <div class="info">
+            <img src="{% static 'img/logo.jpg' %}" width="40px" height="40px" alt="">
+            <div>
+              <h4>{{ message.name }} <span class="las la-user-circle" style="color: #3d6a95;"></span></h4>
+              <small>{{ message.email }}</small>
+
+             </div>
+          </div>
+          <div class="contact">
+          
+            <span class="fas fa-envelope"></span>
+          </div>
+        </div>
+        {% endfor %}
+        
+      </div>
+    </div>
+
+  </div> -->
+</div>        
+      </main>
+
+     <!-- Pagination Controls -->
+<!-- Pagination Controls -->
+<div class="pagination">
+  <span class="step-links">
+    {% if user_profiles.has_previous %}
+      <a href="?page=1">&laquo; first</a>
+      <a href="?page={{ user_profiles.previous_page_number }}">previous</a>
+    {% endif %}
+    <span class="current">
+      Page {{ user_profiles.number }} of {{ user_profiles.paginator.num_pages }}.
+    </span>
+    {% if user_profiles.has_next %}
+      <a href="?page={{ user_profiles.next_page_number }}">next</a>
+      <a href="?page={{ user_profiles.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+  </span>
+</div>
+<!-- ------------------------------endpaginator--------- -->
+
+
+
+    </div>
+
+    <script>
+      // Get the search input element
+      const searchInput = document.getElementById('searchInput');
+  
+      // Add an event listener for the 'input' event to detect changes in the input field
+      searchInput.addEventListener('input', function() {
+          // Get the value entered by the user
+          const searchText = this.value.trim().toLowerCase();
+  
+          // Get the table within the table-responsive portion
+          const table = document.querySelector('.table-responsive table');
+  
+          // Get all the rows in the table body
+          const rows = table.querySelectorAll('tbody tr');
+  
+          // Loop through each row
+          rows.forEach(row => {
+              // Get the text content of each row
+              const rowText = row.textContent.toLowerCase();
+  
+              // If the row contains the search text, display it, otherwise hide it
+              if (rowText.includes(searchText)) {
+                  row.style.display = '';
+              } else {
+                  row.style.display = 'none';
+              }
+          });
+      });
+  </script>
+  
+
+
+    {% endblock %}    

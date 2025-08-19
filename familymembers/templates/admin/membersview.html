@@ -1,0 +1,401 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block content %}   
+
+<style>
+    /* ----- Modernized Table Styling ----- */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    th, td {
+        padding: 10px 12px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+        background-color: #3d6a95;
+        color: #fff;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    /* ----- Card Styling ----- */
+    .card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        margin-top: 10px; /* Reduced top margin */
+    }
+
+    .card-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-header h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .card-header h2 span:first-child {
+        margin-right: 8px;
+        color: #3d6a95;
+    }
+
+    .member-count {
+        background-color: #3d6a95;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+    }
+
+    /* ----- Button Styling ----- */
+    .view-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        background-color: #3d6a95;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.2s;
+    }
+
+    .view-btn:hover {
+        background-color: #2b3348;
+    }
+
+    /* Original delete button style */
+    .delete-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        color: #f1aa04;
+    }
+
+    .delete-button i {
+        font-size: 18px;
+    }
+
+    .delete-button:hover {
+        color: #cd0c0c;
+    }
+
+    /* ----- Original Progress Bar Styling ----- */
+    .progress-bar {
+        display: flex;
+        height: 20px;
+        font-size: 14px;
+        text-align: center;
+        line-height: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #f3f3f3;
+    }
+
+    .progress {
+        flex: 1;
+        height: 100%;
+    }
+
+    .bg-success {
+        background-color:#5eac0c !important;
+    }
+
+    .bg-danger {
+        background-color: rgb(200, 21, 21) !important;
+    }
+
+    /* ----- Pagination Styling ----- */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 15px 0;
+    }
+
+    .step-links a {
+        color: #3d6a95;
+        padding: 5px 10px;
+        text-decoration: none;
+        border: 1px solid #ddd;
+        margin: 0 3px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+    }
+
+    .step-links a:hover {
+        background-color: #3d6a95;
+        color: white;
+    }
+
+    .current {
+        padding: 5px 10px;
+        color: #333;
+        font-size: 0.85rem;
+    }
+
+    /* ----- Header Styling ----- */
+    header {
+        background-color: white;
+        padding: 10px 20px; /* Reduced padding */
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+
+    .user-wrapper img {
+        border-radius: 50%;
+        margin-right: 8px;
+        border: 2px solid #3d6a95;
+        width: 42px;
+        height: 42px;
+    }
+
+    /* ----- Layout Improvements ----- */
+    .recent-grid {
+        display: grid;
+        grid-gap: 15px;
+        grid-template-columns: 1fr;
+        padding: 15px; /* Reduced padding */
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    /* ----- Text Improvements ----- */
+    td {
+        font-size: 0.9rem;
+        color: #444;
+        vertical-align: middle;
+    }
+
+    .uppercase-text {
+        text-transform: uppercase;
+    }
+
+    .total {
+        color: #dd3a8e !important;
+        font-weight: bold;
+    }
+</style> 
+    
+<input type="checkbox" id="nav-toggle">
+<div class="sidebar"> 
+    <div class="sidebar-brand">
+        <h2><span class="las la-user-circle"></span><span>ZMCA</span></h2>
+    </div>
+    <div class="sidebar-menu">
+        <ul>
+            <li>
+                <a href="{% url 'adminindex' %}" class="active"><span class="fas fa-home"></span>
+                <span>Dashboard</span></a>
+            </li>
+            <li>
+                <a href="{% url 'members_view' %}"><span class="las la-home"></span>
+                <span>Families</span></a>
+            </li>
+            <li>
+                <a href="{% url 'committe' %}"><span class="las la-users"></span>
+                <span>Committee</span></a>
+            </li>
+            <li>
+                <a href="{% url 'fam_view' %}">
+                <span class="fas fa-id-badge"></span>
+                <span>Membership</span></a>
+            </li>
+            <li>
+                <a href="{% url 'enquiry_list' %}"><span class="fas fa-envelope"></span>
+                <span>Enquiries</span></a>
+            </li>
+            <li>
+                <a href="{% url 'bloodgroupadmin' %}">
+                <span class="fas fa-tint" style="color: rgb(200, 21, 21);"></span>
+                <span>Blood Group</span></a>
+            </li>
+            <li>
+                <a href="{% url 'birthdaydetails1' %}">
+                <span class="fas fa-birthday-cake"></span>
+                <span>Birthdays</span></a>
+            </li>
+            <li>
+                <a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-image"></span>
+                <span>Gallery</span></a>
+            </li>
+            <li>
+                <a href="{% url 'addhomegallery' %}"><span class="fa-solid fa-image"></span>
+                <span>Home Gallery</span></a>
+            </li>
+            <li>
+                <a href="{% url 'addblogview' %}"><span class="las la-blog"></span>
+                <span>Blog</span></a>
+            </li>
+            <li>
+                <a href="{% url 'eventview' %}"><span class="fa fa-bell"></span>
+                <span>Events</span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="main-content">
+    <header>
+        <h2 style="margin: 0;"> <!-- Removed extra margin -->
+            <label for="nav-toggle">
+                <span class="las la-bars"></span>
+            </label>       
+            ZMCA Admin
+        </h2>
+
+        <div class="search-wrapper">
+            <form id="search-form" method="GET" action="{% url 'members_view' %}">
+                <span class="las la-search"></span>
+                <input id="search-input" type="search" name="q" placeholder="Search families..." value="{{ request.GET.q }}"/>
+            </form>
+        </div>
+
+        <div class="user-wrapper">
+            <img src="{% static 'img/logo.jpg' %}" alt="">
+            <div>
+                <h4 style="margin: 0;"> <!-- Removed extra margin -->
+                    <a href="{% url 'logout' %}" style="color: #3d6a95;"><i class="fa-solid fa-right-from-bracket"></i></a>
+                </h4>
+                <small>Super Admin</small>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="recent-grid">
+            <div class="projects">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><span class="las la-users"></span>
+                            <span>Families</span></h2>
+                        <span class="member-count">Total: {{uacount}}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Member Name</th>
+                                        <th>Family Name</th>
+                                        <th>Email</th>
+                                        <th>Contact</th>
+                                        <th>Registration Progress</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for member in members_info %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td class="uppercase-text">{{member.firstname}} {{member.lastname}} <span class="total">({{ member.total }})</span></td>
+                                            <td class="uppercase-text">{{ member.familyname }}</td>
+                                            <td>{{ member.email }}</td>
+                                            <td>{{ member.phonenumber }}</td>
+                                            <td>
+                                                <div class="progress-bar">
+                                                    <div class="progress {% if member.owner_complete %}bg-success{% else %}bg-danger{% endif %}" style="width: {{ member.owner_completion_percentage }}%;">O</div>
+                                                    <div class="progress {% if member.spouse_complete %}bg-success{% else %}bg-danger{% endif %}" style="width: {{ member.spouse_completion_percentage }}%;">S</div>
+                                                    <div class="progress {% if member.child_complete %}bg-success{% else %}bg-danger{% endif %}" style="width: {{ member.child_completion_percentage }}%;">C</div>
+                                                    <div class="progress {% if member.other_complete %}bg-success{% else %}bg-danger{% endif %}" style="width: {{ member.other_completion_percentage }}%;">G</div>
+                                                    <div class="progress {% if member.photo_complete %}bg-success{% else %}bg-danger{% endif %}" style="width: {{ member.photor_completion_percentage }}%;">P</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div style="display: flex; gap: 8px; align-items: center;">
+                                                    <a href="{% url 'view_family' user_id=member.id %}" class="view-btn">
+                                                        View
+                                                    </a>
+                                                    <form method="post" action="{% url 'deletefamily' f_id=member.id %}" style="margin: 0;">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this member?')">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="pagination">
+                            <span class="step-links">
+                                {% if current_page.has_previous %}
+                                    <a href="?page=1">&laquo; first</a>
+                                    <a href="?page={{ current_page.previous_page_number }}">previous</a>
+                                {% endif %}
+                          
+                                <span class="current">
+                                    Page {{ current_page.number }} of {{ current_page.paginator.num_pages }}.
+                                </span>
+                          
+                                {% if current_page.has_next %}
+                                    <a href="?page={{ current_page.next_page_number }}">next</a>
+                                    <a href="?page={{ current_page.paginator.num_pages }}">last &raquo;</a>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </main>
+</div>
+
+<script>
+    // Get the search input element
+    var searchInput = document.getElementById("search-input");
+  
+    // Variable to store the timeout
+    var timeout = null;
+  
+    // Add an event listener to detect keypress events
+    searchInput.addEventListener("keypress", function(event) {
+        // Check if the Enter key was pressed
+        if (event.key === 'Enter') {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+        }
+    });
+  
+    // Add an event listener to detect changes in the input field
+    searchInput.addEventListener("input", function() {
+        // Clear the previous timeout to avoid rapid submission
+        clearTimeout(timeout);
+  
+        // Set a timeout to delay form submission
+        timeout = setTimeout(function() {
+            // Get the search form element
+            var searchForm = document.getElementById("search-form");
+            
+            // Submit the form
+            searchForm.submit();
+        }, 1000); // Adjust the delay time (in milliseconds) as needed
+    });
+</script>
+
+{% endblock %}

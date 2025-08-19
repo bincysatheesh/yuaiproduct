@@ -1,0 +1,519 @@
+<html>
+  <head>
+    {% load static %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>ZMCA </title>
+    <link href="{% static 'img/logo.jpg' %}" rel="icon">
+
+    <!-- Add the scripts for html2canvas and jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+
+    <style>
+      .container {
+        width: 100%; /* Set width to 100% for responsiveness */
+        margin: 0 auto;
+        padding: 10px;
+      }
+
+      .outer-table {
+        width: 99%; /* Set the width to 100% */
+        border-collapse: collapse;
+      }
+
+      .inner-table {
+        width: 100%; /* Set the width to 100% */
+        border-collapse: collapse;
+        margin-top: 10px;
+        table-layout: fixed; /* Add this line to fix the table layout */
+      }
+      body{
+
+        background: linear-gradient(to bottom, #3d6a95, #ffffff);
+        border-color: antiquewhite;
+
+      text-transform: uppercase;
+      }
+
+      .outer-table td,
+      .outer-table th,
+      .inner-table td,
+      .inner-table th {
+        border: 3px solid #174e74;
+        padding: 8px;
+        text-align: left;
+        word-wrap: break-word; /* Add this line to allow long words to break and wrap */
+        overflow: hidden;
+      }
+
+      .outer-table th,
+      .inner-table th {
+        background-color: #f2f2f2;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      /* Styles for the logo to ensure it stays on the same line */
+      .table-image-container {
+        text-align: center; /* Center the content horizontally */
+      }
+
+      .table-image {
+        /* width: 80px;
+        height: 80px; */
+        border-radius: 50%; /* Set border-radius to 50% for a round shape */
+        overflow: hidden; /* Hide any overflow beyond the border-radius */
+        display: inline-block; /* Make it inline-block to stay on the same line */
+        margin: 0 auto; /* Center the image within its container */
+      }
+      .timage{
+        width: 10%;
+        height: 10%;
+
+
+      }
+      header {
+      background-color: #3d6a95;
+      color: antiquewhite;
+      display: flex;
+      align-items: center;
+      justify-content: center; /* Center the logo horizontally */
+      padding: 10px;
+    }
+
+    .header-logo {
+      width: 100px; /* Set the width as needed */
+      height: auto; /* Maintain the aspect ratio */
+    }
+      footer {
+        text-align: center; /* Center the content horizontally in the footer */
+        background-color: #3d6a95;
+        color: antiquewhite;
+        padding: 10px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+
+      /* Define styles for the pagebreak class */
+.pagebreak {
+  page-break-after: always; /* Force a page break after these rows */
+}
+    </style>
+  </head>
+  <body>
+    <!-- <header>
+      <div class="table-image-container">
+        <img src="{% static 'img/logo.jpg' %}" style="height: 8%;width: 10%;" alt="Family Photo" class="table-image header-logo">
+      </div>
+    </header> -->
+    <br><br>
+    
+    <div class="container" style="width: 100%;">
+      <table class="outer-table">
+        <tbody>
+          <tr>
+            <td colspan="2" style="text-align: left; background-color: #3d6a95; color: antiquewhite;">
+              <!-- <a style="position: absolute; top:90px; left: 45px;" href="{% url 'members_view' %}">
+                <i class="fa-solid fa-house" style="color: rgb(238, 239, 243);"></i>
+              </a> -->
+              <button style="position: absolute; top: 90px; left: 35px; padding: 8px 15px; border-radius: 10px; background-color: #ffffff; color: rgb(20, 1, 1); border: none;" onclick="goBack()">BACK</button>
+
+              <div class="table-image-container">
+                <img src="{% static 'img/logo.jpg' %}" style="height: 5%;width: 5%;" alt="Family Photo" class="table-image header-logo">
+              </div>
+            
+              <!-- <button style="position: absolute; top: 90px; right: 35px; padding: 8px 15px; border-radius: 10px; background-color: #ffffff; color: rgb(20, 1, 1); border: none;" onclick="printToPDF()">Print</button> -->
+            </td>
+          </tr>
+
+          <!-- <tr >
+            <td colspan="2" style="text-align: left;  border: #9d9999; background-color: rgb(22, 118, 156); color: antiquewhite;">
+              <a style="position: absolute; top: 145px; left: 45px; " href="{% url 'fam_view' %}">
+                <i class="fa-solid fa-house" style="color: rgb(54, 72, 142);"></i>
+              </a>
+              <button style="position: absolute; top: 136px; right: 35px; padding: 8px 15px; border-radius: 10px; background-color: #30688d; color:#ffffff; border: none;" onclick="printToPDF()">Print</button>
+            </td>
+          </tr>  -->
+          
+      <tr>
+        <td colspan="2" style="text-align: left; background-color: #3d6a95; color: antiquewhite;">
+          <strong>Family Photo</strong>
+          
+       
+        </td>
+      </tr>
+      
+  <tr>
+    <td colspan="2">
+      {% if fp %}
+      <img src="{{ fp.familyphoto.url }}" alt="Family Photo" class="timage">
+  {% else %}
+      <p>No Family Photo Uploaded</p>
+  {% endif %}
+  
+    </td>
+  </tr>
+ 
+        <tr>
+
+          <td colspan="2" style="text-align: left; background-color: #3d6a95;color: antiquewhite;"><strong>OWNER DETAILS</strong>
+     
+          </td>
+         </tr>
+         <!-- Display Owner Details -->
+{% if od %}
+{% for od in od %}
+
+
+          <tr>
+            <td>Name:</td>
+          <td>{{ od.owner_first_name }} {{ od.owner_last_name }}
+            </td></tr>
+            <tr><td>Birthday & Blood group:</td>
+            <td>{{ od.dob|date:"F d" }},{{ od.blood_group}}VE      </td>
+          </tr>
+          
+        <tr>
+          <td>Communication address in Zambia:</td>
+          <td>{{ od.address_zambia }} <br>
+              Living City: &nbsp;{{ od.lcity}}<br>
+              Province   : &nbsp;{{ od.lprovince}}<br>        </td>
+          </tr>
+          <tr>
+            <td>Living City & Province in Zambia:</td>
+            <td>{{ od.lcity}} ,&nbsp;{{ od.lprovince}}<br>        </td>
+          </tr>
+
+          <tr>
+            <td>Communication address in India:</td>
+            <td>{{ od.address_india }} <br>   </td>
+            </tr>
+            <tr>
+              <td>Employeement Details:</td>
+              <td>In my current role, I hold the position of {{od.work_name}} at {{od.company_name}}. <br>   </td>
+              </tr>
+              <tr>
+                <td>Contact Details:</td>
+                <td> India:&nbsp;{{od.contact_no_india}}<br>
+                     Zambia:&nbsp;{{od.contact_no_zm}} <br>  
+                     whatsapp No:&nbsp;{{od.whatsapp_no}} </td>
+                </tr>
+                <tr>
+                  <td>Email:</td>
+                  <td style="text-transform: lowercase;"> {{od.email}} </td>
+                  </tr>
+                  <tr>
+                    <td>Living status in Zambia:</td>
+                   
+                  <td>
+                    {% if od.zmstatus == 'With Family' %}
+                      Currently, I am living with my family in Zambia.
+                    {% elif od.zmstatus == 'Alone' %}
+                      Currently, I am living alone in Zambia.
+                     {% else %}
+                      Living status is not specified.
+                    {% endif %}</td>
+                    </tr>
+{% endfor %}
+{% else %}
+  <tr>
+    <td colspan="2">No Owner Details available</td>
+  </tr>
+{% endif %}
+   
+                    <tr>
+                      <td colspan="2" style="text-align: left;background-color:#3d6a95;color: antiquewhite;" ><strong>SPOUSE DETAILS</strong>
+                      
+                      </td>
+                      
+                    </tr>
+                         <!-- Display Spouse Details -->
+     {% if sd %}
+     {% for sd in sd %}                    
+                    
+                        <tr class="pagebreak">
+                          <td>Name:</td>
+                        <td>{{ sd.spouse_name }}  </tr>                   
+                          <tr><td>Birthday & Blood group:</td>
+                          <td>{{ sd.spouse_dob|date:"F d" }},{{ od.blood_group}}VE      </td>
+                        </tr>
+                        <tr>
+                          <td>Employeement Details:</td>
+                          <td>{{sd.spouse_work}}</td>
+                          </tr>
+                          <tr>
+                            <td>Living status:</td>
+                          <td> {% if sd.status == '1' %}
+                            Currently, my spouse is <span>&nbsp;Living in Zambia</span>.
+                        {% elif sd.status == '2' %}
+                            Currently, my spouse is<span>&nbsp;Living in another country</span>.
+                        {% elif sd.status == '3' %}
+                            Unfortunately, my spouse has <span>&nbsp;Passed away</span>.
+                        {% endif %}</td>  </tr>
+                        <tr>
+                          <td>Contact Details:</td>
+                        <td>{{ sd.spouse_phone_no }}<br>
+                          Whatspap No:{{sd.spouse_whatsapp_no}}  </tr>      
+                          <tr><td>Email</td>
+                          <td style="text-transform: lowercase;">{{sd.spouse_email}} </td>
+                        </tr>
+                        
+                      
+                        {% endfor %}
+                        {% else %}
+                          <tr>
+                            <td colspan="2">No Spouse Details available</td>
+                          </tr>
+                        {% endif %}
+                  
+                 
+                  </tr>
+                  <!-- ---------------- -->
+                  <tr>
+                    <td colspan="2" style="text-align: left;background-color: #3d6a95;color: antiquewhite;" ><strong>CHILDRENS DETAILS</strong></td>
+                    </tr>
+                                   
+                   
+{% if cd %}
+<tr >
+  <td colspan="2">
+    <table class="inner-table">
+      <thead>
+        <tr>
+          <th style="background-color: #7ea6e6;">Sl.No:</th>
+          <th style="background-color: #7ea6e6;">Name</th>
+          <th  style="background-color: #7ea6e6;">Gender</th>       
+          <th  style="background-color: #7ea6e6;">Birthday </th>
+          <th  style="background-color: #7ea6e6;">Blood group</th>
+          <th  style="background-color: #7ea6e6;">Birth Order</th>
+         <th  style="background-color: #7ea6e6;">Living Status</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for child in cd %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ child.child_name }}</td>
+            <td>{{ child.get_gender_display }}</td>
+            <td>{{ child.dob|date:"F d" }}</td>
+            <td>{{ child.blood_group }}VE</td>
+            <td>{{ child.get_birth_order_display }}</td>
+           
+          <td>{% if child.status == 1 %}
+            Living in Zambia
+          {% elif child.status == 2 %}
+            Living in Other Country
+          {% elif child.status == 3 %}
+            Deceased
+          {% else %}
+            Unknown Status
+          {% endif %}
+        
+        </td>
+        
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </td>
+</tr>
+                    
+                    {% else %}
+                      <!-- Display "NA" if no entry in Childrendetails -->
+                      <tr><td colspan="2">NA</td>
+                        </tr>
+                    {% endif %}
+                
+               
+                </tr> <!-- //////////////////////////// -->
+                <tr>
+                  <td colspan="2" style="text-align: left;background-color: #3d6a95;color: antiquewhite;" ><strong>GUEST DETAILS</strong></td>
+                  </tr>
+                  
+{% if other %}
+{% for guest in other %}
+  <tr>
+    <td colspan="2">
+      <table class="inner-table">
+        <thead>
+          <tr>
+            <th style="background-color: #7ea6e6;">Sl.No:</th>
+
+            <th style="background-color: #7ea6e6;">Name</th>
+            <th  style="background-color: #7ea6e6;">Gender</th>       
+            <th  style="background-color: #7ea6e6;">Birthday & Blood group </th>
+            <th  style="background-color: #7ea6e6;">Relationships with owner</th>
+           <th  style="background-color: #7ea6e6;">Living Status</th>
+           <th  style="background-color: #7ea6e6;">Contact No:</th>
+           <th  style="background-color: #7ea6e6;">Email</th>
+
+    
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ guest.fname }}&nbsp;{{ guest.lname }}</td>
+            <td>{{ guest.gender }}</td>
+            <td>{{ guest.dob|date:"F d" }},&nbsp;{{ guest.blood_group }}VE</td>
+            <td>{{ guest.relationship_with_owner }}</td>
+            <td>{% if guest.status == 1 %}
+              Living in Zambia
+            {% elif guest.status == 2 %}
+              Living in Other Country
+            {% elif guest.status == 3 %}
+              Deceased
+            {% else %}
+              Unknown Status
+            {% endif %}</td>
+            <td>{{ guest.whatsappno }}</td>
+            <td style="text-transform: lowercase;">{{ guest.email }}</td>
+          
+          </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+{% endfor %}
+{% else %}
+<!-- Display "NA" if no entry in OtherDetails -->
+<tr>
+  <td colspan="2">NA</td>
+</tr>
+{% endif %}
+           
+
+<!-- -----------------------------           -->
+<tr>
+  <td colspan="2" style="background-color: #3d6a95;text-align: center;">
+   <span style="color: #ffffff;"> &copy; 2024 ZMCA @ YuAi Technologies. All rights reserved.</span>
+
+  </td>
+</tr>
+           
+         
+       
+      
+      </tbody>
+    </table>
+
+    <!-- <footer>
+      &copy; 2024 ZMCA Admin@YuAi Technologies. All rights reserved.
+  </footer>
+   -->
+  
+   <br><br>
+  </div>
+  
+  
+
+  <!-- Load jsPDF first -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+  function goBack() {
+    // Handle logic to navigate back (e.g., redirect to the previous step)
+    // For example, redirect to familyregister.html
+    window.location.href = "{% url 'members_view1' %}";
+  }
+  </script>
+<!-- <script>
+  function printToPDF() {
+    console.log('Print to PDF button clicked.');
+
+    // Get the content of the container
+    var element = document.querySelector('.outer-table');
+
+    // Set A4 paper size in millimeters
+    var a4Size = { width: 210, height: 297 };
+
+    // Set options for html2pdf
+    var options = {
+      margin: 10,
+      image: { type: 'jpeg', quality: 0.98 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      keepWithWindow: true,
+      beforeAutopage: function (element) {
+        var pdf = element.internal.pdf;
+        var pageHeight = pdf.internal.pageSize.height;
+        var yPosition = pdf.internal.getVerticalCoordinateString(pageHeight);
+
+        // Calculate the height of the remaining space on the current page
+        var remainingSpace = pageHeight - yPosition;
+
+        // Calculate the height of the current row
+        var rowHeight = element.clientHeight || element.offsetHeight;
+
+        // Check if the current row will fit on the remaining space of the current page
+        if (remainingSpace < rowHeight) {
+          // Start a new page
+          pdf.addPage();
+        }
+      },
+    };
+
+    // Use html2pdf to convert the HTML content to PDF with custom options
+    html2pdf(element, options);
+  }
+</script> -->
+
+<script>
+  function printToPDF() {
+    console.log('Print to PDF button clicked.');
+
+    // Get the content of the container
+    var element = document.querySelector('.outer-table');
+
+    // Set A4 paper size in millimeters
+    var a4Size = { width: 210, height: 297 };
+
+    // Set options for html2pdf
+    var options = {
+      margin: 10,
+      image: { type: 'jpeg', quality: 0.98 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      keepWithWindow: true,
+      beforeAutopage: function (element) {
+        var pdf = element.internal.pdf;
+        var pageHeight = pdf.internal.pageSize.height;
+        var yPosition = pdf.internal.getVerticalCoordinateString(pageHeight);
+
+        // Calculate the height of the remaining space on the current page
+        var remainingSpace = pageHeight - yPosition;
+
+        // Check if the current row has a pagebreak class
+        console.log('Element:', element);
+        console.log('Has pagebreak class:', element.classList.contains('pagebreak'));
+        if (element.classList.contains('pagebreak')) {
+          // Start a new page regardless of remaining space
+          console.log('Pagebreak detected. Starting a new page.');
+          pdf.addPage();
+        } else {
+          // Calculate the height of the current row
+          var rowHeight = element.clientHeight || element.offsetHeight;
+
+          // Check if the current row will fit on the remaining space of the current page
+          if (remainingSpace < rowHeight) {
+            // Start a new page
+            console.log('Insufficient space for the current row. Starting a new page.');
+            pdf.addPage();
+          }
+        }
+      },
+    };
+
+    // Use html2pdf to convert the HTML content to PDF with custom options
+    html2pdf(element, options);
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,594 @@
+<html>
+  <head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>ZMCA Admin</title>
+    <link href="{% static 'img/logo.jpg' %}" rel="icon">
+
+    <!-- Add the scripts for html2canvas and jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+
+    <style>
+      body {
+        text-transform: uppercase;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(to bottom, #3d6a95, #ffffff);
+        margin: 0;
+        padding: 0;
+        color: #333;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      .container {
+        width: 95%;
+        max-width: 1200px;
+        margin: 10px auto;
+        padding: 10px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      .outer-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 15px;
+      }
+
+      .inner-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 5px 0;
+        table-layout: fixed;
+      }
+
+      .outer-table td,
+      .outer-table th,
+      .inner-table td,
+      .inner-table th {
+        border: 1px solid #174e74;
+        padding: 8px;
+        text-align: left;
+        word-wrap: break-word;
+        vertical-align: top;
+      }
+
+      .outer-table th,
+      .inner-table th {
+        background-color: #3d6a95;
+        color: white;
+        font-weight: 500;
+      }
+
+      .section-header {
+        background-color: #3d6a95;
+        color: white;
+        font-weight: 600;
+        padding: 10px;
+        font-size: 14px;
+      }
+
+      .table-image-container {
+        text-align: center;
+        padding: 8px 0;
+      }
+
+      .table-image {
+        border-radius: 4px;
+        overflow: hidden;
+        display: inline-block;
+      }
+
+      .timage {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        border: 2px solid #174e74;
+      }
+
+      .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 8px 12px;
+        border-radius: 4px;
+        background-color: #3d6a95;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 11px;
+        transition: all 0.3s;
+        margin: 3px 0;
+        white-space: nowrap;
+      }
+
+      .btn:hover {
+        background-color: #2a4e6e;
+      }
+
+      .btn-back {
+        background-color: #f0f0f0;
+        color: #333;
+      }
+
+      .btn-print {
+        background-color: #28a745;
+      }
+
+      .logo-header {
+        text-align: center;
+        margin: 5px 0;
+        order: 2;
+        flex: 1;
+        min-width: 100px;
+      }
+
+      .logo-img {
+        height: 50px;
+        width: auto;
+        max-width: 100%;
+      }
+
+      footer {
+        text-align: center;
+        background-color: #3d6a95;
+        color: white;
+        padding: 8px;
+        margin-top: 15px;
+        font-size: 11px;
+        text-transform: capitalize;
+      }
+
+      /* Improved mobile styles */
+      @media (max-width: 768px) {
+        .container {
+          width: 100%;
+          padding: 5px;
+          border-radius: 0;
+          margin: 0;
+          box-shadow: none;
+        }
+        
+        .outer-table, 
+        .inner-table {
+          display: block;
+          width: 100%;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+        
+        .outer-table td,
+        .outer-table th,
+        .inner-table td,
+        .inner-table th {
+          padding: 6px;
+          font-size: 12px;
+          min-width: 80px;
+        }
+        
+        .section-header {
+          padding: 8px;
+          font-size: 12px;
+        }
+        
+        .btn {
+          padding: 6px 8px;
+          font-size: 10px;
+          margin: 2px 0;
+        }
+        
+        .logo-img {
+          height: 40px;
+        }
+        
+        /* Stack table cells vertically on very small screens */
+        @media (max-width: 480px) {
+          .outer-table tr,
+          .inner-table tr {
+            display: block;
+            margin-bottom: 10px;
+            border: 1px solid #174e74;
+          }
+          
+          .outer-table td,
+          .outer-table th,
+          .inner-table td,
+          .inner-table th {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+          }
+          
+          .outer-table th,
+          .inner-table th {
+            background-color: #3d6a95;
+            color: white;
+          }
+          
+          .action-buttons {
+            flex-direction: column;
+          }
+          
+          .logo-header {
+            order: 0;
+            margin-bottom: 5px;
+          }
+        }
+      }
+
+      /* Print styles */
+      @media print {
+        body {
+          background: none;
+          font-size: 12px;
+        }
+        
+        .container {
+          box-shadow: none;
+          padding: 0;
+          margin: 0;
+          width: 100%;
+        }
+        
+        .action-buttons {
+          display: none;
+        }
+        
+        footer {
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          font-size: 10px;
+        }
+        
+        .outer-table td,
+        .outer-table th,
+        .inner-table td,
+        .inner-table th {
+          padding: 4px;
+          font-size: 10px;
+        }
+      }
+
+      /* Zebra striping for inner tables */
+      .inner-table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      /* Highlight important information */
+      .highlight {
+        font-weight: 600;
+        color: #174e74;
+      }
+
+      /* Status indicators */
+      .status-zambia {
+        color: #28a745;
+      }
+      
+      .status-other {
+        color: #ffc107;
+      }
+      
+      .status-deceased {
+        color: #dc3545;
+      }
+      
+      /* Make icons smaller on mobile */
+      .fas, .fab {
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="action-buttons">
+        <button class="btn btn-back" onclick="goBack()">
+          <i class="fas fa-arrow-left"></i> BACK
+        </button>
+        
+        <div class="logo-header">
+          <img src="{% static 'img/logo.jpg' %}" alt="ZMCA Logo" class="logo-img">
+        </div>
+        
+        <button class="btn btn-print" onclick="printToPDF()">
+          <i class="fas fa-print"></i> PRINT
+        </button>
+      </div>
+
+      <table class="outer-table">
+        <!-- Family Photo Section -->
+        <tr>
+          <td colspan="2" class="section-header">
+            <i class="fas fa-camera"></i> FAMILY PHOTO
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align: center; padding: 10px;">
+            {% if fp %}
+              <img src="{{ fp.familyphoto.url }}" alt="Family Photo" class="timage">
+            {% else %}
+              <p style="font-size: 12px;">No Family Photo Uploaded</p>
+            {% endif %}
+          </td>
+        </tr>
+
+        <!-- Owner Details Section -->
+        <tr>
+          <td colspan="2" class="section-header">
+            <i class="fas fa-user"></i> OWNER DETAILS
+          </td>
+        </tr>
+        {% if od %}
+          {% for od in od %}
+            <tr>
+              <td width="30%"><strong>Name:</strong></td>
+              <td>{{ od.owner_first_name }} {{ od.owner_last_name }}</td>
+            </tr>
+            <tr>
+              <td><strong>Birthday & Blood:</strong></td>
+              <td>{{ od.dob|date:"F d" }}, {{ od.blood_group }}VE</td>
+            </tr>
+            <tr>
+              <td><strong>Zambia Address:</strong></td>
+              <td>
+                {{ od.address_zambia }}<br>
+                <span class="highlight">{{ od.lcity}}, {{ od.lprovince}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>India Address:</strong></td>
+              <td>{{ od.address_india }}</td>
+            </tr>
+            <tr>
+              <td><strong>Employment:</strong></td>
+              <td>{{ od.work_name }} at {{ od.company_name }}</td>
+            </tr>
+            <tr>
+              <td><strong>Contacts:</strong></td>
+              <td>
+                <i class="fas fa-phone"></i> IN: +91 {{ od.contact_no_india }}<br>
+                <i class="fas fa-phone"></i> ZM: +260 {{ od.contact_no_zm }}<br>
+                <i class="fab fa-whatsapp"></i> {{ od.whatsapp_no }}
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Email:</strong></td>
+              <td style="text-transform: lowercase;">
+                <i class="fas fa-envelope"></i> {{ od.email }}
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Status:</strong></td>
+              <td>
+                {% if od.zmstatus == 'With Family' %}
+                  <i class="fas fa-home"></i> With family in Zambia
+                {% elif od.zmstatus == 'Alone' %}
+                  <i class="fas fa-user"></i> Alone in Zambia
+                {% else %}
+                  <i class="fas fa-question-circle"></i> Status not specified
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="2">No Owner Details</td>
+          </tr>
+        {% endif %}
+
+        <!-- Spouse Details Section -->
+        <tr class="pagebreak">
+          <td colspan="2" class="section-header">
+            <i class="fas fa-heart"></i> SPOUSE DETAILS
+          </td>
+        </tr>
+        {% if sd %}
+          {% for sd in sd %}
+            <tr>
+              <td><strong>Name:</strong></td>
+              <td>{{ sd.spouse_name }}</td>
+            </tr>
+            <tr>
+              <td><strong>Birthday & Blood:</strong></td>
+              <td>{{ sd.spouse_dob|date:"F d" }}, {{ od.blood_group }}VE</td>
+            </tr>
+            <tr>
+              <td><strong>Employment:</strong></td>
+              <td>{{ sd.spouse_work }}</td>
+            </tr>
+            <tr>
+              <td><strong>Status:</strong></td>
+              <td>
+                {% if sd.status == '1' %}
+                  <span class="status-zambia"><i class="fas fa-check-circle"></i> In Zambia</span>
+                {% elif sd.status == '2' %}
+                  <span class="status-other"><i class="fas fa-globe"></i> Other country</span>
+                {% elif sd.status == '3' %}
+                  <span class="status-deceased"><i class="fas fa-times-circle"></i> Deceased</span>
+                {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Contacts:</strong></td>
+              <td>
+                <i class="fas fa-phone"></i> {{ sd.spouse_phone_no }}<br>
+                <i class="fab fa-whatsapp"></i> {{ sd.spouse_whatsapp_no }}
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Email:</strong></td>
+              <td style="text-transform: lowercase;">
+                <i class="fas fa-envelope"></i> {{ sd.spouse_email }}
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="2">No Spouse Details</td>
+          </tr>
+        {% endif %}
+
+        <!-- Children Details Section -->
+        <tr>
+          <td colspan="2" class="section-header">
+            <i class="fas fa-child"></i> CHILDREN
+          </td>
+        </tr>
+        {% if cd %}
+          <tr>
+            <td colspan="2">
+              <div style="overflow-x: auto;">
+                <table class="inner-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Gender</th>
+                      <th>Birthday</th>
+                      <th>Blood</th>
+                      <th>Order</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for child in cd %}
+                      <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ child.child_name }}</td>
+                        <td>{{ child.get_gender_display|slice:":1" }}</td>
+                        <td>{{ child.dob|date:"M d" }}</td>
+                        <td>{{ child.blood_group }}VE</td>
+                        <td>{{ child.get_birth_order_display|slice:":1" }}</td>
+                        <td>
+                          {% if child.status == 1 %}
+                            <span class="status-zambia">ZM</span>
+                          {% elif child.status == 2 %}
+                            <span class="status-other">Other</span>
+                          {% elif child.status == 3 %}
+                            <span class="status-deceased">Dec</span>
+                          {% else %}
+                            ?
+                          {% endif %}
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="2">No Children</td>
+          </tr>
+        {% endif %}
+
+        <!-- Guest Details Section -->
+        <tr>
+          <td colspan="2" class="section-header">
+            <i class="fas fa-users"></i> GUESTS
+          </td>
+        </tr>
+        {% if other %}
+          {% for guest in other %}
+            <tr>
+              <td colspan="2">
+                <div style="overflow-x: auto;">
+                  <table class="inner-table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Gender</th>
+                        <th>Birthday</th>
+                        <th>Relation</th>
+                        <th>Status</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ guest.fname|slice:":10" }} {{ guest.lname|slice:":1" }}.</td>
+                        <td>{{ guest.gender|slice:":1" }}</td>
+                        <td>{{ guest.dob|date:"M d" }}</td>
+                        <td>{{ guest.relationship_with_owner|truncatewords:2 }}</td>
+                        <td>
+                          {% if guest.status == 1 %}
+                            <span class="status-zambia">ZM</span>
+                          {% elif guest.status == 2 %}
+                            <span class="status-other">Other</span>
+                          {% elif guest.status == 3 %}
+                            <span class="status-deceased">Dec</span>
+                          {% else %}
+                            ?
+                          {% endif %}
+                        </td>
+                        <td>{{ guest.whatsappno|slice:":10" }}</td>
+                        <td style="text-transform: lowercase;">{{ guest.email|truncatechars:10 }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="2">No Guests</td>
+          </tr>
+        {% endif %}
+      </table>
+    </div>
+
+    <footer>
+      &copy; 2025 ZMCA Admin @YuAi Technologies. All rights reserved.
+    </footer>
+
+    <!-- Load jsPDF first -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+      function goBack() {
+        window.location.href = "{% url 'fam_view' %}";
+      }
+
+      function printToPDF() {
+        console.log('Print to PDF button clicked.');
+        var element = document.querySelector('.container');
+        var opt = {
+          margin: 5,
+          filename: 'family_details.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { 
+            scale: 2,
+            scrollY: 0,
+            useCORS: true
+          },
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', 
+            orientation: 'portrait' 
+          }
+        };
+        
+        // New Promise-based usage
+        html2pdf().set(opt).from(element).save();
+      }
+    </script>
+  </body>
+</html>

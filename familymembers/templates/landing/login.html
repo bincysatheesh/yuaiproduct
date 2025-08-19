@@ -1,0 +1,235 @@
+{% extends 'landing/fcbase.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap');
+  
+  :root {
+    --primary: #1a365d;
+    --accent: #f7b733;
+    --light: #f8f9fa;
+    --dark: #032b51;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  /* Login Container */
+  .login-container {
+    max-width: 450px;
+    margin: 10rem auto;
+    padding: 2.5rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .login-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+  }
+
+  .login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .login-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .login-header p {
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  /* Form Elements */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: #f8f9fa;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(247, 183, 51, 0.2);
+  }
+
+  .btn-login {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--primary) 0%, #153a6e 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+  }
+
+  .btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(26, 54, 93, 0.3);
+  }
+
+  .login-links {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  .login-links a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+
+  .login-links a:hover {
+    color: var(--accent);
+  }
+
+  .divider {
+    display: inline-block;
+    margin: 0 10px;
+    color: #ccc;
+  }
+
+  /* Messages */
+  #messages-container {
+    max-width: 450px;
+    margin: 0 auto 2rem;
+  }
+
+  .alert {
+    padding: 12px 15px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+  }
+
+  .btn-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #856404;
+    opacity: 0.7;
+    transition: all 0.3s;
+  }
+
+  .btn-close:hover {
+    opacity: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .login-container {
+      margin: 8rem auto;
+      padding: 1.5rem;
+    }
+
+    .login-header h2 {
+      font-size: 1.8rem;
+    }
+  }
+</style>
+
+<div class="login-container">
+  <div class="login-header">
+    <h2>Sign In</h2>
+    <p>Access your ZMCA account</p>
+  </div>
+
+  <!-- Messages Container -->
+<div id="messages-container">
+  {% if messages %}
+    {% for message in messages %}
+      {% if message.tags == "error" %}
+      <div class="alert alert-warning">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+      </div>
+      {% else %}
+      <div class="alert alert-warning">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+      </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</div>
+
+  <form id="login-form" action="{% url 'mlogin' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" name="username" class="form-control" placeholder="Enter your username" required autocomplete="off">
+    </div>
+    
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" name="password" placeholder="Enter your password" required autocomplete="off">
+    </div>
+    
+    <button type="submit" class="btn-login">Sign In</button>
+    
+    <div class="login-links">
+      <a href="{% url 'forgetpassword' %}">Forgot Password?</a>
+      <span class="divider">|</span>
+      <a href="{% url 'msignup' %}">Don't have an account? Sign Up</a>
+    </div>
+  </form>
+</div>
+
+
+
+<br><br><br>
+{% endblock %}

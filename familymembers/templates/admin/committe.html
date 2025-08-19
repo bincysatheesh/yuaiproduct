@@ -1,0 +1,569 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block content %}    
+
+<style>  
+ table {
+  width: 100%; /* Set the width of the table to 100% */
+}
+.customers .card-body .table-responsive {
+  max-width: 100%; /* Set your desired maximum width */
+  overflow-x: auto; /* Add horizontal scroll if needed */
+}
+.customers .card-body {
+  max-width: 350px; /* Set the maximum width for the Enquiries section */
+}
+
+/* Add this style for the hover effect */
+table tbody tr:hover {
+  background-color: #d6dfe2;
+}
+
+/* Style for the link container */
+.link-container {
+  display: inline-block;
+  padding: 1px 2px;
+  background-color: #3d6a95;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.link-container:hover {
+  background-color: #2b3348;
+}
+
+.recent-grid {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-gap: 2rem; /* Adjust the gap between the two grids */
+  grid-template-columns: 75% auto; /* Adjust the width of each grid */
+}
+
+
+/* ----------------------button style */
+
+/* Input field styling */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: white; /* Adjust background color as needed */
+}
+
+/* Placeholder text */
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+select::placeholder {
+  color: #aaa; /* Adjust placeholder text color */
+}
+
+/* Hover effect on input fields */
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="password"]:hover,
+select:hover {
+  border-color: #333;
+}
+
+/* Zoom effect on input fields */
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="password"]:hover,
+select:hover {
+  transform: scale(1.0);
+}
+
+/* Focus effect on input fields */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus {
+  border-color:  #3d6a95;
+  outline: none;
+  box-shadow: 0 0 5px  #3d6a95;
+}
+
+/* Button styling */
+button {
+  background-color: #007bff; /* Button background color */
+  color: white; /* Button text color */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Hover effect on buttons */
+button:hover {
+  background-color: #0056b3; /* Adjust hover background color */
+}
+
+/* Zoom effect on buttons */
+button:hover {
+  transform: scale(1.05);
+}
+
+/* Year dropdown styling */
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: white; /* Adjust background color as needed */
+  appearance: none; /* Remove default arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23000000'%3E%3Cpath d='M5.293 7.293a1 1 0 0 1 1.414 0L10 10.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px; /* Adjust size of arrow */
+}
+
+/* Placeholder text for year dropdown */
+select::placeholder {
+  color: #aaa; /* Adjust placeholder text color */
+}
+
+/* Hover effect on year dropdown */
+select:hover {
+  border-color: #333;
+}
+
+/* Zoom effect on year dropdown */
+select:hover {
+  transform: scale(1.0);
+}
+
+/* Focus effect on year dropdown */
+select:focus {
+  border-color:  #3d6a95;
+  outline: none;
+  box-shadow: 0 0 5px #3d6a95;
+}
+
+/* CSS for table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-color: #ccc; /* Set default border color */
+}
+
+/* Hover effect on table */
+table:hover {
+    border-color: #3d6a95; /* Change border color on hover */
+}
+
+
+
+  /* Style for table header */
+  table th {
+    background-color: #3d6a95;
+    color: #fff;
+    padding: 10px;
+  }
+
+  table thead{
+    text-align: left;
+  }
+  /* Style for table body */
+  /* table td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    height: 100px;
+  } */
+  /* Style for table body */
+table td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  height: 100px; /* Set the height for all table cells */
+  width: calc(100% / 6); /* Set the width of each cell to be 1/6th of the table's width */
+  box-sizing: border-box; /* Include padding and border in the width calculation */
+}
+
+  /* Hover effect on table rows */
+  table tbody tr:hover {
+    background-color: #f5f5f5;
+   
+  }
+
+  /* Zoom effect on table rows */
+  table tbody tr:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s;
+  }
+
+  /* Style for action buttons in table cells */
+ 
+
+  table td a.btn {
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s, transform 0.3s;
+  display: inline-block;
+  height: auto;
+  border: none; /* Remove border */
+}
+  /* Button primary color */
+  .btn-primary {
+    /* background-color: #007bff; */
+    color:#007bff;
+  }
+
+  /* Button danger color */
+  .btn-danger {
+    /* background-color: #dc3545; */
+    color: #dc3545;
+  }
+
+  /* Hover effect on buttons */
+  table td a.btn:hover {
+    transform: scale(1.05);
+  }
+  
+
+/* Adjust icon style */
+table td a.btn i {
+  font-size: 20px;
+  margin-right: 5px;
+  height: 24px;
+  width: 24px;
+}
+/* /////////////////// */
+/* Style for file input field */
+.form-group input[type="file"] {
+  width: 100%; /* Set width to fill the container */
+  padding: 10px; /* Add padding for better appearance */
+  margin: 5px 0; /* Add margin to separate it from other elements */
+  border: 1px solid #ccc; /* Add border for clarity */
+  border-radius: 4px; /* Add border-radius for rounded corners */
+  box-sizing: border-box; /* Include padding and border in the width */
+  background-color: white; /* Set background color */
+  outline: none; /* Remove default focus outline */
+}
+
+/* Placeholder text for file input field */
+.form-group input[type="file"]::placeholder {
+  color: #aaa; /* Adjust placeholder text color */
+}
+
+/* Hover effect on file input field */
+.form-group input[type="file"]:hover {
+  border-color: #333; /* Change border color on hover */
+}
+
+/* Focus effect on file input field */
+.form-group input[type="file"]:focus {
+  border-color: #3d6a95; /* Change border color on focus */
+  box-shadow: 0 0 5px #3d6a95; /* Add box shadow on focus */
+}
+
+
+/* Style for the edit icon */
+.edit-icon {
+    display: inline-block;
+    margin-right: 5px;
+    /* Add any additional styles as needed */
+}
+.uppercase-text {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+
+</style>
+    
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar"> 
+      <div class="sidebar-brand">
+        <h2><span class="las la-user-circle"></span><span>ZMCA</span></h2>
+
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li>
+            <a href="{% url 'adminindex' %}" class="active"><span class="fas fa-home"></span>
+            <span>Home</span></a>
+          </li>
+          <!-- <li>
+            <a href="{% url 'adminindex' %}"><span class="fas fa-home"></span>
+            <span></span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'members_view' %}"><span class="las la-home"></span>
+              <span>Families</span></a>
+          <li>
+            <a href="{% url 'committe' %}"><span class="las la-users"></span>
+            <span>Committee Members</span></a>
+          </li>
+          <li>
+            <a href="{% url 'fam_view' %}">
+            <span class="fas fa-id-badge"></span>
+            <span>Membership</span></a>
+          </li>
+          
+          <li>
+            <a href="{% url 'enquiry_list' %}"><span class="fas fa-envelope"></span>
+            <span>Enqueries</span></a>
+            <!-- <ul class="submenu">
+              <li></li>
+              <li><a href="{% url 'allenquiry_list' %}"><span class="fas fa-envelope"></span><span>(All)</span></a></li>            
+           -->
+           </ul>
+          </li>
+          <li>
+            <a href="{% url 'bloodgroupadmin' %}">
+              <span class="fas fa-tint" style="color: red;"></span>
+            <span>Blood Group</span></a>
+          </li>
+          <li>
+            <a href="{% url 'birthdaydetails1' %}">
+              <span class="fas fa-birthday-cake"></span>
+            <span>Birthday</span></a>
+          </li>
+
+          </li>
+          <li>
+            <a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-image"></span>
+            <span>Gallery</span></a>
+            <ul class="submenu">
+              <!-- <li></li>
+              <li><a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Add Gallery</a></li>
+              <li><a href="{% url 'galleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Gallery</a></li> -->
+         
+          
+           </ul>
+           <li>
+            <a href="{% url 'addhomegallery' %}"><span class="fa-solid fa-image"></span>
+            <span>Home Gallery</span></a>
+           
+              </ul>
+          </li>
+          <!-- <li>
+            <a href="{% url 'gallery'%}"><span class="fa-solid fa-image"></span>
+            <span>Gallery</span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'addblogview' %}"><span class="las la-blog"></span>
+            <span>Blog</span></a>
+          </li>
+          <li>
+            <a href="{% url 'eventview' %}"><span class="fa fa-bell"></span>
+            <span>Events</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- --------end link---------- -->
+    <div class="main-content">
+      <header>
+           
+        <h2> 
+          <label for="nav-toggle">
+            <span class="las la-bars"></span>
+          </label>       
+        ZMCA Admin
+        </h2>
+      <!-- Add this div to contain the search input -->
+      <div class="search-wrapper">
+        <form method="GET" action="{% url 'committe' %}">
+            <span class="las la-search"></span>
+            <input type="search" id="searchInput" name="q" placeholder="Search here" value="{{ request.GET.q|default_if_none:'' }}"/>
+        </form>
+      </div>
+
+        <div class="user-wrapper">
+          <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+        
+          <div>
+            <!-- <h4>ZMCA</h4> -->
+            <h4>        <a href="{% url 'logout' %}" style="font-size: 16px;"> <i class="fa-solid fa-right-from-bracket"></i></a>
+            </h4>
+            <small>Super Admin</small>
+
+          </div>
+
+          
+        </div>
+
+      </header>
+      <!-- ----------end header---------- -->
+      <main>
+      
+        <!-- -------------------endcards------------- -->
+<div class="recent-grid">
+  <div class="projects">
+    <div class="card" style="width: 130%;">
+      <div class="card-header" style="background-color:#3d6a95;">
+        <h3> <span class="las la-users" style="color: #edeff1;"></span> &nbsp;COMMITTE MEMBERS</h3>
+       
+
+      </div>
+      <div class="card-body">
+        <!-- Inside the card-body div -->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      
+        <input type="file" class="form-control-file" id="image" name="image" class="uppercase-text" placeholder="Choose Your Image" accept="image/*" required>
+    </div>
+    <div class="form-group">
+    
+      <input type="text" id="member_name" name="member_name" class="uppercase-text" class="form-control" placeholder="Enter the Member Name" required>
+    </div>
+    <div class="form-group">
+    
+      <input type="text" id="post" name="post" class="uppercase-text" class="form-control" placeholder="Enter the post" required>
+    </div>
+    <select name="year" id="year">
+        <option value="">Select Year</option>
+        {% for year in years %}
+        <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
+      </select>
+    <div class="form-group">
+   
+      <select id="status" name="status" class="form-control" class="uppercase-text" required>
+        <option value="Active" class="uppercase-text">Active</option>
+        <option value="Inactive" class="uppercase-text">Inactive</option>
+      </select>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary" style="color: #fff;" >ADD MEMBER</button>
+  </form>
+<br><br>
+
+<!-- <p id="noResultsMessage" style="display: none;">No results found.</p> -->
+
+ <!-- Display committee members in a table -->
+ <div class="table-responsive">
+ {% if committee_members %}
+<table class="table">
+    <thead style="background-color:#3d6a95;height: 50%;color: #ccc;">
+        <tr>
+            <th class="uppercase-text">Member Name</th>
+            <th class="uppercase-text">Post</th>
+            <th class="uppercase-text">Year</th>
+            <th class="uppercase-text">Status</th>
+            <th class="uppercase-text">Image</th>
+            <th class="uppercase-text">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for member in committee_members %}
+            <tr>
+                <td class="uppercase-text">{{ member.member_name }}</td>
+                <td class="uppercase-text">{{  member.post }}</td>
+                <td class="uppercase-text">{{ member.year }} - {{ member.year|add:1 }}</td>
+                <td class="uppercase-text">{{ member.status }}</td>
+                <td class="uppercase-text"><img src="{{ member.image.url }}" alt="{{ member.member_name }}" width="50% " height="90%"></td>
+            <td>
+              <a href="{% url 'editcommitte' member.id %}" class="btn btn-primary btn-sm">
+                <span class="edit-icon"><i class="fas fa-edit"></i></span>
+            </a>
+            &nbsp;&nbsp;
+                <!-- <a href="{% url 'editcommitte' member.id %}" class="btn btn-primary btn-sm" ><i class="fas fa-edit"></i></a> &nbsp;&nbsp; -->
+             <!-- Form for delete action -->
+        <form method="post" action="{% url 'delete_member' member.id %}">
+          {% csrf_token %}
+          <button type="submit" style="background-color: #fff;" onclick="return confirm('Are you sure you want to delete this member?')">
+              <i class="fa-solid fa-trash" style="color: #f1aa04; font-size: 24px;"></i>
+          </button>
+      </form>
+            </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+ 
+
+   
+      </div>
+      <!-- Pagination Controls -->
+<div class="pagination">
+    <span class="step-links">
+      {% if committee_members.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ committee_members.previous_page_number }}">previous</a>
+      {% endif %}
+      <span class="current">
+        Page {{ committee_members.number }} of {{ committee_members.paginator.num_pages }}.
+      </span>
+      {% if committee_members.has_next %}
+        <a href="?page={{ committee_members.next_page_number }}">next</a>
+        <a href="?page={{ committee_members.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+  {% endif %}
+
+    </div>
+
+  </div>
+
+</div>        
+      </main>
+
+<!-- ------------------------------endpaginator--------- -->
+
+
+
+    </div>
+
+<script>
+    // Get the search input element
+    const searchInput = document.getElementById('searchInput');
+
+    // Get the no results message element
+    const noResultsMessage = document.getElementById('noResultsMessage');
+
+    // Add an event listener for the 'input' event to detect changes in the input field
+    searchInput.addEventListener('input', function() {
+        // Get the value entered by the user
+        const searchText = this.value.trim().toLowerCase();
+
+        // Get the table within the table-responsive portion
+        const table = document.querySelector('.table');
+
+        // Get all the rows in the table body
+        const rows = table.querySelectorAll('tbody tr');
+
+        let found = false; // Flag to track if any search results were found
+
+        // Loop through each row
+        rows.forEach(row => {
+            // Get the text content of each row
+            const rowText = row.textContent.toLowerCase();
+
+            // If the row contains the search text, display it, otherwise hide it
+            if (rowText.includes(searchText)) {
+                row.style.display = '';
+                found = true; // Set found to true if at least one search result is found
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        // Toggle the visibility of the no results message based on search results
+        noResultsMessage.style.display = found ? 'none' : 'block';
+    });
+</script>
+
+  
+
+    {% endblock %}    

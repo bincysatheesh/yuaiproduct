@@ -1,0 +1,598 @@
+{% extends 'member/memberbase.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+<style type="text/css">
+  /* Add this to your main.css or create a new CSS file */
+  body{
+    /* font-family: poppins,sans-serif; */
+
+background: linear-gradient(to bottom, #dde8f1, #ffffff);
+
+  }
+  /* Add more styling as needed */
+  input[type="text"],
+select {
+    text-transform: uppercase;
+}
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .dashboard {
+    /* border-right: 2px solid #007BFF; */
+    padding-right: 30px;
+    height: 700px; /* Adjust height as needed */
+  }
+      /* Styles for form elements */
+      input:hover,
+textarea:hover
+{ 
+    /* background-color: #adcfdf; */
+    color: rgb(22, 1, 1);
+}
+select:hover {
+    background-color: #f0f2f3;
+    color: rgb(16, 1, 1);
+}
+
+
+
+  
+
+  .dashboard-heading h4 {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 5px;
+  }
+
+  .dashboard-heading h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40%;
+    height: 5px;
+    background-color:#e0a905;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  table tr {
+    display: flex;
+    /* margin-bottom: 15px; */
+  }
+
+  table td {
+    width: 50%;
+    box-sizing: border-box;
+    padding-right: 10px;
+  }
+
+  form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 5px;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+  }
+
+  .vertical-steps {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .vertical-steps a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    margin-bottom: 10px;
+  }
+
+  .vertical-steps a:hover {
+    text-decoration: underline;
+  }
+
+  .right-content {
+    padding-left: 20px;
+  }
+
+  .progress-link {
+    border: 2px solid #3c679f;
+    /* Gives blue border for the anchor tag */
+        color: #000; /* Black text */
+        /* background-color: #e0a905; */
+         /* Yellow background */
+        display: block;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .progress-link-container {
+      width: 280px;
+        transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+    } 
+
+    .progress-link-container:hover {
+        transform: scale(1.1); /* Increase the scale to zoom in */
+    }
+
+    .progress-link:hover {
+        background-color:#3c679f;
+         /* Darker yellow on hover */
+        color: #ffffff;
+    }
+  
+    /* Styling for the progress container */
+
+    .progress-title {
+        text-align: left;
+        font-size: 18px;
+        font-weight: bold;
+        font-family: 'Your Desired Font', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .progress-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px; /* Adjust margin as needed */
+    }
+
+    .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color:#3c679f; /* Adjust the color as needed */
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .line {
+        flex: 1;
+        height: 2px;
+        background-color:#3c679f; /* Adjust the color as needed */
+    }
+
+    .active-circle {
+        background-color: #e0a905;/* Adjust the color as needed */
+    }
+    /* ----------------/ */
+    .custom-blue {
+    background-color: #007BFF; /* Blue background */
+    color: #fff; /* White text */
+    /* Add any other styles you need */
+}
+.custom-green {
+    background-color: #1a9d06; /* Blue background */
+    color: #fff; /* White text */
+    /* Add any other styles you need */
+}
+.full-width {
+    width: 100% !important;
+}
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+button-container {
+  display: flex;
+  justify-content: space-between;
+}
+.button-container button {
+    width: 150px;
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+button {
+    width: 180px; /* Adjust the width as needed */
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+.button-container button:hover {
+    background-color: #3c679f;
+}
+
+  button:hover {
+    background-color: #3c679f;
+  }
+
+/* -------------------endbutton */
+
+.form-container {
+    width: 100%;
+    max-width: 100%;
+    animation: slideInFromBottom 1s ease-out;
+  }
+
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  /* --------------------------- */
+.othercontainer {
+  width: 100%;
+        margin-top: 20px; /* Adjust the margin as needed */
+    }
+
+    .othercontainer h2 {
+      
+        text-align: center;
+        color: #007BFF; /* Adjust the color as needed */
+    }
+
+    .othercontainer table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    .othercontainer th,
+    .othercontainer td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        width: 100%;
+    }
+
+    .othercontainer thead {
+        background-color: #e4d683;
+        color: #09449c;
+        width: 100%;
+    }
+
+    .othercontainer tbody tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .othercontainer tbody tr:nth-child(even) {
+        background-color: #e6e6e6;
+        width: 100%;
+    }
+    .othercontainer tbody tr:hover {
+    background-color: #f1f0a1; /* Change this color to your desired hover color */
+}
+
+    .othercontainer td a {
+        text-decoration: none;
+        color: #007BFF;
+        margin-right: 10px;
+        width: 100%;
+    }
+
+    .othercontainer td a:hover {
+        text-decoration: underline;
+        width: 100%;
+    }
+    .othercontainer tbody tr {
+    transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+}
+
+.othercontainer tbody tr:hover {
+    background-color:#5b8acd; /* Change this color to your desired hover color */
+    transform: scale(1.05); /* Increase the scale to zoom in */
+}
+
+.childbtn
+{
+    display: flex;
+  justify-content: space-between; 
+}
+/* CSS for button responsiveness */
+.childbtn {
+  display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap to the next line if necessary */
+  justify-content: center; /* Center the buttons horizontally */
+}
+
+.childbtn button {
+  width: calc(33.33% - 10px); /* Initially, each button occupies one-third of the container width with some spacing */
+  margin: 5px; /* Add some spacing between buttons */
+}
+
+@media screen and (max-width: 768px) {
+  .childbtn button {
+    width: calc(50% - 10px); /* Adjust button width for smaller screens (e.g., tablets) */
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .childbtn button {
+    width: 100%; /* Make buttons occupy full width on smaller screens (e.g., mobile devices) */
+  }
+}
+
+</style>
+
+<br><br><br><br><br><br><br><br><br>
+
+<div class="container">
+  <div class="row gy-4">
+    <div class="col-lg-3" data-aos="fade-up">
+      <div class="dashboard">
+        <div class="dashboard-heading">
+          <h4 class="underline-below"><span style="text-transform: uppercase;font-weight: bold; font-size: 18px;">Registration Process</span></h4>
+         
+        </div>
+        <div class="vertical-steps"> <br>
+         <!-- Step 1: Owner Details -->
+         {% if not od %}
+         <a href="{% url 'save_owner' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 1: Owner Details</span></a>
+         {% else %}
+         <!-- Add your content for the 'else' case, e.g., change color to yellow -->
+         <a href="{% url 'save_owner' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 1: Owner Details</span></a>
+         {% endif %}          <br>
+          <!-- Step 2: Spouse Details -->
+          {% if not sd %}
+          <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 2: Spouse Details</span></a>
+          {% else %}
+          <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 2: Spouse Details</span></a>
+          {% endif %} <br>
+          <!-- Step 3: Children's Details -->
+          {% if not cd %}
+          <a href="{% url 'childrenview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 3: Children's Details</span></a>
+          {% else %}
+          <a href="{% url 'childrenview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 3: Children's Details</span></a>
+          
+          {% endif %}<br>
+          <!-- Step 4: Other Details -->
+          <a href="{% url 'otherview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-hand-point-right" style="color: #e0a905; font-size: 24px;"></i><span style="text-transform: uppercase;font-weight: bold;">Step 4: Other's Details</span></a>
+            <!-- Step 3: family photo's Details --><br>
+            {% if not fp %}
+            <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 5:Upload Photo</span></a>
+            {% else %}
+            <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 5:Upload Photo</span></a>
+            
+            {% endif %}<br>
+      
+         <a href="{% url 'submitfamilyview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><span style="text-transform: uppercase;font-weight: bold;">Step 6: Review and Submit</span></a>
+        </div>
+      </div>
+    </div>
+   
+    <div class="col-lg-9 right-content" data-aos="fade-up">
+      <div class="progress-title" id="progress-title">Step 4: <span class="fa fa-users"></span> &nbsp;OTHER'S DETAILS</span></div>
+
+       <!-- Progress Container -->
+       <div class="progress-container" id="progress-container">
+        <!-- Circles with Connecting Lines -->
+        <div class="circle active-circle">1</div>
+        <div class="line"></div>
+        <div class="circle active-circle">2</div>
+        <div class="line"></div>
+        <div class="circle active-circle">3</div>
+        <div class="line"></div>
+        <div class="circle active-circle">4</div>
+        <div class="line"></div>
+        <div class="circle">5</div>
+        <div class="line"></div>
+        <div class="circle ">6</div>
+       
+    </div>
+    <br>
+    <div class="form-container">
+      <div class="col-lg-9 right-content form-container" data-aos="fade-up">
+  
+      <!-- Owner Details Form -->
+      <form method="post" action="{% url 'edit_other' o_id=other.oid %}">
+        {% csrf_token %}
+        <table>
+          <!-- Other Details -->
+          <tr class="form-row">
+              <td><input type="text" name="fname" placeholder="First Name" value="{{other.fname}}" required></td>
+              <td><input type="text" name="lname" placeholder="Last Name" value="{{other.lname}}" required></td>
+          </tr>
+          <tr class="form-row">
+              <td>
+                <select name="gender" required>
+                    <option value="M" {% if other.gender == 'M' %}selected{% endif %}>Male</option>
+                    <option value="F" {% if other.gender == 'F' %}selected{% endif %}>Female</option>
+                    <option value="O" {% if other.gender == 'O' %}selected{% endif %}>Other</option>
+                  </select>
+              </td>
+              <td>
+                 <!-- Month Dropdown -->
+                 <select name="dob_month"  class="uppercase-text">
+                  {% for month in dob_month_names %}
+                  <option  class="uppercase-text" value="{{ forloop.counter }}" {% if forloop.counter == dob_month %}selected{% endif %}>{{ month }}</option>
+                  {% endfor %}
+                </select>
+                  </td>
+               
+                  <td>         
+                
+               <!-- Day Dropdown -->
+               <select name="dob_day">
+                {% for day in dob_days %}
+                <option value="{{ forloop.counter }}" {% if forloop.counter == dob_day %}selected{% endif %}>{{ day }}</option>
+                {% endfor %}
+              </select>
+                <!-- <input type="text" name="dob" id="dob" placeholder="Enter your DOB (DD/MM)" maxlength="5" pattern="\d{2}/\d{2}" title="Enter a valid date (DD/MM)" required> -->
+              </td>
+                  
+              </tr>
+              <tr class="form-row">
+
+                <td>
+                   <!-- Add the necessary HTML and Django template tags for the 'blood_group' field -->
+                   <select name="blood_group" required>
+                    <option value="" disabled>Select Blood Group</option>
+                    <option value="A+" {% if child.blood_group == 'A+' %}selected{% endif %}>A+</option>
+                    <option value="A-" {% if child.blood_group == 'A-' %}selected{% endif %}>A-</option>
+                    <option value="B+" {% if child.blood_group == 'B+' %}selected{% endif %}>B+</option>
+                    <option value="B-" {% if child.blood_group == 'B-' %}selected{% endif %}>B-</option>
+                    <option value="AB+" {% if child.blood_group == 'AB+' %}selected{% endif %}>AB+</option>
+                    <option value="AB-" {% if child.blood_group == 'AB-' %}selected{% endif %}>AB-</option>
+                    <option value="O+" {% if child.blood_group == 'O+' %}selected{% endif %}>O+</option>
+                    <option value="O-" {% if child.blood_group == 'O-' %}selected{% endif %}>O-</option>
+                  </select>
+                </td>
+                <td><input type="text" name="relationship_with_owner" value="{{other.relationship_with_owner}}" placeholder="Relationship with Owner" required></td>
+              </tr>
+              <tr class="form-row">
+              <td><input type="email" name="email" value="{{other.email}}" placeholder="Email"  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required></td>
+              <td><input type="tel" id="contactno" name="whatsappno" placeholder="WhatsApp Number" value="{{other.whatsappno}}" style="width: 132%" required></td>
+         
+              <input type="hidden" id="country_code" name="country_code">
+
+            </tr>
+         
+         
+      </table>
+        <div class="childbtn">
+          
+            <button type="button" class="btn btn-primary"  onclick="goBack()">Back</button>
+            <button type="submit" class="btn btn-primary" >Update</button>
+            <button type="button" class="btn btn-primary"  onclick="goToNext()">Next</button>
+            
+     
+        </div>
+        
+      </form>
+    </div>
+  </div>
+
+              </div>
+          
+     
+</div>
+</div>
+<!-- ========================== -->
+
+<script>
+  var inputElement = document.querySelector("#contactno");
+  var iti = window.intlTelInput(inputElement, {
+      separateDialCode: true,
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+      initialCountry: "in",
+      dropdownContainer: document.body
+  });
+// Initialize the country code on page load
+document.getElementById('country_code').value = iti.getSelectedCountryData().dialCode;
+inputElement.addEventListener('countrychange', function () {
+    var countryCode = iti.getSelectedCountryData().dialCode;
+    document.getElementById('country_code').value = countryCode;
+});
+
+
+// Retain the existing country code if the phone number is not modified
+document.querySelector("#contactno").addEventListener('input', function () {
+    var existingCountryCode = document.getElementById('country_code').value;
+    if (this.value.trim() === "") {
+        document.getElementById('country_code').value = existingCountryCode;
+    }
+});
+
+</script>
+
+      
+
+          
+<!-- ===============================          -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      var dobInput = document.getElementById('dob');
+
+      dobInput.addEventListener('input', function (event) {
+          var input = event.target.value;
+          // Remove any non-digit characters
+          var sanitizedInput = input.replace(/\D/g, '');
+
+          if (sanitizedInput.length > 2) {
+              // Add a '/' after the second character
+              sanitizedInput = sanitizedInput.slice(0, 2) + '/' + sanitizedInput.slice(2);
+          }
+
+          // Update the input field with the formatted value
+          dobInput.value = sanitizedInput;
+      });
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      // Check if the URL has a 'success' parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const successParam = urlParams.get('success');
+
+      // If 'success' is present and truthy, update the UI
+      if (successParam) {
+          // Add a green tick or update the style for Step 1 in the dashboard
+          document.querySelector('.progress-container .circle').classList.add('active-circle');
+      }
+  });
+</script>
+
+<script>
+  function goBack() {
+    // Handle logic to navigate back (e.g., redirect to the previous step)
+    // For example, redirect to familyregister.html
+    window.location.href = "{% url 'childrenview' %}";
+  }
+</script>
+<script>
+  function goToNext() {
+    // Handle logic to navigate back (e.g., redirect to the previous step)
+    // For example, redirect to familyregister.html
+    window.location.href = "{% url 'save_fp' %}";
+  }
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Select all input and select elements in the form
+    var formElements = document.querySelectorAll('input, select');
+
+    // Loop through each form element
+    formElements.forEach(function(element) {
+        // Add event listener for input events
+        element.addEventListener('input', function() {
+            // Convert the value to uppercase
+            this.value = this.value.toUpperCase();
+        });
+    });
+});
+
+</script>
+
+
+{% endblock %}

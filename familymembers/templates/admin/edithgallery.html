@@ -1,0 +1,315 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block content %}    
+
+<style>  
+
+
+/* Style for the link container */
+.link-container {
+  display: inline-block;
+  padding: 1px 2px;
+  background-color: #3d6a95;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.link-container:hover {
+  background-color: #2b3348;
+}
+/* Body styles */
+body {
+  /* text-transform: uppercase; */
+    font-family: poppins, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+    /* overflow: hidden; */
+     /* Hide scrollbar */
+}
+/* Container styles */
+.recent-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+.projects {
+    width: 100%;
+    max-width: 600px;
+}
+
+.card {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #3d6a95;
+    padding: 20px;
+    color: #fff;
+}
+
+.card-header h3 {
+    margin: 0;
+}
+
+.form-container {
+    padding: 20px;
+}
+
+/* Form styles */
+form {
+    display: grid;
+    gap: 10px;
+    height: auto;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"],
+textarea,select,
+button,
+input[type="file"] {
+    width: calc(100% - 20px); /* Adjust width to allow for padding */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: transform 0.3s; /* Apply transition effect */
+    }
+
+    /* Apply zoom effect on hover */
+    input[type="text"]:hover,
+    textarea:hover,
+    select:hover,
+    button:hover,
+    input[type="file"]:hover {
+        transform: scale(1.05); /* Scale up by 5% on hover */
+    }
+textarea {
+    resize: vertical;
+}
+
+button {
+    background-color: #3d6a95;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2e5275;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+    .card {
+        max-width: 90%; /* Adjust max-width for smaller screens */
+    }
+}
+
+        /* CSS for table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+</style>
+    
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar"> 
+      <div class="sidebar-brand">
+        <h2><span class="las la-user-circle"></span><span>ZMCA</span></h2>
+
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li>
+            <a href="{% url 'adminindex' %}" class="active"><span class="fas fa-home"></span>
+            <span>Home</span></a>
+          </li>
+          <!-- <li>
+            <a href="{% url 'adminindex' %}"><span class="fas fa-home"></span>
+            <span></span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'members_view' %}"><span class="las la-home"></span>
+              <span>Families</span></a>
+          <li>
+            <a href="{% url 'committe' %}"><span class="las la-users"></span>
+            <span>Committee Members</span></a>
+          </li>
+          <li>
+            <a href="{% url 'fam_view' %}">
+            <span class="fas fa-id-badge"></span>
+            <span>Membership</span></a>
+          </li>
+          
+          <li>
+            <a href="{% url 'enquiry_list' %}"><span class="fas fa-envelope"></span>
+            <span>Enqueries</span></a>
+            <!-- <ul class="submenu">
+              <li></li>
+              <li><a href="{% url 'allenquiry_list' %}"><span class="fas fa-envelope"></span><span>(All)</span></a></li>            
+           -->
+           </ul>
+          </li>
+          <li>
+            <a href="{% url 'bloodgroupadmin' %}">
+              <span class="fas fa-tint" style="color: red;"></span>
+            <span>Blood Group</span></a>
+          </li>
+          <li>
+            <a href="{% url 'birthdaydetails1' %}">
+              <span class="fas fa-birthday-cake"></span>
+            <span>Birthday</span></a>
+          </li>
+
+          </li>
+          <li>
+            <a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-image"></span>
+            <span>Gallery</span></a>
+            <ul class="submenu">
+              <!-- <li></li>
+              <li><a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Add Gallery</a></li>
+              <li><a href="{% url 'galleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Gallery</a></li> -->
+         
+          
+           </ul>
+           <li>
+            <a href="{% url 'addhomegallery' %}"><span class="fa-solid fa-image"></span>
+            <span>Home Gallery</span></a>
+           
+              </ul>
+          </li>
+          <!-- <li>
+            <a href="{% url 'gallery'%}"><span class="fa-solid fa-image"></span>
+            <span>Gallery</span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'addblogview' %}"><span class="las la-blog"></span>
+            <span>Blog</span></a>
+          </li>
+          <li>
+            <a href="{% url 'eventview' %}"><span class="fa fa-bell"></span>
+            <span>Events</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- --------end link---------- -->
+    <div class="main-content">
+      <header>
+           
+        <h2> 
+          <label for="nav-toggle">
+            <span class="las la-bars"></span>
+          </label>       
+        ZMCA Admin
+        </h2>
+      <!-- Add this div to contain the search input -->
+    
+
+        <div class="user-wrapper">
+          <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+        
+          <div>
+            <!-- <h4>ZMCA</h4> -->
+            <h4>        <a href="{% url 'logout' %}" style="font-size: 16px;"> <i class="fa-solid fa-right-from-bracket"></i></a>
+            </h4>
+            <small>Super Admin</small>
+
+          </div>
+
+          
+        </div>
+
+      </header>
+      <!-- ----------end header---------- -->
+      <main>
+       <br><br><br><br>
+        <div class="recent-grid">
+            <div class="projects" >
+                <div class="card"style="width: 80%;" >
+                    <div class="card-header" style="background-color:#3d6a95;" >
+                        <h3 style="color: white;"> 
+                            <span class="fa-solid fa-images" style="color: #f1f2f3;"></span> &nbsp;<span style="text-transform: uppercase;"> New Gallery Item</span>
+                        </h3>
+                    </div>
+                    <div class="form-container"  >
+                        <form method="post" action="{% url 'edithgallery' g.id %}" enctype="multipart/form-data" style="width: 105%;">
+                            {% csrf_token %}
+                            
+                            <label for="current_image" style="text-transform: uppercase;">Current Image:</label>
+                            <img src="{{ g.image.url }}" alt="{{ g.title }}">
+            
+                            <input type="file" style="text-transform: uppercase;" id="image" name="image" placeholder="Upload Image"  style="text-transform: uppercase;">
+                          
+                       <input type="text" id="title" style="text-transform: uppercase;" name="title" placeholder="Enter title" value="{{g.title}}" required>
+                            
+                         
+                        
+                       <select id="status" name="status" style="text-transform: uppercase;">
+                        <option style="text-transform: uppercase;" value="Active" {% if g.status == 'Active' %} selected {% endif %}>Active</option>
+                        <option style="text-transform: uppercase;" value="Inactive" {% if g.status == 'Inactive' %} selected {% endif %}>Inactive</option>
+                      </select>
+                        
+                            <button type="submit">SAVE</button>
+                            <button type="button" onclick="window.history.back()">CANCEL</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+        
+        
+     
+        <!-- -------------------endcards------------- -->
+
+      </main>
+
+     <!-- Pagination Controls -->
+<!-- Pagination Controls -->
+
+<!-- ------------------------------endpaginator--------- -->
+
+
+
+    </div>
+
+
+
+    {% endblock %}    

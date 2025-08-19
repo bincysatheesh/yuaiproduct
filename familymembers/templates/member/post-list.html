@@ -1,0 +1,305 @@
+{% extends 'member/customerbase.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .job-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+  
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .page-title {
+    color: #3d6a95;
+    font-size: 28px;
+  }
+  
+  .create-btn {
+    background-color: #3d6a95;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+  }
+  
+  .create-btn:hover {
+    background-color: #2b3348;
+    transform: translateY(-2px);
+  }
+  
+  .job-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+  }
+  
+  .job-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  
+  .job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  }
+  
+  .job-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .job-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #3d6a95;
+    margin: 0;
+  }
+  
+  .job-type {
+    background-color: #e1f5fe;
+    color: #0288d1;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  .job-body {
+    padding: 20px;
+  }
+  
+  .job-description {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .job-footer {
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .job-date {
+    font-size: 13px;
+    color: #777;
+  }
+  
+  .job-status {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  
+  .status-pending {
+    background-color: #fff8e1;
+    color: #ff8f00;
+  }
+  
+  .status-approved {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    grid-column: 1 / -1;
+  }
+  
+  .empty-icon {
+    font-size: 60px;
+    color: #ddd;
+    margin-bottom: 20px;
+  }
+  
+  .empty-text {
+    color: #777;
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+</style>
+
+<input type="checkbox" id="nav-toggle">
+<div class="sidebar"> 
+  <div class="sidebar-brand">
+    <h2><span class="las la-user-circle"></span><span style="text-transform:capitalize;">{{ufn}}&nbsp;{{uln}}</span></h2>
+  </div>
+  {% if owner_details and membership_detail %}
+  <div class="sidebar-menu">
+    <ul>
+      <li>
+        <a href="{% url 'customerindex' %}"><span class="fas fa-home"></span>
+        <span>Home</span></a>
+      </li>
+      <li>
+        <a href="{% url 'memberaboutus' %}" class="active"><span class="fas fa-info-circle"></span>
+        <span>About Us</span></a>
+      </li>
+      <li>
+        <a href="{% url 'committemembers' %}"><span class="las la-users"></span>
+        <span>Committee Members&nbsp;({{ccount}})</span></a>
+      </li>
+      <li>
+        <a href="{% url 'members_view1' %}"><span class="las la-home"></span>
+        <span>Families&nbsp;({{uacount}})</span></a>
+      </li>
+      <li>
+        <a href="{% url 'birthdaydetails' %}"><span class="fas fa-birthday-cake"></span>
+        <span>Birthday</span></a>
+      </li>
+      <li>
+        <a href="{% url 'bloodgroup' %}"><span class="fas fa-tint" style="color: red;"></span>
+        <span>Blood Group</span></a>
+      </li>
+      <li>
+        <a href="{% url 'payments1' %}">
+        <span class="fas fa-id-badge"></span>
+        <span>Membership</span></a>
+      </li>
+      <li>
+        <a href="{% url 'cevents' %}"><span class="fa fa-bell"></span>
+        <span>Events&nbsp;({{teventscount}})</span></a>
+      </li>
+    </ul>
+  </div>
+  {% else %}
+  <div class="sidebar-menu">
+    <ul>
+      <li>
+        <a href="{% url 'customerindex' %}" class="active"><span class="fas fa-home"></span>
+        <span>Home</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href=""><span class="fas fa-info-circle"></span>
+        <span>About Us</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href=""><span class="las la-users"></span>
+        <span>Committee Members&nbsp;({{ccount}})</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href=""><span class="las la-home"></span>
+        <span>Families&nbsp;({{uacount}})</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href=""><span class="fas fa-birthday-cake"></span>
+        <span>Birthday</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href=""><span class="fas fa-tint" style="color: red;"></span>
+        <span>Blood Group</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href="">
+        <span class="fas fa-id-badge"></span>
+        <span>Membership</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href=""><span class="fa fa-bell"></span>
+        <span>Events&nbsp;({{teventscount}})</span></a>
+      </li>
+    </ul>
+  </div>
+  {% endif %}
+</div>
+
+<div class="main-content">
+
+  <header>
+    <h2> 
+      <label for="nav-toggle">
+        <span class="las la-bars"></span>
+      </label>
+      Job Posts
+    </h2>
+    <div class="user-wrapper">
+      <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+      <div>
+        <h4><a href="{% url 'logout' %}" style="font-size: 16px;"><i class="fa-solid fa-right-from-bracket"></i></a></h4>
+        <small>user@example.com</small>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="job-container">
+      <div class="page-header">
+        <h1 class="page-title">My Job Posts</h1>
+        <a href="{% url 'create_job_post' %}" class="create-btn">
+          <span class="las la-plus"></span>
+          Create New Post
+        </a>
+      </div>
+      
+      <div class="job-grid">
+        <!-- Sample Job Post 1 -->
+        <div class="job-card">
+          <div class="job-header">
+            <h3 class="job-title">Looking for a Cook</h3>
+            <span class="job-type">Help Wanted</span>
+          </div>
+          <div class="job-body">
+            <p class="job-description">
+              We need an experienced cook for our family restaurant. Must have 3+ years experience in Indian cuisine. Accommodation can be provided.
+            </p>
+          </div>
+          <div class="job-footer">
+            <span class="job-date">Posted on: May 15, 2023</span>
+            <span class="job-status status-approved">Approved</span>
+          </div>
+        </div>
+        
+        <!-- Sample Job Post 2 -->
+        <div class="job-card">
+          <div class="job-header">
+            <h3 class="job-title">Driver Needed</h3>
+            <span class="job-type">Job Opportunity</span>
+          </div>
+          <div class="job-body">
+            <p class="job-description">
+              Looking for a reliable driver with own vehicle for school pickups. Must have clean driving record. Competitive salary offered.
+            </p>
+          </div>
+          <div class="job-footer">
+            <span class="job-date">Posted on: June 2, 2023</span>
+            <span class="job-status status-pending">Pending</span>
+          </div>
+        </div>
+        
+        <!-- Empty State (for when no posts exist) -->
+        <!-- <div class="empty-state">
+          <div class="empty-icon">
+            <span class="las la-briefcase"></span>
+          </div>
+          <h3 class="empty-text">You haven't created any posts yet</h3>
+          <a href="{% url 'create_job_post' %}" class="create-btn">
+            <span class="las la-plus"></span>
+            Create Your First Post
+          </a>
+        </div> -->
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}

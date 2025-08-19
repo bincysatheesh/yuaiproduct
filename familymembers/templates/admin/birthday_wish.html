@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Wish</title>
+    <!-- Add your CSS styles for the card here -->
+    <style>
+        /* Styles for modal */
+        body {
+            background-color: #f5f5f5; /* Light grey background for the entire screen */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+            font-family: Arial, sans-serif; /* Use Arial font family */
+        }
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: transparent; /* Transparent background */
+            padding-top: 60px;
+            color: #3d6a95; /* Dark blue text */
+        }
+
+        /* Modal content */
+        .modal-content {
+            background-color:#3d6a95;/* White background for content */
+            margin: 5% auto; /* 5% from the top and centered */
+            width: 20%; /* Could be more or less, depending on screen size */
+            border-radius: 10px;
+            padding: 20px;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.5s ease-in-out; /* Slide-in effect */
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* OK button */
+        .ok-button {
+            background-color: white; /* Dark blue background */
+            color:#3d6a95; /* White text color */
+            border: none; /* No border */
+            padding: 10px 20px; /* Padding */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        .ok-button:hover {
+            background-color:gray; /* Darker blue on hover */
+            transform: scale(1.05); /* Zoom effect on hover */
+            color:#3d6a95;
+        }
+
+        /* Birthday cake icon */
+        .fas.fa-birthday-cake {
+            font-size: 2em; /* Adjust size as needed */
+            margin-right: 10px; /* Add spacing between icon and text */
+        }
+    </style>
+</head>
+<body>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="fas fa-birthday-cake"></span>
+            {% if success %}
+                <span>Birthday wish sent successfully!</span>
+            {% else %}
+                <span>Error: {{ error }}</span>
+            {% endif %}
+            <!-- OK button to go back -->
+            <button class="ok-button" onclick="window.history.back()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Display modal when page loads
+        window.onload = function() {
+            modal.style.display = "block";
+        }
+    </script>
+</body>
+</html>

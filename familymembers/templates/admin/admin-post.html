@@ -1,0 +1,313 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  /* Sidebar scroll */
+  .sidebar-menu {
+    overflow-y: auto;
+    max-height: 85vh;
+  }
+
+  /* Container and layout */
+  .admin-container {
+    max-width: 1400px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+
+  .admin-header {
+    margin-bottom: 30px;
+  }
+
+  .admin-title {
+    color: #3d6a95;
+    font-size: 28px;
+  }
+
+  /* Filter & search */
+  .filter-bar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .search-box {
+    flex: 1;
+    max-width: 400px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+
+  .status-filter {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: white;
+  }
+
+  .filter-btn {
+    background-color: #3d6a95;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  /* Job Table */
+  .job-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    overflow-x: auto;
+  }
+
+  .job-table th {
+    background-color: #3d6a95;
+    color: white;
+    padding: 15px;
+    text-align: left;
+  }
+
+  .job-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .job-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .job-table tr:hover {
+    background-color: #f9f9f9;
+  }
+
+  .post-title {
+    font-weight: 600;
+    color: #3d6a95;
+  }
+
+  .post-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .status-pending {
+    background-color: #fff8e1;
+    color: #ff8f00;
+  }
+
+  .status-approved {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  .status-rejected {
+    background-color: #ffebee;
+    color: #c62828;
+  }
+
+  .action-btns {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-sm {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  .btn-approve {
+    background-color: #2e7d32;
+    color: white;
+    border: none;
+  }
+
+  .btn-reject {
+    background-color: #c62828;
+    color: white;
+    border: none;
+  }
+
+  .btn-view {
+    background-color: #3d6a95;
+    color: white;
+    border: none;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 10px;
+  }
+
+  .page-link {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #3d6a95;
+    text-decoration: none;
+  }
+
+  .page-link.active {
+    background-color: #3d6a95;
+    color: white;
+    border-color: #3d6a95;
+  }
+
+  /* Responsive fix for overflow */
+  .table-responsive {
+    overflow-x: auto;
+    width: 100%;
+  }
+</style>
+
+
+<div class="main-content">
+    <div class="sidebar">
+    <div class="sidebar-menu">
+      <ul>
+        <li><a href="{% url 'adminindex' %}" class="active"><span class="fas fa-home"></span><span>Home</span></a></li>
+        <li><a href="{% url 'members_view' %}"><span class="las la-home"></span><span>Families</span></a></li>
+        <li><a href="{% url 'committe' %}"><span class="las la-users"></span><span>Committee Members</span></a></li>
+        <li><a href="{% url 'fam_view' %}"><span class="fas fa-id-badge"></span><span>Membership</span></a></li>
+        <li><a href="{% url 'enquiry_list' %}"><span class="fas fa-envelope"></span><span>Enquiries</span></a></li>
+        <li><a href="{% url 'bloodgroupadmin' %}"><span class="fas fa-tint" style="color: red;"></span><span>Blood Group</span></a></li>
+        <li><a href="{% url 'birthdaydetails1' %}"><span class="fas fa-birthday-cake"></span><span>Birthday</span></a></li>
+        <li><a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-image"></span><span>Gallery</span></a></li>
+        <li><a href="{% url 'addhomegallery' %}"><span class="fa-solid fa-image"></span><span>Home Gallery</span></a></li>
+        <li><a href="{% url 'admin_services_posts' %}"><span class="fa fa-bell"></span><span>Service Requests</span></a></li>
+        <li><a href="{% url 'addblogview' %}"><span class="las la-blog"></span><span>Blog</span></a></li>
+        <li><a href="{% url 'eventview' %}"><span class="fa fa-bell"></span><span>Events</span></a></li>
+      </ul>
+    </div>
+  </div>
+  <header>
+    <h2>
+      <label for="nav-toggle">
+        <span class="las la-bars"></span>
+      </label>
+      Job Posts Management
+    </h2>
+
+    
+
+    <div class="user-wrapper">
+      <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+      <div>
+        <h4><a href="{% url 'logout' %}" style="font-size: 16px;"><i class="fa-solid fa-right-from-bracket"></i></a></h4>
+        <small>Super Admin</small>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <div class="admin-container">
+      <div class="admin-header">
+        <h1 class="admin-title">Job Posts Approval</h1>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" class="search-box" placeholder="Search posts...">
+        <select class="status-filter">
+          <option value="">All Statuses</option>
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+        <button class="filter-btn">Filter</button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="job-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Posted By</th>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="post-title">Looking for a Cook</td>
+              <td class="post-user">
+                <img src="{% static 'img/user1.jpg' %}" class="user-avatar">
+                <span>John Doe</span>
+              </td>
+              <td>May 15, 2023</td>
+              <td>Help Wanted</td>
+              <td><span class="status-badge status-approved">Approved</span></td>
+              <td class="action-btns">
+                <button class="btn-sm btn-view">View</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="post-title">Driver Needed</td>
+              <td class="post-user">
+                <img src="{% static 'img/user2.jpg' %}" class="user-avatar">
+                <span>Jane Smith</span>
+              </td>
+              <td>June 2, 2023</td>
+              <td>Job Opportunity</td>
+              <td><span class="status-badge status-pending">Pending</span></td>
+              <td class="action-btns">
+                <button class="btn-sm btn-approve">Approve</button>
+                <button class="btn-sm btn-reject">Reject</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="post-title">House Maid Required</td>
+              <td class="post-user">
+                <img src="{% static 'img/user3.jpg' %}" class="user-avatar">
+                <span>Robert Johnson</span>
+              </td>
+              <td>June 10, 2023</td>
+              <td>Help Wanted</td>
+              <td><span class="status-badge status-rejected">Rejected</span></td>
+              <td class="action-btns">
+                <button class="btn-sm btn-view">View</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <a href="#" class="page-link">&laquo;</a>
+        <a href="#" class="page-link active">1</a>
+        <a href="#" class="page-link">2</a>
+        <a href="#" class="page-link">3</a>
+        <a href="#" class="page-link">&raquo;</a>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}

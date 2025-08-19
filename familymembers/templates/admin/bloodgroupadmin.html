@@ -1,0 +1,310 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block content %}    
+
+<style>
+    /* ----- Table Styling ----- */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border: 1px solid #e0e0e0;
+    }
+
+    th {
+        background-color: #3d6a95;
+        color: #fff;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+        transition: background-color 0.2s ease;
+    }
+
+    /* ----- Card Styling ----- */
+    .card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        margin-top: 1.5rem;
+    }
+
+    .card-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        background-color: #f8f9fa;
+    }
+
+    .card-header h2 {
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .card-header h2 span:first-child {
+        margin-right: 10px;
+        color: red;
+    }
+
+    /* ----- Search Styling ----- */
+    .search-wrapper {
+        position: relative;
+        margin-right: 20px;
+    }
+
+    .search-wrapper input {
+        padding: 8px 15px 8px 35px;
+        border-radius: 4px;
+        border: 1px solid #e0e0e0;
+        width: 250px;
+        transition: all 0.3s ease;
+    }
+
+    .search-wrapper input:focus {
+        outline: none;
+        border-color: #3d6a95;
+    }
+
+    .search-wrapper span {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c757d;
+    }
+
+    /* ----- Pagination Styling ----- */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 20px 0;
+    }
+
+    .step-links a {
+        color: #3d6a95;
+        padding: 6px 12px;
+        text-decoration: none;
+        border: 1px solid #ddd;
+        margin: 0 4px;
+        border-radius: 4px;
+        transition: all 0.3s;
+    }
+
+    .step-links a:hover {
+        background-color: #3d6a95;
+        color: white;
+        border-color: #3d6a95;
+    }
+
+    .current {
+        padding: 6px 12px;
+        color: #333;
+    }
+
+    /* ----- Text Styling ----- */
+    .uppercase-text {
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    td {
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    /* ----- Layout Improvements ----- */
+    .recent-grid {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        border-radius: 8px;
+    }
+</style> 
+    
+<input type="checkbox" id="nav-toggle">
+<div class="sidebar"> 
+    <div class="sidebar-brand">
+        <h2><span class="las la-user-circle"></span><span>ZMCA</span></h2>
+    </div>
+    <div class="sidebar-menu">
+        <ul>
+            <li>
+                <a href="{% url 'adminindex' %}"><span class="fas fa-home"></span>
+                <span>Home</span></a>
+            </li>
+            <li>
+                <a href="{% url 'members_view' %}"><span class="las la-home"></span>
+                <span>Families</span></a>
+            </li>
+            <li>
+                <a href="{% url 'committe' %}"><span class="las la-users"></span>
+                <span>Committee Members</span></a>
+            </li>
+            <li>
+                <a href="{% url 'fam_view' %}">
+                <span class="fas fa-id-badge"></span>
+                <span>Membership</span></a>
+            </li>
+            <li>
+                <a href="{% url 'enquiry_list' %}"><span class="fas fa-envelope"></span>
+                <span>Enqueries</span></a>
+            </li>
+            <li>
+                <a href="{% url 'bloodgroupadmin' %}" class="active">
+                <span class="fas fa-tint" style="color: red;"></span>
+                <span>Blood Group</span></a>
+            </li>
+            <li>
+                <a href="{% url 'birthdaydetails1' %}">
+                <span class="fas fa-birthday-cake"></span>
+                <span>Birthday</span></a>
+            </li>
+            <li>
+                <a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-image"></span>
+                <span>Gallery</span></a>
+            </li>
+            <li>
+                <a href="{% url 'addhomegallery' %}"><span class="fa-solid fa-image"></span>
+                <span>Home Gallery</span></a>
+            </li>
+            <li>
+                <a href="{% url 'addblogview' %}"><span class="las la-blog"></span>
+                <span>Blog</span></a>
+            </li>
+            <li>
+                <a href="{% url 'eventview' %}"><span class="fa fa-bell"></span>
+                <span>Events</span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="main-content">
+    <header>
+        <h2> 
+            <label for="nav-toggle">
+                <span class="las la-bars"></span>
+            </label>       
+            ZMCA Admin
+        </h2>
+
+        <div class="search-wrapper">
+            <form id="search-form" method="GET" action="{% url 'bloodgroupadmin' %}">
+                <span class="las la-search"></span>
+                <input id="search-input" type="search" name="q" placeholder="Search blood groups..." value="{{ request.GET.q }}"/>
+            </form>
+        </div>
+
+        <div class="user-wrapper">
+            <img src="{% static 'img/logo.jpg' %}" width="50px" height="50px" alt="">
+            <div>
+                <h4>
+                    <a href="{% url 'logout' %}" style="color: #3d6a95;"><i class="fa-solid fa-right-from-bracket"></i></a>
+                </h4>
+                <small>Super Admin</small>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="recent-grid">
+            <div class="projects">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><span class="fas fa-tint" style="color: red;"></span>
+                            <span>Blood Group Records</span></h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Blood Group</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in paginated_data %}
+                                    <tr>
+                                        <td>{{ item.0 }}</td>
+                                        <td>{{ item.1 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="pagination">
+                            <span class="step-links">
+                                {% if paginated_data.has_previous %}
+                                    <a href="?page=1">&laquo; first</a>
+                                    <a href="?page={{ paginated_data.previous_page_number }}">previous</a>
+                                {% endif %}
+                        
+                                <span class="current">
+                                    Page {{ paginated_data.number }} of {{ paginated_data.paginator.num_pages }}.
+                                </span>
+                        
+                                {% if paginated_data.has_next %}
+                                    <a href="?page={{ paginated_data.next_page_number }}">next</a>
+                                    <a href="?page={{ paginated_data.paginator.num_pages }}">last &raquo;</a>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </main>
+</div>
+
+<script>
+    // Get the search input element
+    var searchInput = document.getElementById("search-input");
+
+    // Variable to store the timeout
+    var timeout = null;
+
+    // Add an event listener to detect keypress events
+    searchInput.addEventListener("keypress", function(event) {
+        // Check if the Enter key was pressed
+        if (event.key === 'Enter') {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+        }
+    });
+
+    // Add an event listener to detect changes in the input field
+    searchInput.addEventListener("input", function() {
+        // Clear the previous timeout to avoid rapid submission
+        clearTimeout(timeout);
+
+        // Set a timeout to delay form submission
+        timeout = setTimeout(function() {
+            // Get the search form element
+            var searchForm = document.getElementById("search-form");
+
+            // Submit the form
+            searchForm.submit();
+        }, 1000); // Adjust the delay time (in milliseconds) as needed
+    });
+</script>
+
+{% endblock %}

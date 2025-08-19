@@ -1,0 +1,539 @@
+{% extends 'landing/fcbase.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap');
+  
+  :root {
+    --primary: #1a365d;
+    --accent: #f7b733;
+    --light: #f8f9fa;
+    --dark: #032b51;
+    --zmca-blue: #3d6a95;
+    --zmca-yellow: #feb900;
+  }
+
+  /* Base Styles */
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    color: var(--dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Title Styles */
+  h1, h2, h3, h4, h5, h6,
+  .section-header h2,
+  .cta-title,
+  .post-title,
+  .portfolio-info h4,
+  .custom-h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+  }
+
+  /* Hero Section */
+  .hero {
+    position: relative;
+  }
+
+  .hero h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+  }
+
+ 
+
+  /* Map Section Replacement */
+  .image-section {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .image-section:hover {
+    transform: translateY(-5px);
+  }
+
+  .image-section img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+  }
+
+  /* Call-to-Action Section */
+  .cta-section {
+    border-radius: 20px;
+    padding: 3rem;
+    margin: 4rem auto;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+
+  .cta-section::after {
+    content: "";
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .cta-title {
+    font-size: 2.2rem;
+    color: rgb(0, 0, 0);
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-text {
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.9);
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: var(--zmca-yellow);
+    color: var(--dark);
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border: 2px solid transparent;
+  }
+
+  .cta-button:hover {
+    background-color: transparent;
+    color: rgb(0, 0, 0);
+    border-color: var(--zmca-yellow);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+
+  /* Blog Card Styles */
+  .blog-card {
+    border-radius: 15px;
+    overflow: hidden;
+    background: #f7f8fa;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .blog-card-img {
+    position: relative;
+    overflow: hidden;
+    height: 220px;
+  }
+
+  .blog-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    display: block;
+  }
+
+  .blog-card:hover .blog-card-img img {
+    transform: scale(1.05);
+  }
+
+  .blog-card-content {
+    padding: 15px 20px 20px;
+    
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+  }
+
+  .portfolio-content img{
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.02);
+    
+  }
+  
+
+  .yellow-dot {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color:#feb900;
+  border-radius: 50%;
+  bottom: 10px;
+  right: 10px;
+  z-index: 2;
+}
+
+
+  .post-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .post-date {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--accent);
+    color: #000;
+    font-size: 13px;
+    padding: 0px 8px;
+    height: 25px;
+    border-radius: 20px;
+    font-weight: 600;
+    z-index: 2;
+  }
+
+  .readmore {
+    display: inline-block;
+    margin-top: auto;
+    padding: 6px 14px;
+    font-size: 13px; 
+    color: #000;
+     border-style: solid;
+    border-radius: 50px;
+    border-color: var(--accent);
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+  }
+
+  .readmore:hover {
+    background-color: var(--accent);
+    color: #fff;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 992px) {
+    .cta-section {
+      padding: 2.5rem;
+    }
+    
+    .cta-title {
+      font-size: 1.8rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cta-section {
+      padding: 2rem 1.5rem;
+      border-radius: 15px;
+    }
+    
+    .cta-title {
+      font-size: 1.6rem;
+    }
+    
+    .cta-text {
+      font-size: 1rem;
+    }
+    
+    .hero h2 {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .cta-section {
+      padding: 1.5rem;
+    }
+    
+    .cta-title {
+      font-size: 1.4rem;
+    }
+    
+    .cta-button {
+      padding: 10px 25px;
+      font-size: 0.9rem;
+    }
+    
+    .hero h2 {
+      font-size: 1.8rem;
+    }
+  }
+
+  /* Custom H3 Style */
+  .custom-h3 {
+    color: #656363;
+    font-size: 35px;
+    text-align: left;
+    margin-bottom: 8px;
+    position: relative;
+    display: inline-block;
+  }
+</style>
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="hero">
+  <div class="info d-flex align-items-center">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-12 text-center">
+          <h2>Welcome to <br>ZMCA</h2>
+          <p data-aos="fade-up">
+            The Zambia Malayalee Cultural Association (ZMCA) serves as a bridge between 'God's own Country' and the heart of Africa, tirelessly working towards cultural enrichment and charitable impact in the Zambian community.
+          </p>
+          <a data-aos="fade-up" data-aos-delay="200" href="#get-started" class="btn-get-started">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+    {% for image in carousel_images %}
+    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+      <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.title }}">
+    </div>
+    {% endfor %}
+  
+    <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+    </a>
+
+    <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+    </a>
+  </div>
+</section><!-- End Hero Section -->
+
+<main id="main">
+  <!-- ======= Get Started Section ======= -->
+  <section id="get-started" class="get-started section-bg zoom-effect">
+    <div class="container">
+      <div class="row align-items-center gy-5">
+        <!-- Text Column -->
+        <div class="col-lg-6" data-aos="fade-up">
+          <div class="content">
+            <h3 class="custom-h3">Zambia Malayalee Cultural Association (ZMCA)</h3>
+            <div class="animated-paragraph">
+              <p style="text-align: justify;">
+                Established in 1980 and registered under the Societies Act of Zambia, the Zambia Malayalee Cultural Association (ZMCA) stands as a testament to the enduring commitment to cultural exchange and charitable endeavors.
+              </p>
+              <p style="text-align: justify;">
+                Rooted in the vibrant heritage of "God's Own Country", Kerala, the association actively engages in diverse charitable and cultural activities to foster a strong connection with Zambia. With a core focus on preserving and upholding the rich identity and traditions of Kerala, ZMCA encourages its members to participate wholeheartedly.
+              </p>
+            </div>
+            <!-- Circle dots -->
+            <div class="circle-dots">
+              <div class="circle"></div>
+              <div class="circle"></div>
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Image Column -->
+        <div class="col-lg-6 d-flex justify-content-center" data-aos="fade-left">
+          <div class="image-section">
+            <img src="{% static 'img/peoplei.jpg' %}" alt="ZMCA Community Gathering">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- ======= Gallery Section ======= -->
+<section id="projects" class="projects">
+  <div class="container" data-aos="fade-up">
+    <div class="section-header">
+      <h2>Gallery</h2>
+      <p style="text-align: justify;">
+        Explore our gallery to witness a vibrant collection showcasing the diverse range of programs and events hosted by our esteemed ZMCA association, encapsulating the essence of our cultural, social, and charitable endeavors.
+      </p>
+    </div>
+    <div class="row gy-4 portfolio-container">
+      {% for item in latest_gallery_items|slice:":3" %}
+      <div class="col-xl-4 col-md-6 post-item" data-aos="fade-up" data-aos-delay="100">
+        <div class="portfolio-content">
+          <img src="{{ item.image.url }}" class="img-fluid portfolio-image" alt="{{ item.title }}">
+          <span class="yellow-dot"></span>
+          <span class="white-dot"></span>
+          <div class="portfolio-info">
+            <h4>{{ item.title }}</h4>
+            <p style="text-transform: capitalize;">{{ item.description|truncatewords:5 }}</p>
+            <a href="{{ item.image.url }}" title="{{ item.title }}" data-gallery="portfolio-gallery-{{ item.category }}"
+              class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+            <a href="{{ item.image.url }}" title="More Details" class="details-link"><i
+                class="bi bi-link-45deg"></i></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+      <a href="{% url 'gallerycommon' %}" class="cta-button">View Full Gallery</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Recent Blog Posts Section ======= -->
+<section id="recent-blog-posts" class="recent-blog-posts">
+  <div class="container" data-aos="fade-up">
+    <div class="section-header">
+      <h2 class="text-center">Recent Blog Posts</h2>
+      <p style="text-align: justify; line-height: 1.5;">
+        Explore our ZMCA blog, where every post reflects the heart of our association — from cultural celebrations to community projects, each offering a unique glimpse into our heritage and dedication to making a difference.
+      </p>
+    </div>
+    <div class="row gy-4">
+      {% for blog in published_posts|slice:":3" %}
+        {% if blog.status == 'Published' %}
+          <div class="col-xl-4 col-md-6">
+            <div class="blog-card zoom-effect">
+              <div class="blog-card-img">
+                <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                <span class="post-date">{{ blog.date }}</span>
+              </div>
+              <div class="blog-card-content">
+                <h3 class="post-title">{{ blog.title|truncatewords:5 }}</h3>
+                <div class="meta d-flex justify-content-center align-items-center flex-wrap small text-muted mb-2">
+                  <span><i class="bi bi-person me-1" style="color: var(--accent);"></i>{{ blog.author_name }}</span>
+                  <span class="mx-2">/</span>
+                  <span><i class="bi bi-folder2 me-1"></i>{{ blog.subtitle|truncatewords:4 }}</span>
+                </div>
+                <p class="text-muted small">{{ blog.description|truncatewords:10 }}</p>
+                <a href="{% url 'blogsdetail' blog.id %}" class="readmore">Read More <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+      <a href="{% url 'blogs' %}" class="cta-button">View All Blog Posts</a>
+    </div>
+  </div>
+</section>
+
+  <!-- ======= CTA Section ======= -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Become Part of Our Community</h2>
+        <p class="cta-text">
+          Join us in celebrating our rich cultural heritage while making a meaningful impact in Zambia. Whether you're looking to participate in our events, volunteer for our causes, or simply learn more about our association, we welcome you with open arms.
+        </p>
+        <a href="{% url 'contactus' %}" class="cta-button">Contact Us Today</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Your existing scripts remain unchanged -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var loginForm = document.getElementById("login-form");
+    var signupContainer = document.getElementById("signup-container");
+
+    if (loginForm && signupContainer) {
+      // Show login form, hide signup container
+      loginForm.style.display = "block";
+      signupContainer.style.display = "none";
+
+      // Add event listener to show signup form
+      document.getElementById("show-signup").addEventListener("click", function(event) {
+        event.preventDefault();
+        loginForm.style.display = "none";
+        signupContainer.style.display = "block";
+      });
+
+      // Add event listener to show login form
+      document.getElementById("show-login").addEventListener("click", function(event) {
+        event.preventDefault();
+        signupContainer.style.display = "none";
+        loginForm.style.display = "block";
+      });
+    }
+
+    // For the login form
+    if (loginForm) {
+      loginForm.username.setAttribute("autocomplete", "off");
+      loginForm.password.setAttribute("autocomplete", "off");
+    }
+
+    // For the signup form
+    var signupForm = document.getElementById("signup-form");
+    if (signupForm) {
+      signupForm.firstname.setAttribute("autocomplete", "off");
+      signupForm.lastname.setAttribute("autocomplete", "off");
+      signupForm.familyname.setAttribute("autocomplete", "off");
+      signupForm.phonenumber.setAttribute("autocomplete", "off");
+      signupForm.email.setAttribute("autocomplete", "off");
+      signupForm.password.setAttribute("autocomplete", "off");
+      signupForm.cpassword.setAttribute("autocomplete", "off");
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var loginForm = document.getElementById("login-form");
+    var signupForm = document.getElementById("signup-form");
+
+    if (loginForm) {
+      loginForm.reset();
+    }
+
+    if (signupForm) {
+      signupForm.reset();
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var dismissButton = document.getElementById('dismiss-messages');
+
+    if (dismissButton) {
+      dismissButton.addEventListener('click', function () {
+        // Remove the messages container when the button is clicked
+        document.getElementById('messages-container').innerHTML = '';
+      });
+    }
+  });
+</script>
+{% endblock %}

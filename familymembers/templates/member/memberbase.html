@@ -1,0 +1,400 @@
+{% load static %}
+<!DOCTYPE html>
+<link href="{% static 'css/main.css' %}" type="text/css" rel="stylesheet">
+
+<style>
+   /* Add this in your existing styles or create a new section for it */
+.welcome-heading {
+    font-size: 14px; /* Adjust the font size as needed */
+    color: white;
+    margin-bottom: 5px; /* Adjust the margin as needed */
+}
+
+.user-name {
+    color: goldenrod;
+}
+
+.admin-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-left: 10px;
+}
+
+.dropdown-content a {
+    font-size: 14px; /* Adjust the font size as needed */
+}
+/* Add this in your existing styles or create a new section for it */
+.dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.logo-dropdown-toggle {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.admin-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-left: 10px;
+}
+
+  #footer1 {
+    /* background-color:#3d6a95;  */
+    background: linear-gradient(to top, #3d6a95,#fff); 
+    /* Gradient from bottom to top */
+
+    padding: 40px 0; /* Adjust padding as needed */
+    color: white; /* Set text color to white or any color that contrasts well */
+  }
+
+  #header {
+    background-color:#3d6a95;
+    /* background: url("{% static 'img/headerimg/p5.jpg' %}") top center no-repeat; */
+    background-size: cover;
+}
+  
+  body {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    /* background-color: #333;  */
+    /* Change this to your desired background color */
+    text-align: center;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.navbar li {
+    display: inline-block;
+    margin-right: 20px; /* Adjust as needed */
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white; /* Change this to your desired text color */
+    font-weight: bold;
+    font-size: 16px;
+    display: block;
+    padding: 10px;
+}
+
+
+
+  /* Style for the button */
+  button {
+      background-color: #e0a905;
+      color: #fff; /* text color */
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+
+    h1 {
+        font-size: 3    .5  em; /* You can adjust the value based on your preference */
+    }
+
+    h1 span {
+        font-size: 1 em; /* Adjust the span font size if needed */
+    }
+    .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for form labels */
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Style for form inputs */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Style for buttons */
+        button {
+            background-color:#3c679f; /* Yellow color */
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Style for links */
+        a {
+            color:#3c679f; 
+      /* Blue color */
+            text-decoration: none;
+        }
+
+        /* Add some spacing between form elements */
+        .form-container > * {
+            margin-bottom: 10px;
+        }
+</style>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <!-- <meta content="width=device-width, initial-scale=1.0" name="viewport"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <title>ZMCA</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+   <link href="{% static 'img/logo.jpg' %}" rel="icon">
+   <!-- <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">  -->
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link
+  
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: UpConstruction - v1.3.0
+  * Template URL: https://bootstrapmade.com/upconstruction-bootstrap-construction-website-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+    
+  @media only screen and (max-width: 768px) {
+    /* Add styles for smaller screens */
+    .progress-container {
+       width: 100%;
+    }
+ 
+    .label-container,
+    .circle-container {
+       width: 100%;
+    }
+ }
+ h2 {
+   font-size: 2em;
+}
+
+p {
+   font-size: 1.2em;
+}/*
+.progress-container {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-around;
+   margin-top: 20px;
+   width: 100%;
+}
+
+.circles {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-around;
+   width: 100%;
+} */
+
+ </style>
+ 
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="{% static 'img/logo.jpg' %}" height="500 px" width="50 px " alt=""> -->
+        <h1>ZMCA &nbsp;<span>Lusaka</span></h1>
+      </a>
+     
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url 'customerindex' %} " class="active">Home</a></li>
+          <!-- <li><a href="{% url 'memberaboutus' %}">About</a></li>
+          <li><a href="services.html">Gallery</a></li>
+          <li><a href="projects.html">Event</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          
+          <li><a href="contact.html">Contact</a></li> -->
+        </ul>
+      </nav><!-- .navbar -->
+      <div class="welcome-container">
+        <h1 class="welcome-heading">
+          Welcome, {% if user.is_authenticated %}<span class="user-name">{{ user.username }}</span>{% endif %}
+          <div class="dropdown">      <div class="dropdown">
+                <a href="#" class="logo-dropdown-toggle">
+                    <img src="{% static 'img/logo.jpg' %}" alt="Admin Logo" class="admin-logo">
+                </a>
+                <div class="dropdown-content">
+
+                  <!-- {% if od and family_photo %}
+                  <button type="button" onclick="goToNext()">FINISH</button>
+              {% else %}
+                  <button type="button" onclick="showAlert()">FINISH</button>
+              {% endif %} -->
+
+                    <!-- <a href="{% url 'familyview' %}" style="font-size: 16px;">View Profile</a> -->
+                    <!-- <a href="#" style="font-size: 16px;">Option 2</a> -->
+                    <a href="{% url 'logout' %}" style="font-size: 16px;"> <i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+                </div>
+            </div>
+        </h1>
+      </div>
+<!-- Logout -->
+<!-- <div class="logout">
+  <div class="user-info">
+    {% if user.is_authenticated %}
+      <span style="color: white;">Welcome, &nbsp;{{ user.username }}</span>
+    {% endif %}
+  </div>
+<br>
+  &nbsp;&nbsp;&nbsp; <a href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i><span>Logout</span></a>
+</div> -->
+    </div>
+  </header><!-- End Header -->
+  {% block content %}
+
+
+
+
+  {% endblock %}
+    <!-- ======= Footer ======= -->
+    <footer id="footer1" class="footer1">
+
+        <div class="footer-content position-relative">
+          <div class="container">
+            <div class="row">
+    
+              <!-- <div class="col-lg-4 col-md-6">
+                <div class="footer-info">
+                  <h3>ZMCA</h3>
+                 
+               
+                </div>
+              </div> -->
+              <!-- End footer info column-->
+    
+          
+            
+            
+          
+            </div>
+          </div>
+        </div>
+    
+        <div class="footer-legal text-center position-relative">
+          <div class="container">
+            <div class="copyright">
+            <span style="color: #3d6a95;font-weight: bold;">  &copy; Copyright</span> 
+             <span style="color: #9a6a09;font-weight: bold;"> YuAi Soft Solutions</span>. <span style="color: #3d6a95;font-weight: bold;"> 
+               All Rights Reserved</span>
+            </div>
+            <div class="credits">
+              <!-- All the links in the footer should remain intact. -->
+              <!-- You can delete the links only if you purchased the pro version. -->
+              <!-- Licensing information: https://bootstrapmade.com/license/ -->
+              <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/upconstruction-bootstrap-construction-website-template/ -->
+              <span style="color: #3d6a95;font-weight: bold;"> Designed by</span> <a href=""> <span style="color: #9a6a09;font-weight: bold;">YuAi Soft Solutions</span></a> <a
+                href=""></a>
+            </div>
+          </div>
+        </div>
+    
+      </footer>
+      <!-- End Footer -->
+    
+      <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
+          class="bi bi-arrow-up-short"></i></a>
+    
+      <div id="preloader"></div>
+    
+      <!-- Vendor JS Files -->
+      <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'vendor/aos/aos.js' %}"></script>
+      <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+      <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+      <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+      <script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
+      <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+    
+      <!-- Template Main JS File -->
+      <script src="{% static 'js/main.js' %}"></script>
+      
+    
+    </body>
+    
+    </html>

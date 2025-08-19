@@ -1,0 +1,469 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block content %}    
+
+<style>  
+
+
+  /* Style for the link container */
+  .link-container {
+    display: inline-block;
+    padding: 1px 2px;
+    background-color: #3d6a95;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .link-container:hover {
+    background-color: #2b3348;
+  }
+  /* Body styles */
+  body {
+      font-family: poppins, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f1f1f1;
+      /* overflow: hidden; */
+       /* Hide scrollbar */
+  }
+  /* Container styles */
+  .recent-grid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50vh;
+  }
+  
+  .projects {
+      width: 100%;
+      max-width: 600px;
+  }
+  
+  .card {
+      width: 100%;
+      background-color: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      /* Center content horizontally */
+    
+  }
+  
+
+  .card-header {
+      background-color: #3d6a95;
+      padding: 20px;
+      color: #fff;
+  }
+  
+  .card-header h3 {
+      margin: 0;
+  }
+  
+  .form-container {
+      padding: 20px;
+  }
+  
+  /* Form styles */
+  form {
+      display: grid;
+      gap: 10px;
+      height: auto;
+  }
+  
+  label {
+      font-weight: bold;
+  }
+  
+  input[type="text"],
+  textarea,
+  button,
+  input[type="file"] {
+      width: calc(100% - 20px); /* Adjust width to allow for padding */
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+  }
+  
+  textarea {
+      resize: vertical;
+  }
+  
+  button {
+      background-color: #3d6a95;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+  
+  button:hover {
+      background-color: #2e5275;
+  }
+  
+  /* Responsive styles */
+  @media screen and (max-width: 600px) {
+      .card {
+          max-width: 90%; /* Adjust max-width for smaller screens */
+      }
+  }
+  
+          /* CSS for table */
+          table {
+              width: 100%;
+              border-collapse: collapse;
+          }
+  
+          th, td {
+              padding: 8px;
+              text-align: left;
+              border-bottom: 1px solid #ddd;
+          }
+  
+          th {
+              background-color: #f2f2f2;
+          }
+  
+          img {
+              max-width: 100px;
+              max-height: 100px;
+          }
+          .gallery-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust minmax value as needed */
+      gap: 10px;
+  }
+  
+  .gallery-item {
+      background-color: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding-left: 10%;
+  }
+  
+  .gallery-item img {
+      max-width: 100%;
+      height: auto;
+      transition: transform 0.3s ease-in-out; /* Add transition for smooth effect */
+  }
+  
+  .gallery-item img:hover {
+      transform: scale(1.1); /* Scale the image by 10% on hover */
+  }
+   /* Styles for the search input wrapper */
+   /* Styles for the search input wrapper */
+   .search-wrapper {
+      margin-bottom: 20px;
+      display: flex; /* Use flexbox */
+      align-items: center; /* Align items vertically */
+      justify-content: center; /* Center items horizontally */
+    }
+  
+    /* Styles for the search icon */
+    .search-icon {
+      margin-right: 10px; /* Add margin for spacing */
+    }
+  
+   /* Styles for the search input */
+   .search-wrapper {
+      margin-bottom: 20px;
+      display: flex; /* Use flexbox */
+      align-items: center; /* Align items vertically */
+      justify-content: center; /* Center items horizontally */
+      max-width: 400px; /* Set the maximum width */
+      width: 90%; /* Set the desired width */
+      margin: 0 auto; /* Center the wrapper horizontally */
+  }
+  .uppercase-text {
+              text-transform: uppercase;
+              font-weight: bold;
+          }
+  
+  
+  /* CSS for the search input */
+  /* CSS */
+.actions {
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+}
+
+.button-container {
+    display: flex;
+}
+
+.button-container > * {
+    margin-right: 5px; /* Add some spacing between the buttons */
+}
+
+.blog {
+  margin-top: 20px; /* Adjust margin as needed */
+  padding: 20px; /* Add padding around the blog section */
+  background-color: #fff; /* Set background color */
+  border-radius: 10px; /* Add border radius for rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+}
+
+.blog .container {
+  max-width: 1200px; /* Set maximum width for the container */
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+.blog .row {
+  margin-right: -15px; /* Adjust margin to offset the negative margin of columns */
+  margin-left: -15px; /* Adjust margin to offset the negative margin of columns */
+}
+
+.blog .col-lg-8 {
+  flex: 0 0 66.666667%; /* Set flex basis for 8-column layout */
+  max-width: 66.666667%; /* Set maximum width for the column */
+}
+.blog-details {
+    padding: 20px; /* Add padding inside the blog details */
+    font-family: 'Poppins', sans-serif; /* Set common font for blog */
+}
+.blog-details .post-img {
+    margin-bottom: 20px; /* Add margin at the bottom of the post image */
+    text-align: center; /* Center the image */
+}
+.card {
+    width: 100%;
+    /* background-color: #fff; */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.post-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Set width to fill the entire card width */
+    height: 200px; /* Set a fixed height for the image container */
+    overflow: hidden; /* Hide any overflow */
+    border-bottom: 1px solid #ccc; /* Optional: Add a border for visualization */
+}
+
+.post-img img {
+    width: auto; /* Allow the image width to adjust while maintaining aspect ratio */
+    height: auto; /* Allow the image height to adjust while maintaining aspect ratio */
+    max-width: 100%; /* Ensure the image doesn't exceed the container width */
+    max-height: 100%; /* Ensure the image doesn't exceed the container height */
+}
+
+p{
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  padding: auto;
+  text-align:justify; 
+  overflow:auto;
+}
+.uppercase-text{
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+
+.blog-details .title {
+    font-size: 24px; /* Set font size for the title */
+    margin-bottom: 10px; /* Add margin at the bottom of the title */
+}
+
+.blog-details .meta-top {
+    margin-bottom: 20px; /* Add margin at the bottom of the meta top section */
+}
+
+.blog-details .content {
+    font-size: 16px; /* Set font size for the content */
+    line-height: 1.6; /* Set line height for better readability */
+}
+.blog-details blockquote {
+    margin: 0; /* Remove default margin for blockquote */
+    padding: 10px; /* Add padding inside the blockquote */
+    background-color: #f9f9f9; /* Set background color for blockquote */
+    border-left: 5px solid #ccc; /* Add left border for blockquote */
+    font-style: italic; /* Set font style for blockquote */
+}
+
+  
+  </style>
+      
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar"> 
+      <div class="sidebar-brand">
+        <h2><span class="las la-user-circle"></span><span>ZMCA</span></h2>
+
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li>
+            <a href="" class="active"><span class="las la-search"></span>
+            <span>Search</span></a>
+          </li>
+          <li>
+            <a href="{% url 'adminindex' %}"><span class="fas fa-home"></span>
+            <span>Home</span></a>
+          </li>
+          <li>
+            <a href="{% url 'members_view' %}"><span class="las la-home"></span>
+              <span>Families</span></a>
+          <li>
+            <a href="{% url 'committe' %}"><span class="las la-users"></span>
+            <span>Committee Members</span></a>
+          </li>
+          <li>
+            <a href="{% url 'fam_view' %}">
+            <span class="las la-users"></span>
+            <span>Association Members</span></a>
+          </li>
+          
+          <li>
+            <a href="{% url 'enquiry_list' %}"><span class="las la-question-circle"></span>
+            <span>Enqueries</span></a>
+            <ul class="submenu">
+              <li></li>
+              <li><a href="{% url 'allenquiry_list' %}"><span class="fas fa-envelope"></span><span>(All)</span></a></li>            
+          
+           </ul>
+          </li>
+          <li>
+            <a href="{% url 'bloodgroupadmin' %}">
+              <span class="fas fa-tint" style="color: red;"></span>
+            <span>Blood Group</span></a>
+          </li>
+          <li>
+            <a href="{% url 'birthdaydetails1' %}">
+              <span class="fas fa-birthday-cake"></span>
+            <span>Birthday</span></a>
+          </li>
+
+          </li>
+          <li>
+            <a href=""><span class="fa-solid fa-image"></span>
+            <span>Registration</span></a>
+            <ul class="submenu">
+              <li></li>
+              <li><a href="{% url 'gallerycategory' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Gallery Category</a></li>
+         
+          
+           </ul>
+          </li>
+          <!-- <li>
+            <a href="{% url 'gallery'%}"><span class="fa-solid fa-image"></span>
+            <span>Gallery</span></a>
+          </li> -->
+          <li>
+            <a href=""><span class="las la-blog"></span>
+            <span>Blog</span></a>
+          </li>
+          <li>
+            <a href=""><span class="las la-clipboard-list"></span>
+            <span>Events</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- --------end link---------- -->
+    <div class="main-content">
+      <header>
+           
+        <h2> 
+          <label for="nav-toggle">
+            <span class="las la-bars"></span>
+          </label>       
+        ZMCA Admin
+        </h2>
+     
+
+        <div class="user-wrapper">
+          <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+        
+          <div>
+            <!-- <h4>ZMCA</h4> -->
+            <h4>        <a href="{% url 'logout' %}" style="font-size: 16px;"> <i class="fa-solid fa-right-from-bracket"></i></a>
+            </h4>
+            <small>Super Admin</small>
+
+          </div>
+
+          
+        </div>
+
+      </header>
+      <!-- ----------end header---------- -->
+ 
+      <main>
+        <br><br><br>
+        <div style="display: flex; justify-content: center;">
+          <button onclick="window.location.href='{% url 'addblogview' %}'" class="btn btn-primary" style="flex-grow: 0.1; width: auto;"><span class="fas fa-arrow-left"></span> BACK</button>
+      
+        </div>
+       
+        <section id="blog" class="blog" style="background: linear-gradient(to bottom, #3d6a95, #ffffff);">
+          <div class="container" data-aos="fade-up" data-aos-delay="100">
+              <div class="row g-5">
+                  <div class="col-lg-6">
+                    <br><br>
+                    <div style="text-align: center;color: #ccc;font-weight: bolder;font-size: 28px;">
+                      <h2 class="title uppercase-text"   >{{ blog.title }}&nbsp; </h2>
+                      <br>
+
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="card"  style="background-color: transparent;">
+                          <div class="post-img">
+                              {% if blog.image %}
+                                  <img src="{{ blog.image.url }}" alt="{{ blog.name }}">
+                              {% else %}
+                                  <p>No image available</p>
+                              {% endif %}
+                          </div>
+                      </div>
+                  </div>
+                  
+                  </div>
+                  <div class="col-lg-6">
+                      <article class="blog-details">
+                          <h3 class="uppercase-text" style="font-size:22px;font-weight: bolder;color:rgba(10, 82, 127, 0.951);">{{ blog.subtitle }}</h3><br>
+                          <div class="meta-top">
+                              <ul>
+                                  <li class="d-flex align-items-center">
+                                     
+                                  </li>
+                                  <li class="d-flex align-items-center">
+                                      <i class="bi bi-clock"></i> 
+                                  Created on {{ blog.date }}&nbsp;  <span class="uppercase-text"></span>{{ blog.time|time:"H:i:s" }}</span> by  <i class="bi bi-person"></i> 
+                                      <a href="" class="uppercase-text">{{ blog.author_name }}</a>
+                                  </li>
+                              </ul>
+                          </div>
+                          <div class="content" style="text-transform:none">
+                            <blockquote>
+                              <p>{{ blog.description }}</p>
+                          </blockquote>
+                          <br> 
+                          </div>
+                      </article>
+                  </div>
+              </div>
+          </div>
+      </section>
+     
+    
+      
+    </main>
+ 
+<!-- ------------------------------endpaginator--------- -->
+
+
+
+    </div>
+
+    
+    {% endblock %}    

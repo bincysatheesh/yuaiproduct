@@ -1,0 +1,353 @@
+{% extends 'member/memberbase.html' %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 1200px; /* Adjust the maximum width as needed */
+        margin: 0 auto; /* Center the container */
+    }
+
+    .col-lg-3 {
+        width: 25%; /* Adjust the width as needed */
+    }
+
+    .col-lg-9 {
+        width: 75%; /* Adjust the width as needed */
+    }
+
+    h4 {
+        display: inline-block;
+        position: relative;
+        padding-bottom: 5px; /* Adjust as needed */
+    }
+
+    h4::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 40%; /* Underline spans the entire width */
+        height: 5px; /* Adjust as needed */
+        background-color: #eee205; /* Adjust the color as needed */
+    }
+
+    .vertical-steps {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .vertical-steps li {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .vertical-steps li::after {
+        content: '';
+        display: inline-block;
+        width: 1px;
+        height: 100%;
+        background-color: #007BFF; /* Adjust the color as needed */
+        margin-left: 10px; /* Adjust the margin as needed */
+    }
+
+    .dashboard {
+        border-right: 2px solid #007BFF; /* Adjust the color as needed */
+        padding-right: 30px; /* Adjust the padding as needed */
+        height: 900px;
+    }
+
+    .content {
+        padding-left: 20px; /* Adjust the padding as needed */
+    }
+
+    /* Styling for the progress container */
+    .progress-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px; /* Adjust margin as needed */
+    }
+
+    .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #007BFF; /* Adjust the color as needed */
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .line {
+        flex: 1;
+        height: 2px;
+        background-color: #007BFF; /* Adjust the color as needed */
+    }
+
+    .active-circle {
+        background-color: #eee205; /* Adjust the color as needed */
+    }
+      /* Increase the height of the entire section */
+      #get-started {
+        min-height: 400px; /* Adjust the minimum height as needed */
+        margin-top: 10px; /* Adjust the top margin as needed */
+    }
+    
+    .content-section h2 {
+        margin-bottom: 20px;
+    }
+
+    .progress-title {
+        text-align: left;
+        font-size: 18px;
+        font-weight: bold;
+        font-family: 'Your Desired Font', sans-serif;
+        margin-bottom: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    td {
+        padding: 10px;
+    }
+
+    input, textarea, select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    button {
+        padding: 10px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3; /* Change color on hover */
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6/jquery.inputmask.min.js"></script>
+
+
+<br><br><br><br>
+<section id="get-started" class="get-started section-bg">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-lg-3" data-aos="fade-up">
+                <div class="dashboard">
+                    <div class="dashboard-heading"><h4 class="underline-below">Registration Process</h4></div>
+                    <br>
+                    <ul class="vertical-steps">
+                        <li class="progress-step" onclick="showParentsPage()">Step 1: Owner Details</li>
+                        <br>
+                        <li class="progress-step" onclick="showChildrenPage()">Step 2: Spouse Details</li>
+                        <br>
+                        <li class="progress-step" onclick="showOtherPage()">Step 3: Children's Details</li>
+                        <br>
+                        <li class="progress-step" onclick="showFinishPage()">Step 4: Other Details</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9" data-aos="fade-up">
+                <div class="content">
+                    <div class="progress-title" id="progress-title">Step 1: Owner Details</div>
+                    <!-- Progress Container -->
+                    <div class="progress-container" id="progress-container">
+                        <!-- Circles with Connecting Lines -->
+                        <div class="circle active-circle" onclick="showParentsPage()">1</div>
+                        <div class="line"></div>
+                        <div class="circle {% if parent_details_exist %}active-circle{% endif %}" onclick="showChildrenPage()">2</div>
+                        <div class="line"></div>
+                        <div class="circle {% if parent_details_exist and children_details_exist %}active-circle{% endif %}" onclick="showOtherPage()">3</div>
+                        <div class="line"></div>
+                        <div class="circle {% if parent_details_exist and children_details_exist and other_details_exist %}active-circle{% endif %}" onclick="showFinishPage()">4</div>
+                    </div>
+
+                    <div class="content-section" id="step-content">
+                        <br><br><br>
+                        <form method="post" action="{% url 'save_owner' %}">
+                            {% csrf_token %}
+                           
+      <table>
+          <tr class="form-row">
+              <td><input type="text" name="owner_first_name" placeholder="Owner First Name" required></td>
+              <td><input type="text" name="owner_last_name" placeholder="Owner Last Name" required></td>
+          </tr>
+          <tr class="form-row">
+              <td colspan="2"><input type="text" name="family_name" style="width: 100%;" placeholder="Family Name" required ></td>
+              
+              </tr>
+              <tr class="form-row">
+              <td>
+                <select name="gender" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="O">Other</option>
+                </select>
+            </td>
+              <td>
+                <input type="text" name="dob" id="dob" placeholder="DD/MM" maxlength="5" pattern="\d{2}/\d{2}" title="Enter a valid date (DD/MM)" required>
+            </td>
+
+            
+    </tr>
+          <tr class="form-row">
+              <td><textarea name="address_india" placeholder="Address India" rows="4" required></textarea></td>
+              <td><textarea name="address_zambia" placeholder="Address Zambia" rows="4" required></textarea></td>
+
+            </tr>
+            <tr class="form-row">
+              <td><input type="text" name="lcity" placeholder="Living City in Zambia" required></td>
+              <td><input type="text" name="lprovince" placeholder="Living Province in Zambia" required></td>
+          </tr>
+          <tr class="form-row">
+            <td>
+              <select name="blood_group" required>
+                  <option value="" disabled selected>Select Blood Group</option>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+              </select>
+          </td>   
+          
+          <td>
+            <select name="zmstatus" required>
+                <option value="With Family">With Family</option>
+                <option value="With Family">Alone</option>
+
+            </select>
+        </td>
+
+          </tr>
+          <tr class="form-row">
+              <td><input type="text" name="company_name" placeholder="Company Name" required></td>
+              <td><input type="text" name="work_name" placeholder="Work Name" required ></td>
+
+          </tr>
+          <tr class="form-row">
+              <td><input type="text" name="contact_no_india" placeholder="Contact Number India" required></td>
+              <td><input type="text" name="contact_no_zm" placeholder="Contact Number Zambia" required></td>
+          </tr>
+          <tr class="form-row">
+            <td><input type="text" name="whatsapp_no" placeholder="WhatsApp Number" required></td>
+
+              <td><input type="email" name="email" placeholder="Email" required ></td>
+             
+                      </tr>
+        
+      </table>
+
+      <div class="form-actions">
+          <button type="submit">Submit</button>
+      </div>
+    </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+                     
+                    </div>
+                    <script>
+                        function showParentsPage() {
+                            // Implement logic to show content for Step 1
+                            console.log("Showing Step 1 content");
+                        }
+                    
+                        function showChildrenPage() {
+                            // Implement logic to show content for Step 2
+                            console.log("Showing Step 2 content");
+                        }
+                    
+                        function showOtherPage() {
+                            // Implement logic to show content for Step 3
+                            console.log("Showing Step 3 content");
+                        }
+                    
+                        function showFinishPage() {
+                            // Implement logic to show content for Step 4
+                            console.log("Showing Step 4 content");
+                        }
+                    </script>
+                    <script>
+                        function loadContent(url) {
+                            var xhr = new XMLHttpRequest();
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState == 4) {
+                                    console.log('Response Status:', xhr.status);
+                                    console.log('Response Text:', xhr.responseText);
+                    
+                                    if (xhr.status == 200) {
+                                        document.getElementById('step-content').innerHTML = xhr.responseText;
+                                    } else {
+                                        console.error('Failed to load content:', xhr.statusText);
+                                    }
+                                }
+                            };
+                            xhr.open('GET', url, true);
+                            xhr.send();
+                        }
+                    
+                      
+
+                      
+                    </script>
+              
+                
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      var dobInput = document.getElementById('dob');
+
+      dobInput.addEventListener('input', function (event) {
+          var input = event.target.value;
+          // Remove any non-digit characters
+          var sanitizedInput = input.replace(/\D/g, '');
+
+          if (sanitizedInput.length > 2) {
+              // Add a '/' after the second character
+              sanitizedInput = sanitizedInput.slice(0, 2) + '/' + sanitizedInput.slice(2);
+          }
+
+          // Update the input field with the formatted value
+          dobInput.value = sanitizedInput;
+      });
+  });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check if the URL has a 'success' parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const successParam = urlParams.get('success');
+
+        // If 'success' is present and truthy, update the UI
+        if (successParam) {
+            // Add a green tick or update the style for Step 1 in the dashboard
+            document.querySelector('.progress-container .circle').classList.add('active-circle');
+        }
+    });
+</script>
+
+     
+                    
+       
+<br><br><br> <br>
+{% endblock %}

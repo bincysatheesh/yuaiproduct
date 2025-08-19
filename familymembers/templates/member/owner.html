@@ -1,0 +1,941 @@
+{% extends 'member/memberbase.html' %}
+{% block content %}
+
+<style type="text/css">
+  /* Add this to your main.css or create a new CSS file */
+
+  /* Add more styling as needed */
+  body{
+    /* font-family: poppins,sans-serif; */
+
+background: linear-gradient(to bottom, #dde8f1, #ffffff);
+
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .dashboard {
+    /* border-right: 4px solid #3c679f; */
+    padding-right: 30px;
+    height: 1000px; /* Adjust height as needed */
+  }
+
+  .dashboard-heading h4 {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 5px;
+  }
+
+  .dashboard-heading h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40%;
+    height: 5px;
+    background-color: #eee205;
+  }
+
+  .vertical-steps {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .vertical-steps a {
+    width: 112%;
+    display: block;
+    text-decoration: none;
+    color: #000;
+    margin-bottom: 10px;
+  }
+
+  .vertical-steps a:hover {
+    text-decoration: underline;
+  }
+
+  .right-content {
+    padding-left: 20px;
+  }
+
+  table {
+    width: 100%; /* Adjust as needed */
+    max-width: 100%;
+  
+    table-layout: fixed; 
+  }
+
+  table tr {
+    display: flex;
+    margin-bottom: 15px;
+  }
+
+  table td {
+    flex: 1; /* Each column takes up equal space */
+    /* width: 50%; */
+    box-sizing: border-box;
+    width: 50%; /* Each column takes up half of the table width */
+    padding-right: 10px;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Distribute buttons evenly */
+    max-width: 400px; /* Adjust the maximum width of the container as needed */
+    width: 100%; /* Ensure the container takes up the full width */
+}
+
+.button-container button {
+  flex-grow: 1; /* Allow buttons to grow and fill the available space */
+    margin: 0 1px; /* Add margin to create space between buttons */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 15px; /* Adjust the value as needed to increase or decrease the gap */
+
+}
+
+
+
+.button-container button:hover {
+    background-color: #0056b3;
+}
+
+
+  input,
+  textarea,
+  select,
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+  }
+  .progress-link {
+        border: 2px solid #3c679f;
+        color: #000; /* Black text */
+        /* background-color:#e0a905;  */
+        /* Yellow background */
+        display: block;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+ 
+    .progress-link-container {
+        transition: transform 0.3s;
+       width:10%;
+        /* width: 70%; */
+         /* Add a smooth transition for the zoom effect */
+        font-size: 14px;
+    }
+    .progress-link-container strong {
+    font-size: 14px;
+}
+
+
+    .progress-link-container:hover {
+        transform: scale(1.1); /* Increase the scale to zoom in */
+    }
+
+    .progress-link:hover {
+        background-color: #3c679f;
+         /* Darker yellow on hover */
+        color: #ffffff;
+    }
+    /* Adjust font size for smaller screens */
+    @media screen and (max-width: 768px) {
+    .progress-link-container strong {
+        font-size: 14px;
+    }
+}
+
+    /* Styling for the progress container */
+
+    .progress-title {
+        text-align: left;
+        font-size: 18px;
+        font-weight: bold;
+        font-family: '', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .progress-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px; /* Adjust margin as needed */
+    }
+
+    .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color:#3c679f; /* Adjust the color as needed */
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .line {
+        flex: 1;
+        height: 2px;
+        background-color: #3c679f; /* Adjust the color as needed */
+    }
+
+    .active-circle {
+        background-color:#e0a905; /* Adjust the color as needed */
+    }
+    /* ----------------/ */
+    .custom-blue {
+    /* background-color: #3c679f; */
+    /* Blue background */
+    color: #fff; /* White text */
+    /* Add any other styles you need */
+}
+.custom-green {
+    background-color: #9be722; /* Blue background */
+    color: #fff; /* White text */
+    /* Add any other styles you need */
+}
+/* .full-width {
+    width: 100% !important;
+} */
+
+  /* Add new styles for animation */
+  form {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 5px;
+  }
+  .form-container {
+    width: 100%;
+    max-width: 100%;
+    animation: slideInFromBottom 1s ease-out;
+  }
+
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  /* ---- */
+    .finger-symbol {
+        margin-right: 10px;
+        font-size: 20px;
+        /* color: red; */
+        transition: transform 0.5s;
+    }
+    /* --------------- */
+    /* Styles for form elements */
+    input:hover,
+textarea:hover {
+    /* background-color: #b1cfdf; */
+    color: rgb(25, 1, 1);
+    transform: scale(1.05); /* Adjust the scale factor as needed */
+    transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+}
+select:hover {
+    transform: scale(1.05); /* Adjust the scale factor as needed */
+    transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+    background-color: #f2f3f4;
+    color: rgb(16, 15, 15);
+}
+/* select:hover option { */
+    /* transform: scale(1.);  */
+    /* Adjust the scale factor as needed */
+    /* transition: transform 0.3s; */
+     /* Add a smooth transition for the zoom effect */
+  /* } */
+
+/* --------------p-------------- */
+/* Styles for paragraphs */
+p {
+    font-family: 'Arial', sans-serif;
+    font-size: 18px; /* Adjust font size for regular screens */
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+/* Responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+    p {
+        font-size: 14px; /* Adjust font size for smaller screens */
+        line-height: 1.5;
+    }
+}
+/* Add new styles for responsiveness */
+@media screen and (max-width: 768px) {
+  .form-actions.button-container {
+    flex-direction: column; /* Align buttons vertically on smaller screens */
+  }
+
+  .form-actions.button-container button {
+    width: 100%; /* Make buttons full width on smaller screens */
+    margin: 5px 0; /* Add some margin between buttons */
+  }
+}
+
+
+  .contact-details {
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  .btn1{
+    background-color: #edbc09;
+  }
+  .uppercase-text {
+            text-transform: uppercase;
+        }
+
+        .wide-cell {
+    width: 100%; /* Adjust the width percentage as needed */
+}
+input[type="tel"] {
+    width: 100%; /* Adjust the width as needed */
+    /* Add any other styles you need */
+}
+.row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -15px; /* Adjust as needed */
+    }
+    .col {
+        flex: 1;
+        padding: 0 15px; /* Adjust as needed */
+    }
+ 
+    .phoneinput {
+        width: 100%!important;
+    }
+    .childbtn
+{
+    display: flex;
+  justify-content: space-between; 
+}
+/* CSS for button responsiveness */
+
+.childbtn button {
+  width: calc(33.33% - 10px); /* Initially, each button occupies one-third of the container width with some spacing */
+  margin: 5px; /* Add some spacing between buttons */
+}
+
+@media screen and (max-width: 768px) {
+  .childbtn button {
+    width: calc(50% - 10px); /* Adjust button width for smaller screens (e.g., tablets) */
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .childbtn button {
+    width: 100%; /* Make buttons occupy full width on smaller screens (e.g., mobile devices) */
+  }
+}
+/* ------------------------ */
+/* Styling for cards */
+.card {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s; /* Added background-color transition */
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  background-color: #f0f0f0; /* Change background color on hover */
+}
+
+.card-header {
+  background-color:#3d6a95;
+  padding: 10px;
+}
+
+.card-title {
+  margin: 0;
+}
+
+.card-body {
+  padding: 15px;
+  background: linear-gradient(to bottom,#3d6a95, #ffffff);
+
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .col-lg-3 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .col-lg-9 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+</style>
+
+<br><br><br><br><br><br>
+
+<div class="container">
+  <div class="row gy-4">
+    <div class="col-lg-3" data-aos="fade-up">
+      <div class="dashboard">
+        <div class="dashboard-heading">
+          <h4 class="underline-below uppercase-text" style="font-size: 18px;">Registration Process</h4>
+         
+        </div>
+        <div class="vertical-steps uppercase-text"> <br>
+          <!-- Step 1: Owner Details -->
+          {% if not owner_details %}
+          <a href="{% url 'save_owner' %}" class="progress-link-container progress-link  custom-blue" style="text-decoration: dotted;" >  <span class="finger-symbol" >
+            <i class="fa-solid fa-hand-point-right" style="color: #e0a905; font-size: 24px;"></i>
+
+        </span><strong class="uppercase-text">STEP 1 : Owner Details</strong> </a>
+        {% else %}
+           <a href="{% url 'save_owner' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px;"></i><strong class="uppercase-text">Step 1 : Owner Details</strong></a>
+           {% endif %} 
+
+          <br>
+          <!-- Step 2: Spouse Details -->
+          {% if not sd %}
+          <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link uppercase-text" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<strong>Step 2 : Spouse Details</strong></a>
+          {% else %}
+          <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link uppercase-text" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px; "></i>&nbsp;<strong>STEP 2 : Spouse Details</strong></a>
+          {% endif %} 
+          <br>
+          <!-- Step 3: Children's Details -->
+          {% if not cd %}
+          <a href="{% url 'childrenview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<strong class="uppercase-text">Step 3: Children's Details</strong></a>
+          {% else %}
+          <a href="{% url 'childrenview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<strong class="uppercase-text">Step 3: Children's Details</strong></a>
+          {% endif %} 
+          <br>
+          <!-- Step 4: Other Details -->
+          {% if not other %}
+          <a href="{% url 'otherview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"  ></i>&nbsp;<strong class="uppercase-text">Step 4 : Other's Details</strong></a>
+          {% else %}
+          <a href="{% url 'otherview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<strong class="uppercase-text">Step 4 : Other's Details </strong></a>
+          {% endif %} 
+          <br>
+          <!-- Step 5: Other Details -->
+          {% if not family_photos %}
+          <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<strong class="uppercase-text">Step 5 : Upload photo</strong></a>
+          {% else %}
+          <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<strong class="uppercase-text">Step 5 : Upload photo</strong></a>
+          {% endif %} 
+          <br>
+          <!-- Step 6: Other Details -->
+          <a href="{% url 'submitfamilyview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><strong class="uppercase-text"> 6: Review and Submit</strong></a>
+        </div>
+      </div>
+    </div>
+   
+    <div class="col-lg-9 right-content" data-aos="fade-up">
+      <div class="progress-title uppercase-text" id="progress-title">Step 1: Owner Details</div>
+
+       <!-- Progress Container -->
+       <div class="progress-container" id="progress-container">
+        <!-- Circles with Connecting Lines -->
+        <div class="circle active-circle">1</div>
+        <div class="line"></div>
+        <div class="circle">2</div>
+        <div class="line"></div>
+        <div class="circle">3</div>
+        <div class="line"></div>
+        <div class="circle">4</div>
+        <div class="line"></div>
+        <div class="circle">5</div>
+        <div class="line"></div>
+        <div class="circle ">6</div>
+    </div>
+    <br>
+    <div class="form-container">
+    <div class="col-lg-9 right-content form-container" data-aos="fade-up">
+      {% if owner_details %}
+ 
+  <div class="row">
+  <div class="col-md-12">
+  <div class="card">
+    <div style="text-align: justify;padding: 2%;background: linear-gradient(to bottom,#3d6a95, #ffffff);">
+     
+         <span style="color:#00090f;font-family:poppins, sans-serif;font-weight: bold;" >
+        <br>
+  {% if owner_details.gender == 'M' %}
+  Hello, I am Mr. <span style="color:#0056b3;">{{ owner_details.owner_first_name }} {{ owner_details.owner_last_name }}</span>. My birthday is on <span style="color:#0056b3;" class="uppercase-text">{{ owner_details.dob|date:"F d" }}</span>.
+{% elif owner_details.gender == 'F' %}
+  Hello, I am Mrs. <span style="color:#0056b3;">{{ owner_details.owner_first_name }} {{ owner_details.owner_last_name }}</span>. My birthday is on <span style="color:#0056b3;" class="uppercase-text">{{ owner_details.dob|date:"F d" }}</span>.
+{% else %}
+  Hello, I am <span style="color:#0056b3;">{{ owner_details.owner_first_name }} {{ owner_details.owner_last_name }}</span>. My birthday is on <span style="color:#0056b3;"class="uppercase-text">{{ owner_details.dob|date:"F d" }}</span>.
+{% endif %}
+
+My blood group is 🩸 <span style="color:#0056b3;">{{ owner_details.blood_group }}.</span>
+
+{% if owner_details.zmstatus == 'With Family' %}
+Currently, I am living<span style="text-transform: uppercase;color:#0056b3;"> with my family in Zambia.</span>
+{% else %}
+Currently, I am living <span style="text-transform: uppercase;color:#0056b3;">  alone in Zambia.</span>
+{% endif %}
+
+        </span>
+    </div>
+    </div>
+    </div>
+  <!-- Communication Address in India -->
+  <div class="row">
+    <div class="col-md-6">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">  <span style="color:#e4e7e9;font-family:poppins, sans-serif;text-transform: uppercase;font-weight: bold;" >Indian Address (🇮🇳)  <i class="fas fa-home" style="color:#e5da09;"></i>:</span>
+      </h5>
+    </div>
+    <div class="card-body">     
+   <span style="color:  #141001;font-weight: bold;" class="uppercase-text">{{ owner_details.address_india }}</span><hr>
+   <span style="text-transform: uppercase;font-weight: bolder;"> Contact Person in INDIA : </span><br><span style="color:  #141001;font-weight: bold;" class="uppercase-text">{{ owner_details.cperson }}</span><hr>
+   <span style="text-transform: uppercase;font-weight: bolder;">   Contact Number in INDIA 📱 :  </span><br><span style="color:  #141001;font-weight: bold;" class="uppercase-text">{{ owner_details.contact_no_india }}</span>
+
+ 
+  </div>
+  </div>
+  </div>
+
+    <div class="col-md-6">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">  <span style="color:#e4e7e9;font-family:poppins, sans-serif;text-transform: uppercase;font-weight: bold;" >ZAMBIAN Address (zm)  <i class="fas fa-home" style="color:#e5da09;"></i>:</span>
+      </h5>
+    </div>
+    <div class="card-body">     
+   <span style="color:  #141001;font-weight: bold;" class="uppercase-text">{{ owner_details.address_zambia }}</span>
+    <hr>
+  <span style="text-transform: uppercase;font-weight: bold;">Living City in Zambia : </span><br> <span style="color: #161201;text-transform:uppercase;font-weight:bold;">{{ owner_details.lcity }} </span><br>
+  
+  <hr><span style="text-transform: uppercase;font-weight: bold;">Living Province in Zambia :</span><br> <span style="color: #141001;text-transform: uppercase;font-weight:bold;">{{ owner_details.lprovince }} </span><br>
+</div></div>
+  </div></div>
+
+
+    <!-- Communication details -->
+    <div class="row">
+      <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">  <span style="color:#e4e7e9;font-family:poppins, sans-serif;text-transform: uppercase;font-weight: bold;" >COMPANY DETAILS🏢</span>
+        </h5>
+      </div>
+      <div class="card-body">    
+        
+    <span style="text-transform: uppercase;font-weight: bold;"> Company Name 🏢: </span><span style="color:  #141001;font-weight: bold;" class="uppercase-text">{{ owner_details.company_name }}</span>
+   <hr> <span style="text-transform: uppercase;font-weight: bold;">   Occupation 💼: </span><span style="color:  #141001;font-weight: bold;" class="uppercase-text">{{ owner_details.work_name }}</span>
+
+    </div>
+    </div>
+    </div>
+  
+    <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">  <span style="color:#e4e7e9;font-family:poppins, sans-serif;text-transform: uppercase;font-weight: bold;" >Contact Details:</span>
+        </h5>
+      </div>
+      <div class="card-body"> 
+        
+        <span style="text-transform: uppercase;font-weight: bold;"> Contact Number in ZAMBIA 📱 :  </span><br><span style="color:  #141001;font-weight: bold;" class="uppercase-text">{{ owner_details.contact_no_zm }}</span><hr>
+        <span style="text-transform: uppercase;font-weight: bold;"> WhatsApp Number <i class="fab fa-whatsapp" style="color: #193203;font-weight: bold;"></i> :   </span><br><span style="color:  #141001;font-weight: bold;" class="uppercase-text">{{ owner_details.whatsapp_no }}</span>
+       <hr> <span style="text-transform: uppercase;font-weight: bold;">   - Email 📧:  </span><span style="color:  #141001;font-weight: bold;">{{ owner_details.email }}</span>
+
+  </div></div>
+  
+    </div>
+  </div>
+
+<div class="childbtn">
+  <!-- <button type="button" class="btn btn-primary" style="width: 20%;" onclick="goBack()">Back</button> -->
+
+  <button class="btn btn-primary" style="width: 20%;">
+      <a href="{% url 'edit_owner' owner_details.pid %}" style="text-decoration: dotted;color: #f2f3f4;">
+          <strong>EDIT</strong>
+      </a>
+  </button>
+  
+  <button class="btn btn-primary" style="width: 20%;" onclick="return confirm('Are you sure you want to delete your details?')"">
+      <a href="{% url 'deleteowner' owner_details.pid %}" style="text-decoration: dotted;color: #f2f3f4;">
+          <i class="fa-solid fa-trash"></i>
+      </a>
+  </button>
+
+  <button type="button" class="btn btn-primary" style="width: 20%;" onclick="goToNext()">Next</button>
+</div>
+
+
+
+     
+      {% else %}
+      <!-- Owner Details Form -->
+      <form method="post" action="{% url 'save_owner' %}">
+        {% csrf_token %}
+        <div class="form-container">
+          <div class="row">
+            <div class="col">
+            <input type="text" name="owner_first_name" class="uppercase-text" placeholder="Owner First Name" required>
+           </div>
+           <div class="col">
+            <input type="text" name="owner_last_name" class="uppercase-text" placeholder="Owner Last Name" required>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col">
+            <input type="text" name="family_name" class="full-width uppercase-text" placeholder="Family Name" required>
+           
+           </div>
+           <div class="col">
+             <select name="gender" class="uppercase-text" required>
+              <option value="" disabled selected >SELECT GENDER</option>
+              <option value="M" class="uppercase-text">Male</option>
+              <option value="F" class="uppercase-text">Female</option>
+              <option value="O" class="uppercase-text">Other</option>
+            </select>
+          </div>
+          </div>
+          <div class="row">
+            <label for="DOB">&nbsp;DATE OF BIRTH</label>
+            <div class="col">
+            <select name="dob_month" id="dob_month" class="uppercase-text" required>
+              <option value="" disabled selected class="uppercase-text">Select Month</option>                    
+              <option value="01" class="uppercase-text">January</option>
+              <option value="02" class="uppercase-text">February</option>
+              <option value="03" class="uppercase-text">March</option>
+              <option value="04" class="uppercase-text">April</option>
+              <option value="05" class="uppercase-text">May</option>
+              <option value="06" class="uppercase-text">June</option>
+              <option value="07" class="uppercase-text">July</option>
+              <option value="08" class="uppercase-text">August</option>
+              <option value="09" class="uppercase-text">September</option>
+              <option value="10" class="uppercase-text">October</option>
+              <option value="11" class="uppercase-text">November</option>                   
+              <option value="12" class="uppercase-text">December</option>
+            </select>
+            </div>
+            <div class="col">
+            <select name="dob_day" id="dob_day" required  class="uppercase-text">
+              <option value="" disabled selected class="uppercase-text">Select DAY</option>                   
+             
+            </select>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col">
+            <select name="blood_group" class="uppercase-text" required>
+              <option value="" disabled selected>Select Blood Group</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+            </div>
+            <div class="col">
+            <select name="zmstatus" class="uppercase-text" required>
+              <option value="" disabled selected class="uppercase-text">Select Living status</option>
+              <option value="With Family" class="uppercase-text">With Family</option>
+              <option value="Alone" class="uppercase-text">Alone</option>
+            </select>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col">
+            <textarea name="address_india" class="uppercase-text" placeholder="Address India" rows="3" required></textarea>
+            </div>
+            <div class="col">
+            <textarea name="address_zambia" class="uppercase-text" placeholder="Address Zambia" rows="3" required></textarea>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col">           
+              <input type="text" id="cperson" name="cperson" title="CONTACT NUMBER PERSON INDIA" class="uppercase-text" placeholder="CONTACT PERSON IN INDIA" required>
+         
+           </div>
+            <div class="col">
+              <input type="hidden" id="whatsapp_country_code" name="whatsapp_country_code">
+              <input type="hidden" id="contact_no_india_country_code" name="contact_no_india_country_code">
+              <input type="hidden" id="contact_no_zm_country_code" name="contact_no_zm_country_code">
+           
+                <input type="tel" id="contact_no_india" name="contact_no_india"    title="CONTACT NUMBER IN INDIA" placeholder="CONTACT NUMBER IN INDIA"  required>
+           
+             </div>
+             
+          </div>
+          <div class="row">
+            <div class="col">
+              <br>
+            <input type="text" name="lcity" class="uppercase-text" placeholder="Living City in Zambia" required>
+            
+            </div>
+            <div class="col">
+              <br>
+              <select  name="lprovince" class="uppercase-text" class="uppercase-text" required>        
+              <option value="" disabled selected class="uppercase-text">Select Living Province in Zambia</option>
+              <option value="central" class="uppercase-text">Central Province</option>
+              <option value="copperbelt" class="uppercase-text">Copperbelt Province</option>
+              <option value="eastern" class="uppercase-text">Eastern Province</option>
+              <option value="luapula" class="uppercase-text">Luapula Province</option>
+              <option value="lusaka" class="uppercase-text">Lusaka Province</option>
+              <option value="muchinga" class="uppercase-text">Muchinga Province</option>
+              <option value="northern" class="uppercase-text">Northern Province</option>
+              <option value="northwestern" class="uppercase-text">North-Western Province</option>
+              <option value="southern" class="uppercase-text">Southern Province</option>
+              <option value="western" class="uppercase-text">Western Province</option>
+          </select>
+
+          </div>
+          </div>
+          <div class="row">
+            <div class="col">
+            <input type="text" name="company_name" class="uppercase-text" placeholder="Enter your Company Name" required>
+            </div>
+            <div class="col">
+              <input type="text" name="work_name" class="uppercase-text" placeholder="Enter Your Designation">
+          </div></div>
+          <div class="row">
+              
+            <div class="col">
+              <input type="tel" id="contact_no_zm" name="contact_no_zm"   placeholder="CONTACT NUMBER IN ZAMBIA"  title="ENTER YOUR ZAMBIA LOCAL NUMBER" placeholder="ZAMBIA"  required>
+          </div>
+            <div class="col">
+                <input type="tel" id="whatsapp_no" name="whatsapp_no"   placeholder="WHATSAPP" Title="ENTER YOUR WHATSAPP NUMBER" required>
+            </div>
+         
+        </div>
+        <div class="row">
+          
+            <div class="col"  style="width: 100%;" >
+              <br>
+                <input type="email" name="email" placeholder="EMAIL" style="width: 100%;" required>
+            </div>
+        </div>
+        
+        
+            <div class="childbtn" >
+              <button type="button" class="btn btn-primary" onclick="goBack()">BACK</button>
+              <button type="submit" class="btn btn-primary" >Save</button>
+              <button type="button" class="btn btn-primary" onclick="goToNext()">Next</button>
+            </div>
+        
+        </div>
+      </form>
+      
+      {% endif %}
+    </div>
+    </div>
+    </div>
+  </div>
+</div></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      var dobMonthInput = document.getElementById('dob_month');
+      var dobDayInput = document.getElementById('dob_day');
+      
+      // Event listener for the month input
+      dobMonthInput.addEventListener('change', function () {
+          // Get the selected month
+          var selectedMonth = dobMonthInput.value;
+          
+          // Clear the day dropdown
+          dobDayInput.innerHTML = '';
+          
+          // Determine the number of days in the selected month
+          var daysInMonth = new Date(new Date().getFullYear(), selectedMonth, 0).getDate();
+          
+          // Populate the day dropdown with options for the selected month
+          for (var i = 1; i <= daysInMonth; i++) {
+              var option = document.createElement('option');
+              option.value = i < 10 ? '0' + i : i.toString(); // Add leading zero if needed
+              option.textContent = option.value;
+              dobDayInput.appendChild(option);
+          }
+      });
+  });
+  </script>
+  
+
+<!-- Text Validation -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Function to validate if the input contains only text (no digits)
+    function validateTextOnly(inputField) {
+      var textRegex = /^[a-zA-Z\s]*$/; // Regular expression for only text (no digits)
+      return textRegex.test(inputField.value);
+    }
+
+    // Get the input fields for which you want to enforce the text-only rule
+    var firstNameInput = document.querySelector('input[name="owner_first_name"]');
+    var lastNameInput = document.querySelector('input[name="owner_last_name"]');
+    var familyNameInput = document.querySelector('input[name="family_name"]');
+    var companyNameInput = document.querySelector('input[name="company_name"]');
+    var workNameInput = document.querySelector('input[name="work_name"]');
+    var livingCityInput = document.querySelector('input[name="lcity"]');
+
+    // Add an event listener to each input field
+   
+    firstNameInput.addEventListener('input', function () {
+      if (!validateTextOnly(firstNameInput)) {
+        alert('Invalid input. Please use only text (no digits).');
+        firstNameInput.value = '';
+      }
+    });
+
+    lastNameInput.addEventListener('input', function () {
+      if (!validateTextOnly(lastNameInput)) {
+        alert('Invalid input. Please use only text (no digits).');
+        lastNameInput.value = '';
+      }
+    });
+
+    familyNameInput.addEventListener('input', function () {
+      if (!validateTextOnly(familyNameInput)) {
+        alert('Invalid input. Please use only text (no digits).');
+        familyNameInput.value = '';
+      }
+    });
+
+    companyNameInput.addEventListener('input', function () {
+      if (!validateTextOnly(companyNameInput)) {
+        alert('Invalid input. Please use only text (no digits).');
+        companyNameInput.value = '';
+      }
+    });
+
+    workNameInput.addEventListener('input', function () {
+      if (!validateTextOnly(workNameInput)) {
+        alert('Invalid input. Please use only text (no digits).');
+        workNameInput.value = '';
+      }
+    });
+
+    livingCityInput.addEventListener('input', function () {
+      if (!validateTextOnly(livingCityInput)) {
+        alert('Invalid input. Please use only text (no digits).');
+        livingCityInput.value = '';
+      }
+    });
+  });
+</script>
+
+<!-- ---------------------- -->
+<!-- -----------------back &next---------- -->
+
+<script>
+  function goBack() {
+    // Handle logic to navigate back (e.g., redirect to the previous step)
+    // For example, redirect to familyregister.html
+    window.location.href = "{% url 'fr' %}";
+  }
+</script>
+<script>
+  function goToNext() {
+    // Redirect to the next step (children.html)
+    window.location.href = "{% url 'save_spouse' %}";
+  }
+</script>
+<!-- --------------active circle------------ -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      // Check if the URL has a 'success' parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const successParam = urlParams.get('success');
+
+      // If 'success' is present and truthy, update the UI
+      if (successParam) {
+          // Add a green tick or update the style for Step 1 in the dashboard
+          document.querySelector('.progress-container .circle').classList.add('active-circle');
+      }
+  });
+</script>
+<!-- -----------------email--------------------- -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+
+ <script>
+  var inputElement1 = document.querySelector("#whatsapp_no");
+  var iti1 = window.intlTelInput(inputElement1, {
+    separateDialCode: true,
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    initialCountry: "auto",
+    dropdownContainer: document.body
+  });
+
+  inputElement1.addEventListener('countrychange', function () {
+    var countryCode1 = iti1.getSelectedCountryData().dialCode;
+    console.log("Country code 1:", countryCode1); // Log the country code to console
+    document.getElementById('whatsapp_country_code').value = countryCode1;
+  });
+
+
+  var inputElement2 = document.querySelector("#contact_no_india");
+  var iti2 = window.intlTelInput(inputElement2, {
+    separateDialCode: true,
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    initialCountry: "auto",
+    dropdownContainer: document.body
+  });
+
+  inputElement2.addEventListener('countrychange', function () {
+    var countryCode2 = iti2.getSelectedCountryData().dialCode;
+    console.log("Country code 2:", countryCode2); // Log the country code to console
+    document.getElementById('contact_no_india_country_code').value = countryCode2;
+  });
+
+
+  var inputElement3 = document.querySelector("#contact_no_zm");
+  var iti3 = window.intlTelInput(inputElement3, {
+    separateDialCode: true,
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    initialCountry: "auto",
+    dropdownContainer: document.body
+  });
+
+  inputElement3.addEventListener('countrychange', function () {
+    var countryCode3 = iti3.getSelectedCountryData().dialCode;
+    console.log("Country code 3:", countryCode3); // Log the country code to console
+    document.getElementById('contact_no_zm_country_code').value = countryCode3;
+  });
+</script>
+
+
+
+{% endblock %}

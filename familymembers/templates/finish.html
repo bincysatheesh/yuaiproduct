@@ -1,0 +1,66 @@
+<!-- finish.html -->
+{% extends 'memberbase.html' %}
+{% block content %}
+<style>
+  /* Add your custom styles here */
+  .finish-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  #finishButton {
+    background-color: #16836a;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #finishButton:hover {
+    background-color: #057166;
+  }
+
+  #backButton {
+    margin-top: 20px;
+    display: inline-block;
+    text-decoration: none;
+    background-color: #0b5e75;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #backButton:hover {
+    background-color: #0d7981;
+  }
+</style>
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<div class="finish-container">
+  <h4>Please Click here
+ 
+ to complete your Registration <button id="finishButton" onclick="redirectToNextPage()">Finish</button>
+  </h4><a id="backButton" href="{% url 'save_other' %}">Back</a>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+
+<script>
+  function redirectToNextPage() {
+    // You can add logic here to redirect to the next page
+    window.location.href ="{% url 'complete' %}";
+  }
+</script>
+
+{% endblock %}

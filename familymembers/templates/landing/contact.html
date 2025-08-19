@@ -1,0 +1,410 @@
+{% extends 'landing/fcbase.html' %}
+{% load static %}
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap');
+  
+  :root {
+    --primary: #1a365d;
+    --accent: #f7b733;
+    --light: #f8f9fa;
+    --dark: #032b51;
+    --shadow-sm: 0 2px 12px rgba(26,54,93,0.07);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  
+  /* Hero Section */
+  .contact-hero {
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary) 0%, #153a6e 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    margin-bottom: 4rem;
+    position: relative;
+  }
+  
+  .contact-hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    background: url('{% static "img/abstract-bg.jpg" %}') center/cover;
+    opacity: 0.15;
+  }
+  
+  .contact-hero-content {
+    text-align: center;
+    z-index: 2;
+  }
+  
+  .contact-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+  
+  .contact-hero-subtitle {
+    color: var(--accent);
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .contact-hero-subtitle a {
+    color: rgba(247, 183, 51, 0.9);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  
+  .contact-hero-subtitle a:hover {
+    color: white;
+  }
+  
+  /* Logo */
+  .floating-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: -50px auto 2rem;
+    display: block;
+    border: 4px solid white;
+    box-shadow: var(--shadow-md);
+    background: white;
+    position: relative;
+    z-index: 10;
+  }
+  
+  /* Two Column Layout */
+  .contact-container {
+    max-width: 1200px;
+    margin: 0 auto 4rem;
+    padding: 0 2rem;
+    display: flex;
+    gap: 3rem;
+  }
+  
+  /* Left Column - Contact Info */
+  .contact-info-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .contact-details-card {
+    background: white;
+    border-radius: 0.8rem;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .contact-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  
+  .contact-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .contact-detail i {
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-top: 0.2rem;
+  }
+  
+  .contact-detail-content h3 {
+    color: var(--primary);
+    margin-bottom: 0.3rem;
+    font-size: 1.1rem;
+  }
+  
+  .contact-detail-content p, 
+  .contact-detail-content a {
+    color: var(--dark);
+    margin: 0;
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+  
+  .contact-detail-content a {
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .contact-detail-content a:hover {
+    color: var(--accent);
+  }
+  
+  .social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0,0,0,0.05);
+  }
+  
+  .social-links a {
+    color: var(--primary);
+    font-size: 1.3rem;
+    transition: color 0.2s;
+  }
+  
+  .social-links a:hover {
+    color: var(--accent);
+  }
+  
+  /* Right Column - Contact Form */
+  .contact-form-column {
+    flex: 1;
+  }
+  
+  .contact-form-section {
+    background: white;
+    border-radius: 0.8rem;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    height: 100%;
+  }
+  
+  .contact-form-section h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+  
+  .contact-form input, 
+  .contact-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem;
+    font-family: 'Montserrat', sans-serif;
+    transition: border 0.2s;
+  }
+  
+  .contact-form input:focus, 
+  .contact-form textarea:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+  
+  .contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+  
+  .contact-form button {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .contact-form button:hover {
+    background: var(--primary);
+  }
+  
+  /* Map */
+  .google-map-container {
+    border-radius: 0.8rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .google-map-container iframe {
+    width: 100%;
+    height: 250px;
+    border: 0;
+  }
+  
+  /* Messages */
+  .messages {
+    margin-bottom: 1.5rem;
+  }
+  
+  .alert {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+  }
+  
+  .dismiss-message {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  /* Responsive */
+  @media (max-width: 900px) {
+    .contact-details-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .contact-container {
+      flex-direction: column;
+      padding: 0 1.5rem;
+    }
+    
+    .contact-hero h1 {
+      font-size: 2.2rem;
+    }
+    
+    .floating-logo {
+      width: 80px;
+      height: 80px;
+      margin: -40px auto 1.5rem;
+    }
+  }
+</style>
+
+<div class="contact-hero">
+  <div class="contact-hero-content">
+    <h1>Contact Us</h1>
+    <div class="contact-hero-subtitle">
+      <a href="/">Home</a>
+      <span>/</span>
+      <span>Contact</span>
+    </div>
+  </div>
+</div>
+
+<img src="{% static 'img/logo.jpg' %}" alt="ZMCA Logo" class="floating-logo">
+
+<div class="contact-container">
+  <!-- Left Column - Contact Information -->
+  <div class="contact-info-column">
+    <!-- Combined Contact Details Card -->
+    <div class="contact-details-card">
+      <div class="contact-details-grid">
+        <div class="contact-detail">
+          <i class="bi bi-geo-alt"></i>
+          <div class="contact-detail-content">
+            <h3>Our Address</h3>
+            <p>Zambia Malayalee Cultural Association<br>Lusaka, Zambia</p>
+          </div>
+        </div>
+        
+        <div class="contact-detail">
+          <i class="bi bi-envelope"></i>
+          <div class="contact-detail-content">
+            <h3>Email Us</h3>
+            <a href="mailto:zmcazambia@gmail.com">zmcazambia@gmail.com</a>
+          </div>
+        </div>
+        
+        <!-- <div class="contact-detail">
+          <i class="bi bi-telephone"></i>
+          <div class="contact-detail-content">
+            <h3>Call Us</h3>
+            <p></p>
+          </div>
+        </div> -->
+        
+        <!-- <div class="contact-detail">
+          <i class="bi bi-clock"></i>
+          <div class="contact-detail-content">
+            <h3>Working Hours</h3>
+            <p>Mon-Fri: 9AM - 5PM<br>Sat: 10AM - 2PM</p>
+          </div>
+        </div> -->
+      </div>
+      
+      <div class="social-links">
+        <a href="https://www.facebook.com/zmca.lusaka/" target="_blank">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="https://www.instagram.com/zmcazambia/" target="_blank">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <!-- <a href="#" target="_blank">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="#" target="_blank">
+          <i class="fab fa-twitter"></i>
+        </a> -->
+      </div>
+    </div>
+    
+    <!-- Map -->
+    <div class="google-map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d123068.17301789895!2d28.278784!3d-15.4370048!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2szm!4v1707387206069!5m2!1sen!2szm" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+  
+  <!-- Right Column - Contact Form -->
+  <div class="contact-form-column">
+    <div class="contact-form-section">
+      <h2>Send Us a Message</h2>
+      <form class="contact-form" action="{% url 'contactus' %}" method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Your Name" required>
+        </div>
+        
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Your Email" required>
+        </div>
+        
+        <div class="form-group">
+          <input type="text" name="subject" placeholder="Subject" required>
+        </div>
+        
+        <div class="form-group">
+          <textarea name="message" placeholder="Your Message" required></textarea>
+        </div>
+        
+        {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="alert">
+              {{ message }}
+              <button type="button" class="dismiss-message">&times;</button>
+            </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+        
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Dismiss message buttons
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.dismiss-message').forEach(button => {
+      button.addEventListener('click', function() {
+        this.closest('.alert').style.display = 'none';
+      });
+    });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>ZMCA Admin</title>
+    <link href="{% static 'img/logo.jpg' %}" rel="icon">
+  <!-- <link rel= "stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"> -->
+    <!-- <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css" > -->
+    <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+  <script defer src="{% static 'js/admin.js' %}"></script>
+<style>
+
+    
+  /* paginator */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.step-links a {
+    color: #3d6a95;
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+    border-radius: 4px;
+}
+
+.step-links a:hover {
+    background-color: #3d6a95;
+    color: #fff;
+}
+
+.current {
+    padding: 8px 16px;
+    background-color: #3d6a95;
+    color: #fff;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+    border-radius: 4px;
+}
+
+/* Optional: Add some spacing and styling for better readability */
+.pagination span,
+.pagination a {
+    margin: 4px;
+}
+
+</style>
+
+  </head>
+  <body>
+    {% block content %}
+
+
+
+
+    {% endblock %}
+    
+  </body>
+  </html>
+  
+  

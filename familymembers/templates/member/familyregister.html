@@ -1,0 +1,146 @@
+{% extends 'member/memberbase.html' %}
+{% block content %}
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .dashboard-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .dashboard1 {
+        text-align: center;
+        /* border-right: 4px solid #057166; */
+        padding-right: 15px;
+        height: 900px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dashboard-heading {
+        margin-bottom: 20px;
+        position: relative;
+        
+    }
+    .dashboard-heading h4 {
+    color: #b87c04; /* Adjust the font color of the heading */
+    margin-bottom: 10px;
+    position: relative;
+    font-size: 20px;
+}
+
+    .dashboard-heading h4::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50%; /* Adjust the width of the underline as needed */
+    height: 2px; /* Adjust the thickness of the underline as needed */
+    /* background-color: #daa507;  */
+    /* Adjust the color of the underline */
+}
+
+    .vertical-steps {
+        list-style-type: none;
+        padding: 0;
+        text-align: left;
+        width: 100%; /* Take the full width */
+    }
+
+    .progress-link {
+        position: relative;
+        display: block;
+        align-items: center;
+        color: #b53559;
+        /* #857207 */
+        padding: 10px;
+        margin-bottom: 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s, transform 0.5s;
+        height: 50px;
+        border: 2px solid #065072;
+        text-align: center;
+        width: 100%; /* Take the full width */
+   
+        margin-right: 0;
+    }
+    /* .progress-link:hover{
+        background-color:#3c679f;
+
+    } */
+    .progress-link.active {
+        background-color: #ffd700;
+    }
+
+    .progress-link.active .finger-symbol {
+        color: green;
+        transform: rotateZ(360deg);
+    }
+
+    .finger-symbol {
+        margin-right: 10px;
+        font-size: 16px;
+        color: red;
+        transition: transform 0.5s;
+    }
+
+    .progress-link:hover {
+        color: #0f0000;
+        border-color:#b53559;
+        transform: none;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .dashboard1 {
+            padding-right: 0;
+        }
+
+        .progress-link {
+            font-size: 14px;
+        }
+</style>
+
+<section id="get-started" class="get-started section-bg">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-lg-12 dashboard-container" data-aos="fade-up">
+                <div class="dashboard1">
+                    <div class="dashboard-heading">
+                        <h4 class="underline-below" style="color: #696667;">REGISTRATION PROCESS</h4>
+                    </div>
+                    <div class="vertical-steps">
+                        <!-- Step 1: Owner Details -->
+                        <a href="{% url 'save_owner' %}" class="progress-link">
+                            <span class="finger-symbol" style="color: rgb(5, 68, 109);">
+                                <i class="fa-regular fa-hand-point-right"></i>
+                            </span> Step 1: Owner Details                        </a>
+                        <br>                                   
+                        <!-- Step 2: Spouse Details -->
+                        <a href="{% url 'save_spouse' %}" class="progress-link">Step 2: Spouse Details</a>
+                        <br>
+                        <!-- Step 3: Children's Details -->
+                        <a href="{% url 'save_children' %}" class="progress-link">Step 3: Children's Details</a>
+                        <br>
+                        <!-- Step 4: Other Details -->
+                        <a href="{% url 'save_other' %}" class="progress-link">Step 4: Other Details</a>
+                        <br>
+                        <!-- Step 5: Other Details -->
+                        <a href="{% url 'save_fp' %}" class="progress-link">Step 5: Upload family photo</a>
+                        <br>
+                        <!-- Step 6: Other Details -->
+                        <a href="#" class="progress-link">Step 6: Review and Submit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> 
+{% endblock %}  

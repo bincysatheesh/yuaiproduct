@@ -1,0 +1,464 @@
+{% extends 'landing/fcbase.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap');
+
+    :root {
+        --primary: #1a365d;
+        --accent: #f7b733;
+        --light: #f8f9fa;
+        --dark: #032b51;
+    }
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+        color: var(--dark);
+        line-height: 1.6;
+    }
+
+    /* Signup Container */
+    .signup-container {
+        max-width: 650px;
+        margin: 3rem auto;
+        padding: 2.5rem;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .signup-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+    }
+
+    .signup-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .signup-header h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .signup-header p {
+        color: #666;
+        font-size: 0.95rem;
+    }
+
+    /* Form Elements */
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+    }
+
+    .form-col {
+        flex: 0 0 50%;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--primary);
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: all 0.3s;
+        background-color: #f8f9fa;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(247, 183, 51, 0.2);
+    }
+
+    /* Select Box Styling */
+    select.form-control {
+        height: 46px;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 1em;
+    }
+
+    /* Checkbox Styling */
+    .checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .checkbox-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+        margin-right: 8px;
+        width: 18px;
+        height: 18px;
+        accent-color: var(--primary);
+    }
+
+    /* File Input Styling */
+    .file-input {
+        padding: 8px;
+    }
+
+    /* Phone Input Styling */
+    .phone-input {
+        width: 100% !important;
+    }
+
+    /* Button Styling */
+    .btn-signup {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, var(--primary) 0%, #153a6e 100%);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 1rem;
+    }
+
+    .btn-signup:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(26, 54, 93, 0.3);
+    }
+
+    /* Links */
+    .signup-links {
+        margin-top: 1.5rem;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    .signup-links a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .signup-links a:hover {
+        color: var(--accent);
+    }
+
+    /* Messages */
+    #messages-container {
+        max-width: 650px;
+        margin: 0 auto 2rem;
+    }
+
+    .alert {
+        padding: 12px 15px;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .alert-warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+    }
+
+    .btn-close {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: #856404;
+        opacity: 0.7;
+        transition: all 0.3s;
+    }
+
+    .btn-close:hover {
+        opacity: 1;
+    }
+
+    /* Consent Checkbox */
+    .consent-checkbox {
+        display: flex;
+        align-items: flex-start;
+        margin: 1.5rem 0;
+    }
+
+    .consent-checkbox input {
+        margin-right: 10px;
+        margin-top: 3px;
+    }
+
+    .consent-checkbox label {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .signup-container {
+            margin: 2rem auto;
+            padding: 1.5rem;
+        }
+
+        .signup-header h2 {
+            font-size: 1.8rem;
+        }
+
+        .form-col {
+            flex: 0 0 100%;
+        }
+    }
+</style>
+<br><br><br><br>
+<div class="signup-container">
+    <div class="signup-header">
+        <h2>Agency Registration</h2>
+        <p>Register your agency with ZMCA</p>
+    </div>
+
+    <!-- Messages Container -->
+    <div id="messages-container">
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "error" %}
+        <div class="alert alert-warning">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+        </div>
+        {% else %}
+        <div class="alert alert-warning">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <form id="agency-signup-form" action="{% url 'agency_signup' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="agency_name">Agency Name</label>
+            <input type="text" name="agency_name" class="form-control" placeholder="Your agency name" required>
+        </div>
+
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="owner_contact_person">Contact Person</label>
+                    <input type="text" name="owner_contact_person" class="form-control" placeholder="Full name"
+                        required>
+                </div>
+            </div>
+
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="contact_number">Phone Number</label>
+                    <input type="hidden" id="country_code" name="country_code">
+                    <input type="tel" id="contactno" name="contact_number" class="form-control phone-input"
+                        placeholder="Phone Number" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control" placeholder="Email address" required>
+        </div>
+
+        <div class="form-group">
+            <label for="office_address">Office Address</label>
+            <textarea name="office_address" class="form-control" rows="3" placeholder="Full physical address"
+                required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Agency Type</label>
+            <div class="checkbox-group">
+                {% for value, label in AGENCY_TYPES %}
+                <div class="checkbox-item">
+                    <input type="checkbox" name="agency_type" id="agency_type_{{ forloop.counter }}"
+                        value="{{ value }}">
+                    <label for="agency_type_{{ forloop.counter }}">{{ label }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Service Categories</label>
+            <div class="checkbox-group">
+                {% for value, label in SERVICE_CATEGORIES %}
+                <div class="checkbox-item">
+                    <input type="checkbox" name="service_categories" id="service_{{ forloop.counter }}"
+                        value="{{ value }}">
+                    <label for="service_{{ forloop.counter }}">{{ label }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="years_in_operation">Years in Operation</label>
+                    <input type="number" name="years_in_operation" class="form-control" min="0" required>
+                </div>
+            </div>
+
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="number_of_staff">Number of Staff</label>
+                    <input type="number" name="number_of_staff" class="form-control" min="1" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="preferred_service_area">Preferred Service Area(s)</label>
+            <input type="text" name="preferred_service_area" class="form-control"
+                placeholder="e.g. Lusaka, Ndola, Livingstone" required>
+        </div>
+
+        <div class="form-group">
+            <label for="availability">Availability</label>
+            <input type="text" name="availability" class="form-control" placeholder="e.g. Mon–Sat, 8am–6pm" required>
+        </div>
+
+        <div class="form-group">
+            <label for="short_description">Short Description</label>
+            <textarea name="short_description" class="form-control" rows="3"
+                placeholder="Brief description of your agency" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="verification_documents">Verification Documents</label>
+            <input type="file" name="verification_documents" class="form-control file-input"
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+            <small class="text-muted">Upload registration documents (PDF, DOC, JPG, PNG)</small>
+        </div>
+
+
+
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="password"> Password</label>
+                    <input type="text" name="password" class="form-control" placeholder="Enter password "
+                        required>
+                </div>
+            </div>
+
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="text" name="cpassword" class="form-control" placeholder="Enter password again"
+                        required>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="consent-checkbox">
+            <input type="checkbox" name="consent_agreed" id="consent_agreed" required>
+            <label for="consent_agreed">I agree to the terms and conditions and confirm that all information provided is
+                accurate.</label>
+        </div>
+
+        <button type="submit" class="btn-signup">Register Agency</button>
+
+        <div class="signup-links">
+            <a href="{% url 'mlogin' %}">Already have an account? Login</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Initialize phone input
+    var inputElement = document.querySelector("#contactno");
+    var iti = window.intlTelInput(inputElement, {
+        separateDialCode: true,
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        initialCountry: "auto",
+        dropdownContainer: document.body
+    });
+
+    // Get the selected country code and set the hidden input value
+    inputElement.addEventListener('countrychange', function () {
+        var countryCode = iti.getSelectedCountryData().dialCode;
+        document.getElementById('country_code').value = countryCode;
+    });
+
+    // Form validation
+    document.getElementById('agency-signup-form').addEventListener('submit', function (e) {
+        // Check if at least one agency type is selected
+        var agencyTypes = document.querySelectorAll('input[name="agency_type"]:checked');
+        if (agencyTypes.length === 0) {
+            alert('Please select at least one agency type');
+            e.preventDefault();
+            return;
+        }
+
+        // Check if at least one service category is selected
+        var serviceCategories = document.querySelectorAll('input[name="service_categories"]:checked');
+        if (serviceCategories.length === 0) {
+            alert('Please select at least one service category');
+            e.preventDefault();
+            return;
+        }
+
+        // Check consent checkbox
+        if (!document.getElementById('consent_agreed').checked) {
+            alert('You must agree to the terms and conditions');
+            e.preventDefault();
+            return;
+        }
+    });
+</script>
+
+<br><br><br>
+{% endblock %}

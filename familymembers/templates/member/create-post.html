@@ -1,0 +1,267 @@
+{% extends 'member/customerbase.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .form-container {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
+  
+  .form-header {
+    margin-bottom: 30px;
+  }
+  
+  .form-title {
+    color: #3d6a95;
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  .form-subtitle {
+    color: #777;
+    font-size: 16px;
+  }
+  
+  .job-form {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    padding: 30px;
+  }
+  
+  .form-group {
+    margin-bottom: 25px;
+  }
+  
+  .form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #444;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s;
+  }
+  
+  .form-control:focus {
+    border-color: #3d6a95;
+    box-shadow: 0 0 0 3px rgba(61, 106, 149, 0.1);
+    outline: none;
+  }
+  
+  textarea.form-control {
+    min-height: 150px;
+    resize: vertical;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+  }
+  
+  .btn {
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .btn-primary {
+    background-color: #3d6a95;
+    color: white;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #2b3348;
+    transform: translateY(-2px);
+  }
+  
+  .btn-outline {
+    background: transparent;
+    border: 1px solid #ddd;
+    color: #555;
+  }
+  
+  .btn-outline:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .radio-group {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .radio-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .radio-option input {
+    width: auto;
+  }
+</style>
+<input type="checkbox" id="nav-toggle">
+<div class="sidebar"> 
+  <div class="sidebar-brand">
+    <h2><span class="las la-user-circle"></span><span style="text-transform:capitalize;">{{ufn}}&nbsp;{{uln}}</span></h2>
+  </div>
+  {% if owner_details and membership_detail %}
+  <div class="sidebar-menu">
+    <ul>
+      <li>
+        <a href="{% url 'customerindex' %}"><span class="fas fa-home"></span>
+        <span>Home</span></a>
+      </li>
+      <li>
+        <a href="{% url 'memberaboutus' %}" class="active"><span class="fas fa-info-circle"></span>
+        <span>About Us</span></a>
+      </li>
+      <li>
+        <a href="{% url 'committemembers' %}"><span class="las la-users"></span>
+        <span>Committee Members&nbsp;({{ccount}})</span></a>
+      </li>
+      <li>
+        <a href="{% url 'members_view1' %}"><span class="las la-home"></span>
+        <span>Families&nbsp;({{uacount}})</span></a>
+      </li>
+      <li>
+        <a href="{% url 'birthdaydetails' %}"><span class="fas fa-birthday-cake"></span>
+        <span>Birthday</span></a>
+      </li>
+      <li>
+        <a href="{% url 'bloodgroup' %}"><span class="fas fa-tint" style="color: red;"></span>
+        <span>Blood Group</span></a>
+      </li>
+      <li>
+        <a href="{% url 'payments1' %}">
+        <span class="fas fa-id-badge"></span>
+        <span>Membership</span></a>
+      </li>
+      <li>
+        <a href="{% url 'cevents' %}"><span class="fa fa-bell"></span>
+        <span>Events&nbsp;({{teventscount}})</span></a>
+      </li>
+    </ul>
+  </div>
+  {% else %}
+  <div class="sidebar-menu">
+    <ul>
+      <li>
+        <a href="{% url 'customerindex' %}" class="active"><span class="fas fa-home"></span>
+        <span>Home</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href=""><span class="fas fa-info-circle"></span>
+        <span>About Us</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href=""><span class="las la-users"></span>
+        <span>Committee Members&nbsp;({{ccount}})</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href=""><span class="las la-home"></span>
+        <span>Families&nbsp;({{uacount}})</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href=""><span class="fas fa-birthday-cake"></span>
+        <span>Birthday</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href=""><span class="fas fa-tint" style="color: red;"></span>
+        <span>Blood Group</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href="">
+        <span class="fas fa-id-badge"></span>
+        <span>Membership</span></a>
+      </li>
+      <li title="Your account has been blocked. Please complete your registration and renew your membership">
+        <a href=""><span class="fa fa-bell"></span>
+        <span>Events&nbsp;({{teventscount}})</span></a>
+      </li>
+    </ul>
+  </div>
+  {% endif %}
+</div>
+
+<div class="main-content">
+  <header>
+    <h2> 
+      <label for="nav-toggle">
+        <span class="las la-bars"></span>
+      </label>
+      Create Job Post
+    </h2>
+    <div class="user-wrapper">
+      <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+      <div>
+        <h4><a href="{% url 'logout' %}" style="font-size: 16px;"><i class="fa-solid fa-right-from-bracket"></i></a></h4>
+        <small>user@example.com</small>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <div class="form-header">
+        <h1 class="form-title">Create New Job Post</h1>
+        <p class="form-subtitle">Share job opportunities or help requests with the community</p>
+      </div>
+      
+      <form class="job-form">
+        <div class="form-group">
+          <label class="form-label">Post Type</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="post_type" value="job" checked>
+              <span>Job Opportunity</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="post_type" value="help">
+              <span>Help Wanted</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="post_type" value="other">
+              <span>Other</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" id="title" class="form-control" placeholder="e.g. Looking for a Driver">
+        </div>
+        
+        <div class="form-group">
+          <label for="description" class="form-label">Description</label>
+          <textarea id="description" class="form-control" placeholder="Provide details about the job or help needed..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="contact" class="form-label">Contact Information</label>
+          <input type="text" id="contact" class="form-control" placeholder="Phone number or email">
+          <small class="text-muted">This will be visible to other members</small>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Post</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+{% endblock %}

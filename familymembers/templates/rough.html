@@ -1,0 +1,3678 @@
+<!-- children.html -->
+{% extends 'memberbase.html' %}
+{% block content %}
+<style type="text/css">
+  /* Add this to your main.css or create a new CSS file */
+
+  /* Add more styling as needed */
+
+/* Styles for form elements */
+input:hover,
+textarea:hover {
+    background-color: #b1cfdf;
+    color: white;
+    transform: scale(1.05); /* Adjust the scale factor as needed */
+    transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+}
+select:hover {
+    transform: scale(1.05); /* Adjust the scale factor as needed */
+    transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+    background-color: #f2f3f4;
+    color: rgb(16, 15, 15);
+}
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+     
+
+  .dashboard {
+    /* border-right: 2px solid #007BFF; */
+    padding-right: 30px;
+    height: 600px; /* Adjust height as needed */
+  }
+
+  .dashboard-heading h4 {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 5px;
+  }
+
+  .dashboard-heading h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40%;
+    height: 5px;
+    background-color: #e0a905;
+  }
+
+  
+  table {
+    width: 100%;
+  }
+
+  table tr {
+    display: flex;
+    margin-bottom: 15px;
+  }
+
+  table td {
+    width: 50%;
+    box-sizing: border-box;
+    padding-right: 10px;
+  }
+
+ 
+
+  form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 5px;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+  }
+ 
+ 
+ 
+  
+  .vertical-steps {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .vertical-steps a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    margin-bottom: 10px;
+  }
+
+  .vertical-steps a:hover {
+    text-decoration: underline;
+  }
+
+  .right-content {
+    padding-left: 20px;
+  }
+
+
+  .progress-link {
+    border: 2px solid #3c679f;
+    /* Gives blue border for the anchor tag */
+        color: #000; /* Black text */
+        /* background-color: #e0a905; */
+         /* Yellow background */
+        display: block;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .progress-link-container {
+      width: 280px;
+        transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+    } 
+
+    .progress-link-container:hover {
+        transform: scale(1.1); /* Increase the scale to zoom in */
+    }
+
+    .progress-link:hover {
+        background-color:#3c679f;
+         /* Darker yellow on hover */
+        color: #ffffff;
+    }
+  
+    /* Styling for the progress container */
+
+    .progress-title {
+        text-align: left;
+        font-size: 18px;
+        font-weight: bold;
+        font-family: 'Your Desired Font', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .progress-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px; /* Adjust margin as needed */
+    }
+
+    .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color:#3c679f; /* Adjust the color as needed */
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .line {
+        flex: 1;
+        height: 2px;
+        background-color:#3c679f; /* Adjust the color as needed */
+    }
+
+    .active-circle {
+        background-color: #e0a905;   /* Adjust the color as needed */
+    }
+    /* ----------------/ */
+    .custom-blue {
+    background-color: #007BFF; /* Blue background */
+    color: #fff; /* White text */
+    /* Add any other styles you need */
+}
+.custom-green {
+    background-color: #046915; /* Blue background */
+    color: #fff; /* White text */
+    /* Add any other styles you need */
+}
+.full-width {
+    width: 100% !important;
+}
+/* ------------------button------------------ */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+button-container {
+  display: flex;
+  justify-content: space-between;
+}
+.button-container button {
+    width: 150px;
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+button {
+    width: 180px; /* Adjust the width as needed */
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+.button-container button:hover {
+    background-color: #3c679f;
+}
+
+  button:hover {
+    background-color: #3c679f;
+  }
+/* -------------------endbutton */
+
+.form-container {
+    width: 100%;
+    max-width: 100%;
+    animation: slideInFromBottom 1s ease-out;
+  }
+
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  /* Add the following CSS class definition */
+.full-width {
+    width: 100% !important;
+}
+/* --------------------------- */
+.childrencontainer {
+  width: 100%;
+        margin-top: 20px; /* Adjust the margin as needed */
+    }
+
+    .childrencontainer h2 {
+      
+        text-align: center;
+        color: #007BFF; /* Adjust the color as needed */
+    }
+
+    .childrencontainer table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+    .childrencontainer th,
+    .childrencontainer td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        width: 100%;
+    }
+
+    .childrencontainer thead {
+        background-color:  #e0a905;
+        color: #09449c;
+        width: 100%;
+    }
+
+    .childrencontainer tbody tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .childrencontainer tbody tr:nth-child(even) {
+        background-color: #e6e6e6;
+        width: 100%;
+    }
+    .childrencontainer tbody tr:hover {
+    background-color: #f1f0a1; /* Change this color to your desired hover color */
+}
+
+    .childrencontainer td a {
+        text-decoration: none;
+        color: #007BFF;
+        margin-right: 10px;
+        width: 100%;
+    }
+
+    .childrencontainer td a:hover {
+        text-decoration: underline;
+        width: 100%;
+    }
+    .childrencontainer tbody tr {
+    transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+}
+
+.childrencontainer tbody tr:hover {
+    background-color:#fcfdfe; /* Change this color to your desired hover color */
+    transform: scale(1.05); /* Increase the scale to zoom in */
+}
+
+/* .table-progress-link:hover,
+.table-progress-link:hover * {
+    color: #fff !important; /* Change this to the desired hover color */
+/* } */
+
+ 
+
+  
+</style>
+
+<br><br><br><br><br><br><br><br><br>
+
+<div class="container">
+  <div class="row gy-4">
+    <div class="col-lg-3" data-aos="fade-up">
+      <div class="dashboard">
+        <div class="dashboard-heading">
+          <h4 class="underline-below">Registration Process</h4>
+         
+        </div>
+        <div class="vertical-steps"> <br>
+         <!-- Step 1: Owner Details -->
+         {% if not owner_details %}
+         <a href="{% url 'save_owner' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;Step 1: Owner Details</a>
+         {% else %}
+         <!-- Add your content for the 'else' case, e.g., change color to yellow -->
+         <a href="{% url 'save_owner' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px;"></i>&nbsp;Step 1: Owner Details</a>
+         {% endif %}          <br>
+          <!-- Step 2: Spouse Details -->
+          {% if not spouse_details %}
+          <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;Step 2: Spouse Details</a>
+          {% else %}
+          <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;Step 2: Spouse Details</a>
+          {% endif %} <br>
+          <!-- Step 3: Children's Details -->
+          {% if not children_details %}
+          <a href="{% url 'save_children' %}" class="progress-link-container progress-link" style="text-decoration: dotted;">            <i class="fa-solid fa-hand-point-right" style="color: #e0a905; font-size: 24px;"></i>
+            Step 3: Children's Details</a>
+            {% else %}
+            <a href="{% url 'save_children' %}" class="progress-link-container progress-link" style="text-decoration: dotted;">
+              <i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>
+              &nbsp; Step 3: Children's Details</a>
+            {% endif %} <br>
+          
+            <!-- Step 4: Other Details -->
+            {% if not other %}
+            <a href="{% url 'save_other' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;Step 4: Guest's Details</a>
+            {% else %}
+            <a href="{% url 'save_other' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;Step 4: Guest's Details</a>
+            {% endif %}
+            <br>
+            <!-- Step 5: Other Details -->
+            {% if not family_photos %}
+            <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;Step 5: Upload family photo</a>
+            {% else %}
+            <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;Step 5: Upload family photo</a>
+            {% endif %}
+            <br>
+          <!-- Step 6: Other Details -->
+          <a href="{% url 'submitfamilyview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;">Step 6: Review and Submit</a>
+        </div>
+      </div>
+    </div>
+   
+    <div class="col-lg-9 right-content" data-aos="fade-up">
+      <div class="progress-title" id="progress-title">Step 3: Children's Details</div>
+
+       <!-- Progress Container -->
+       <div class="progress-container" id="progress-container">
+        <!-- Circles with Connecting Lines -->
+        <div class="circle active-circle">1</div>
+        <div class="line"></div>
+        <div class="circle active-circle">2</div>
+        <div class="line"></div>
+        <div class="circle active-circle">3</div>
+        <div class="line"></div>
+        <div class="circle">4</div>
+        <div class="line"></div>
+        <div class="circle">5</div>
+        <div class="line"></div>
+        <div class="circle ">6</div>
+    </div>
+    
+    <div class="form-container">
+      <div class="col-lg-9 right-content form-container" data-aos="fade-up">
+  
+      <!-- Owner Details Form -->
+      <form method="post" action="{% url 'save_children' %}">
+        
+        {% csrf_token %}
+        <table>
+          <tr class="form-row">
+            <td class="full-width">
+                <input type="text" name="Child_name" placeholder="Enter your Child Name" required class="full-width">
+            </td>
+          <tr class="form-row">
+            <td>
+              <select name="child_gender" required>
+                  <option value="" disabled selected>Select Gender</option>
+                  <option value="M">Male</option>
+                  <option value="F">Female</option>
+                  <option value="O">Other</option>
+              </select>
+          </td>
+              <td>
+                  <select name="child_birth_order" required>
+                      <option value="" disabled selected>Select Birth Order</option>
+                      <option value="Firstborn">Firstborn</option>
+                      <option value="Secondborn">Secondborn</option>
+                      <option value="Thirdborn">Thirdborn</option>
+                      <option value="Fourthborn">Fourthborn</option>
+                      <option value="Fifthborn">Fifthborn</option>
+                      <option value="Sixthborn">Sixthborn</option>
+                      <option value="Seventhborn">Seventhborn</option>
+                      <option value="Eighthborn">Eighthborn</option>
+                      <option value="Ninenthborn">Ninenthborn</option>
+                      <option value="Tenthborn">Tenthborn</option>
+                     
+                  </select>
+              </td>
+              </tr>
+              <td>
+                <select name="dob_month" id="dob_month" required>
+                  <option value="" disabled selected>Select Born Month</option>                    
+                  <option value="01">January</option>
+                  <option value="02">February</option>
+                  <option value="03">March</option>
+                  <option value="04">April</option>
+                  <option value="05">May</option>
+                  <option value="06">June</option>
+                  <option value="07">July</option>
+                  <option value="08">August</option>
+                  <option value="09">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>                   
+                  <option value="12">December</option>
+                </select>    </td>
+                <td>         
+                
+                <select name="dob_day" id="dob_day" required >
+                  <option value="" disabled selected>Select Your Birthday</option>                   
+  
+                                  
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="01">03</option>
+                  <option value="02">04</option>
+                  <option value="31">05</option>
+                  <option value="31">06</option>
+                  <option value="02">07</option>
+                  <option value="31">08</option>
+                  <option value="31">09</option>
+                  <option value="31">10</option>
+                  <option value="01">11</option>
+                  <option value="02">12</option>
+                  <option value="01">13</option>
+                  <option value="02">14</option>
+                  <option value="31">15</option>
+                  <option value="31">16</option>
+                  <option value="02">17</option>
+                  <option value="31">18</option>
+                  <option value="31">19</option>
+                  <option value="31">20</option>
+                  <option value="01">21</option>
+                  <option value="02">22</option>
+                  <option value="01">23</option>
+                  <option value="02">24</option>
+                  <option value="31">25</option>
+                  <option value="31">26</option>
+                  <option value="02">27</option>
+                  <option value="31">28</option>
+                  <option value="31">29</option>
+                  <option value="31">30</option>
+                  <option value="01">31</option>
+                </select>
+              
+                <!-- <input type="text" name="dob" id="dob" placeholder="Enter your DOB (DD/MM)" maxlength="5" pattern="\d{2}/\d{2}" title="Enter a valid date (DD/MM)" required> -->
+              </td>
+          </tr>
+          <tr class="form-row">
+            <td>
+              <select name="child_blood_group" required>
+                <option value="" disabled selected>Select Blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+            </td>  
+              <!-- <td><input type="text" name="child_blood_group" placeholder="Blood Group" required></td> -->
+              <td colspan="2">
+                <select name="child_living_status" required>
+                    <option value="" disabled selected>Select Living Status</option>                    
+                    <option value="1">Living in Zambia</option>
+                    <option value="2">Living in Other Country</option>
+                    <option value="3">Deceased</option>
+                </select>
+            </td>
+          </tr>
+      </table>
+               <div class="form-actions">
+            <div class="button-container">
+                <button type="button" onclick="goBack()">Back</button>
+                <button type="submit">SAVE</button>
+                <button type="button" onclick="goToNext()">Next</button>
+            </div>
+        </div>
+      </form>
+      <div class="childrencontainer col-lg-">
+        {% if children_details %}
+      
+                  <!-- <h2 style="text-align: center;">Childrens Details</h2> -->
+                
+                  <table class="table">
+                      <thead style="background-color: #3c679f; color: #fff;">
+                          <tr style="text-align: center;">
+                            <td style="text-align: center;">Our Childrens are </td> 
+                          </tr>
+                      </thead>
+                      <tbody>
+                        {% for child in children_details %}
+                        <tr>
+                          <td style="width: 5%;">{{ forloop.counter }}</td>
+                          <td style="text-align: justify; width: 85%; font-size: large;">
+                              {% if child.gender == 'M' %}
+                              Mr.<span style="color: #4f4204; font-weight: bold; font-size: larger;">{{ child.child_name }}</span> is
+                              {% elif child.gender == 'F' %}
+                              Ms.<span style="color: #4f4204; font-weight: bold; font-size: larger;"> {{ child.child_name }}</span> is
+                              {% else %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">{{ child.child_name }}</span> is
+                              {% endif %}
+                              {% if child.birth_order == 'Firstborn' %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">our firstborn</span>
+                              {% elif child.birth_order == 'Secondborn' %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">our secondborn</span>
+                              {% elif child.birth_order == 'Thirdborn' %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">our thirdborn</span>
+                              {% elif child.birth_order == 'Fourthborn' %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">our fourthborn</span>
+                              {% elif child.birth_order == 'Fifthborn' %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">our fifthborn</span>
+                              {% elif child.birth_order == 'Sixthborn' %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">our sixthborn</span>
+                              {% elif child.birth_order == 'Seventhborn' %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">our seventhborn</span>
+                              {% elif child.birth_order == 'Eighthborn' %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">our eighthborn</span>
+                              {% elif child.birth_order == 'Ninthborn' %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">our ninthborn</span>
+                              {% elif child.birth_order == 'Tenthborn' %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">our tenthborn</span>
+                              {% else %}
+                              {{ child.birth_order.lower }}
+                              {% endif %}
+                              and was born on <span style="color: #4f4204; font-weight: bold; font-size: larger;">{{ child.dob|date:"F d" }}</span>
+                              with blood group 🩸 <span style="color: #4f4204; font-weight: bold;">{{ child.blood_group }}</span>.
+                              {% if child.gender == 'F' %}
+                              She is
+                              {% elif child.gender == 'M' %}
+                              He is
+                              {% else %}
+                              They are
+                              {% endif %}
+                              {% if child.status == 1 %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">currently living in Zambia.</span>
+                              {% elif child.status == 2 %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">currently living in another country.</span>
+                              {% elif child.status == 3 %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">deceased.</span>
+                              {% else %}
+                              <span style="color: #4f4204; font-weight: bold; font-size: larger;">status unknown.</span>
+                              {% endif %}
+                          </td>
+                          <td style="width: 20%;">
+                              <a href="{% url 'edit_child' child.cid %}" class="table-progress-link" style="text-decoration: dotted;"><i class="fas fa-edit" style="font-size: 24px; color: #f1aa04;"></i></a>
+                              &nbsp; &nbsp;
+                              <a href="{% url 'deletechild' child.cid %}" class="table-progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-trash" style="color: #f1aa04; font-size: 24px;"></i></a>
+                          </td>
+                      </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+                  {% endif %}
+                  </div>
+    </div>
+    </div>
+ 
+                </div>
+            
+       
+  </div>
+</div>
+
+            </div>
+            
+
+<!-- -------------text type------ -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Function to validate if the input contains only text (no digits)
+    function validateTextOnly(inputField) {
+        var textRegex = /^[a-zA-Z\s]*$/; // Regular expression for only text (no digits)
+        return textRegex.test(inputField.value);
+    }
+  
+    // Get the input field for child name
+    var childNameInput = document.querySelector('input[name="Child_name"]');
+  
+    // Add an event listener to the child name input field
+    childNameInput.addEventListener('input', function () {
+        if (!validateTextOnly(childNameInput)) {
+            alert('Invalid input. Please use only text (no digits).');
+            childNameInput.value = '';
+        }
+    });
+  
+    // ... Add additional fields as needed
+  });
+  </script>
+  
+<!-- ------------- -->
+
+
+
+
+<script>
+  function goBack() {
+    // Handle logic to navigate back (e.g., redirect to the previous step)
+    // For example, redirect to familyregister.html
+    window.location.href = "{% url 'save_spouse' %}";
+  }
+
+  function goToNext() {
+    // Handle logic to navigate to the next step (e.g., redirect to the next step)
+    // For example, redirect to children.html
+    window.location.href = "{% url 'save_other' %}";
+  }
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      var dobInput = document.getElementById('dob');
+
+      dobInput.addEventListener('input', function (event) {
+          var input = event.target.value;
+          // Remove any non-digit characters
+          var sanitizedInput = input.replace(/\D/g, '');
+
+          if (sanitizedInput.length > 2) {
+              // Add a '/' after the second character
+              sanitizedInput = sanitizedInput.slice(0, 2) + '/' + sanitizedInput.slice(2);
+          }
+
+          // Update the input field with the formatted value
+          dobInput.value = sanitizedInput;
+      });
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      // Check if the URL has a 'success' parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const successParam = urlParams.get('success');
+
+      // If 'success' is present and truthy, update the UI
+      if (successParam) {
+          // Add a green tick or update the style for Step 1 in the dashboard
+          document.querySelector('.progress-container .circle').classList.add('active-circle');
+      }
+  });
+</script>
+
+
+
+
+
+{% endblock %}
+
+<!-- editchild.html -->
+{% extends 'memberbase.html' %}
+{% block content %}
+<style type="text/css">
+    /* Add this to your main.css or create a new CSS file */
+  
+    /* Add more styling as needed */
+    input,
+  textarea,
+  select,
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+  }
+  
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+      /* Styles for form elements */
+      input:hover,
+  textarea:hover {
+      background-color: #b1cfdf;
+      color: white;
+      transform: scale(1.05); /* Adjust the scale factor as needed */
+      transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+  }
+  select:hover {
+      transform: scale(1.05); /* Adjust the scale factor as needed */
+      transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+      background-color: #f2f3f4;
+      color: rgb(16, 15, 15);
+  }
+  
+    .dashboard {
+      /* border-right: 2px solid #3c679f; */
+      padding-right: 30px;
+      height: 750px; /* Adjust height as needed */
+    }
+  
+    .dashboard-heading h4 {
+      display: inline-block;
+      position: relative;
+      padding-bottom: 5px;
+    }
+  
+    .dashboard-heading h4::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40%;
+      height: 5px;
+      background-color: #e0a905;
+    }
+  
+    table {
+      width: 100%;
+    }
+  
+    table tr {
+      display: flex;
+      margin-bottom: 15px;
+    }
+  
+    table td {
+      width: 50%;
+      box-sizing: border-box;
+      padding-right: 10px;
+    }
+  
+    form {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      border-radius: 5px;
+    }
+    /* Additional styles for form-row and full-width */
+  .form-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+    input,
+    textarea,
+    select,
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+    
+  .vertical-steps {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .vertical-steps a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    margin-bottom: 10px;
+  }
+
+  .vertical-steps a:hover {
+    text-decoration: underline;
+  }
+
+  .right-content {
+    padding-left: 20px;
+  }
+
+  .progress-link {
+    border: 2px solid #3c679f;
+    /* Gives blue border for the anchor tag */
+        color: #000; /* Black text */
+        /* background-color: #e0a905; */
+         /* Yellow background */
+        display: block;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .progress-link-container {
+      width: 280px;
+        transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+    } 
+
+    .progress-link-container:hover {
+        transform: scale(1.1); /* Increase the scale to zoom in */
+    }
+
+    .progress-link:hover {
+        background-color:#3c679f;
+         /* Darker yellow on hover */
+        color: #ffffff;
+    }
+   
+      /* Styling for the progress container */
+  
+      .progress-title {
+          text-align: left;
+          font-size: 18px;
+          font-weight: bold;
+          font-family: 'Your Desired Font', sans-serif;
+          margin-bottom: 20px;
+      }
+  
+      .progress-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 20px; /* Adjust margin as needed */
+      }
+  
+      .circle {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background-color: #3c679f; /* Adjust the color as needed */
+          color: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+      }
+  
+      .line {
+          flex: 1;
+          height: 2px;
+          background-color:#3c679f; /* Adjust the color as needed */
+      }
+  
+      .active-circle {
+          background-color: #e0a905; /* Adjust the color as needed */
+      }
+      /* ----------------/ */
+      .custom-blue {
+      background-color:#3c679f; /* Blue background */
+      color: #fff; /* White text */
+      /* Add any other styles you need */
+  }
+  .custom-green {
+      /* background-color: #9bcf71;  */
+      /* Blue background */
+      color: #fff; /* White text */
+      /* Add any other styles you need */
+  }
+  .full-width {
+      width: 100% !important;
+  }
+  /* -----------------------button---------------- */
+  .button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+button-container {
+  display: flex;
+  justify-content: space-between;
+}
+.button-container button {
+    width: 150px;
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+button {
+    width: 180px; /* Adjust the width as needed */
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+.button-container button:hover {
+    background-color: #3c679f;
+}
+
+  button:hover {
+    background-color: #3c679f;
+  }
+
+    
+  /* -------------------endbutton */
+  
+  
+  .form-container {
+      width: 100%;
+      max-width: 100%;
+      animation: slideInFromBottom 1s ease-out;
+    }
+    @keyframes slideInFromBottom {
+      0% {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  /* Add the following CSS class definition */
+  .full-width {
+      width: 100% !important;
+  }
+  /* -----------------------card begining------------- */
+  .spouse-card {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    background-color: #3c679f;
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-footer {
+    background-color: #eee;
+    padding: 10px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    text-align: center;
+  }
+  
+  .table-progress-link {
+    color: #3c679f;
+  }
+  
+  /* --------------p-------------- */
+  p {
+      font-family: 'Arial', sans-serif;
+      font-size: 22px;
+      line-height: 1.6;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+  
+    .contact-details {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+  /* ----------------card end------------------------------ */
+  </style>
+  
+<br><br><br><br><br><br><br>
+
+<div class="container">
+  <div class="row gy-4">
+    <div class="col-lg-3" data-aos="fade-up">
+      <div class="dashboard">
+        <div class="dashboard-heading">
+          <h4 class="underline-below">Registration Process</h4>
+        </div>
+        <div class="vertical-steps"> <br>
+          <!-- Step 1: Owner Details -->
+          {% if not od %}
+          <a href="{% url 'save_owner' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;Step 1: Owner Details</a>
+          {% else %}
+          <!-- Add your content for the 'else' case, e.g., change color to yellow -->
+          <a href="{% url 'save_owner' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px;"></i>&nbsp;Step 1: Owner Details</a>
+          {% endif %}          <br>
+           <!-- Step 2: Spouse Details -->
+           {% if not sd %}
+           <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;Step 1: Owner Details</a>
+           {% else %}
+           <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;Step 2: Spouse Details</a>
+           {% endif %} <br>
+           <!-- Step 3: Children's Details -->
+           {% if not child %}
+           <a href="{% url 'save_children' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-hand-point-right" style="color: #e0a905; font-size: 24px;"></i>&nbsp;Step 1: Owner Details</a>
+           {% else %}
+           <a href="{% url 'save_children' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;Step 3: Children's Details</a>
+           
+           {% endif %}<br>
+           <!-- Step 4: Other Details -->
+           {% if not other %}
+           <a href="{% url 'save_other' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>Step 4: Guest's Details</a>
+           {% else %}
+           <a href="{% url 'save_other' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;Step 4: Guest's Details</a>
+           
+           {% endif %}
+           
+           <!-- Step 3: family photo's Details --><br>
+             {% if not fp %}
+             <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;Step 5:Family Photo</a>
+             {% else %}
+             <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;Step 5: Family Photo</a>
+             
+             {% endif %}<br>
+       
+                    <!-- Step 6: R and S Details -->
+           <a href="{% url 'submitfamilyview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;">Step 6: Review and Submit</a>
+                  </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9 right-content" data-aos="fade-up">
+      <div class="progress-title" id="progress-title">Step 3: Children's Details</div>
+
+      <!-- Progress Container -->
+      <div class="progress-container" id="progress-container">
+        <!-- Circles with Connecting Lines -->
+        <div class="circle active-circle">1</div>
+        <div class="line"></div>
+        <div class="circle active-circle">2</div>
+        <div class="line"></div>
+        <div class="circle active-circle">3</div>
+        <div class="line"></div>
+        <div class="circle">4</div>
+        <div class="line"></div>
+        <div class="circle">5</div>
+        <div class="line"></div>
+        <div class="circle">6</div>
+      </div>
+
+      <div class="form-container">
+        <div class="col-lg-9 right-content form-container" data-aos="fade-up">
+
+          <!-- Child Details Form -->
+          <form method="post" action="{% url 'edit_child' child_id=child.cid %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+
+              <tr class="form-row">
+                <td class="full-width">
+                  <input type="text" name="child_name" placeholder="Child Name" value="{{child.child_name}}" required class="full-width">
+                </td>
+              </tr>
+
+              <tr class="form-row">
+                <td>
+                  <select name="gender" required>
+                    <option value="M" {% if child.gender == 'M' %}selected{% endif %}>Male</option>
+                    <option value="F" {% if child.gender == 'F' %}selected{% endif %}>Female</option>
+                    <option value="O" {% if child.gender == 'O' %}selected{% endif %}>Other</option>
+                  </select>
+                </td>
+                <td>
+                  <select id="birth_order" name="birth_order" required>
+                    <option value="Firstborn" {% if child.birth_order == 'Firstborn' %}selected{% endif %}>Firstborn</option>
+                    <option value="Secondborn" {% if child.birth_order == 'Secondborn' %}selected{% endif %}>Secondborn</option>
+                    <option value="Thirdborn" {% if child.birth_order == 'Thirdborn' %}selected{% endif %}>Thirdborn</option>
+                    <option value="Fourtborn" {% if child.birth_order == 'Fourtborn' %}selected{% endif %}>Fourtborn</option>
+                    <option value="Fifthborn" {% if child.birth_order == 'Fifthborn' %}selected{% endif %}>Fifthborn</option>
+                    <option value="Sixthborn" {% if child.birth_order == 'Sixthborn' %}selected{% endif %}>Sixthborn</option>
+                    <option value="Seventhborn" {% if child.birth_order == 'Seventhborn' %}selected{% endif %}>Seventhborn</option>
+                    <option value="Eighthborn" {% if child.birth_order == 'Eighthborn' %}selected{% endif %}>Eighthborn</option>
+                    <option value="Ninenthborn" {% if child.birth_order == 'Ninenthborn' %}selected{% endif %}>Ninenthborn</option>
+                    <option value="Tenthborn" {% if child.birth_order == 'Tenthborn' %}selected{% endif %}>Tenthborn</option>
+                </select>
+
+                </td>
+                </tr>
+                <tr class="form-row" >
+                <td>
+                  <!-- Month Dropdown -->
+                  <select name="dob_month">
+                    {% for month in dob_month_names %}
+                    <option value="{{ forloop.counter }}" {% if forloop.counter == child.dob.month %}selected{% endif %}>{{ month }}</option>
+                    {% endfor %}
+                  </select>
+                </td>
+                <td>
+                  <!-- Day Dropdown -->
+                  <select name="dob_day">
+                    {% for day in dob_days %}    
+    
+                    <option value="{{ forloop.counter }}" {% if forloop.counter == child.dob.day %}selected{% endif %}>{{ day }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                  </tr>
+                  <tr class="form-row">
+                    <td>
+                      <!-- Add the necessary HTML and Django template tags for the 'blood_group' field -->
+                      <select name="blood_group" required>
+                        <option value="" disabled>Select Blood Group</option>
+                        <option value="A+" {% if child.blood_group == 'A+' %}selected{% endif %}>A+</option>
+                        <option value="A-" {% if child.blood_group == 'A-' %}selected{% endif %}>A-</option>
+                        <option value="B+" {% if child.blood_group == 'B+' %}selected{% endif %}>B+</option>
+                        <option value="B-" {% if child.blood_group == 'B-' %}selected{% endif %}>B-</option>
+                        <option value="AB+" {% if child.blood_group == 'AB+' %}selected{% endif %}>AB+</option>
+                        <option value="AB-" {% if child.blood_group == 'AB-' %}selected{% endif %}>AB-</option>
+                        <option value="O+" {% if child.blood_group == 'O+' %}selected{% endif %}>O+</option>
+                        <option value="O-" {% if child.blood_group == 'O-' %}selected{% endif %}>O-</option>
+                      </select>
+                    </td>
+                    <td>
+                      <select name="status" required>
+                        <option value="1" {% if child.status == '1' %}selected{% endif %}>Living in Zambia</option>
+                        <option value="2" {% if child.status == '2' %}selected{% endif %}>Living in Other Country</option>
+                        <option value="3" {% if child.status == '3' %}selected{% endif %}>Deceased</option>
+                      </select>
+                      <!-- Add the necessary HTML and Django template tags for the 'status' field -->
+                      
+                    </td>
+                  </tr>
+               
+                  
+                    
+                    
+                    
+                 
+                 
+                  <!-- Add other fields for the child details as needed -->
+                </table>
+                <div class="form-actions">
+                  <div class="button-container">
+                    <button type="button" onclick="goBack()">Back</button>
+                    <button type="submit">UPDATE</button>
+                    <button type="button" onclick="goToNext()">Next</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ... Your existing scripts ... -->
+    
+
+
+
+
+
+
+
+
+                        <!-- Your existing scripts -->
+
+<script>
+    // Your existing script for number validation
+    document.addEventListener('DOMContentLoaded', function () {
+      // ... (your existing script)
+    });
+  </script>
+  
+  <!-- Additional script for text type validation -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Function to validate if the input contains only text (no digits)
+      function validateTextOnly(inputField) {
+        var textRegex = /^[a-zA-Z\s]*$/; // Regular expression for only text (no digits)
+        return textRegex.test(inputField.value);
+      }
+  
+      // Get the input fields for child name
+      var childNameInput = document.querySelector('input[name="child_name"]');
+  
+      // Add an event listener to each input field
+      childNameInput.addEventListener('input', function () {
+        if (!validateTextOnly(childNameInput)) {
+          alert('Invalid input. Please use only text (no digits).');
+          childNameInput.value = '';
+        }
+      });
+    });
+  </script>
+  
+  <script>
+    // Your existing script for navigation
+    function goBack() {
+      // Handle logic to navigate back
+      window.location.href = "{% url 'save_spouse' %}";
+    }
+  
+    function goToNext() {
+      // Handle logic to navigate to the next step
+      window.location.href = "{% url 'save_children' %}";
+    }
+  </script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Your existing script for date format
+      var dobInput = document.getElementById('dob');
+  
+      dobInput.addEventListener('input', function (event) {
+        var input = event.target.value;
+        // Remove any non-digit characters
+        var sanitizedInput = input.replace(/\D/g, '');
+  
+        if (sanitizedInput.length > 2) {
+          sanitizedInput = sanitizedInput.slice(0, 2) + '/' + sanitizedInput.slice(2);
+        }
+  
+        dobInput.value = sanitizedInput;
+      });
+    });
+  </script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Your existing script for success parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const successParam = urlParams.get('success');
+  
+      if (successParam) {
+        document.querySelector('.progress-container .circle').classList.add('active-circle');
+      }
+    });
+  </script>
+  
+  {% endblock %}
+  
+<!-- index.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+
+
+
+
+    <style>
+      /* ----------------alert */
+
+
+
+  .custom-h3 {
+    font-family: 'Arial', Courier, monospace;
+    color: #656363;
+    font-size: 35px; /* Adjust the font size as needed */
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 8px; /* Adjust the margin as needed */
+    position: relative; /* Required for positioning the underline */
+    display: inline-block;
+  }
+
+  .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 15%; /* Full width of the text */
+    height: 5px; /* Adjust the height of the underline */
+    background-color: rgb(239, 198, 19); /* Adjust the color of the underline */
+  }
+
+        #signup-container {
+            display: none;
+            /* Add styling properties as needed */
+            height: 550px;
+            width: 500px;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        #signup-container.active {
+            display: block;
+        }
+
+        #login-form.active {
+            display: none;
+        }
+
+
+
+        /* ------------ */
+
+
+
+
+  /* Common styles for buttons and text inputs */
+
+ /* Common styles for buttons and text inputs */
+button,
+input[type="text"],
+input[type="password"],
+input[type="tel"],
+input[type="email"] {
+  border: 1px solid #ccc;
+  border-radius: 10px; /* Increase the border-radius for rounded corners */
+  padding: 10px;
+  margin-bottom: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 75%;
+}
+
+/* Styles for buttons */
+button {
+  background-color: #3c679f;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 10px; /* Increase the border-radius for rounded corners */
+}
+
+/* Additional styles for specific inputs */
+input[type="text"].form-control {
+  width: 100%; /* Set the width for the username input to 100% */
+  border-radius: 10px; /* Increase the border-radius for rounded corners */
+}
+
+input[type="password"].form-control {
+  width: 100%; /* Set the width for the password input to 100% */
+  border-radius: 10px; /* Increase the border-radius for rounded corners */
+}
+
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Styles for text inputs */
+  input[type="text"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="email"] {
+    width: 80%;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  input[type="text"]:hover,
+  input[type="password"]:hover,
+  input[type="tel"]:hover,
+  input[type="email"]:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #e2dede;
+    color: black;
+  }
+
+  input[type="text"]:focus,
+  input[type="password"]:focus,
+  input[type="tel"]:focus,
+  input[type="email"]:focus {
+    outline: none;
+    border-color: #f0da4d;
+    box-shadow: 0 0 10px rgb(229, 198, 19);
+  }
+
+  /* Additional styles for signup container */
+  #signup-container {
+    text-align: center;
+  }
+
+  .animated-paragraph {
+    animation: zoomInFromBottom 1s ease-out;
+}
+
+@keyframes zoomInFromBottom {
+    0% {
+        transform: translateY(100%) scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+
+
+    </style>
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero">
+
+    <div class="info d-flex align-items-center">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-12 text-center">
+            <h2 >Welcome to <br>ZMCA</h2>
+           
+            <p data-aos="fade-up">The Zambia Malayalee Cultural Association (ZMCA) serves as a bridge between 'God's own Country' and the heart of Africa, tirelessly working towards cultural enrichment and charitable impact in the Zambian community.
+            </p>
+            <a data-aos="fade-up" data-aos-delay="200" href="#get-started" class="btn-get-started">Get Started</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+      <div class="carousel-item active" style="background-image: url({% static 'img/zmpictures/m4.jpg' %})"></div>
+      <div class="carousel-item" style="background-image: url({% static 'img/zmpictures/thiru3.jpg' %})"></div>      
+      <div class="carousel-item" style="background-image: url({% static 'img/zmpictures/d2.jpg' %});height: 1500px; width: 2000px;"></div>
+      <div class="carousel-item" style="background-image: url({% static 'img/zmpictures/m17.jpg' %})"></div>
+      <div class="carousel-item" style="background-image: url({% static 'img/zmpictures/m1.jpg' %})"></div>
+      <div class="carousel-item" style="background-image: url({% static 'img/zmpictures/od6.jpg' %})"></div>
+      <div class="carousel-item" style="background-image: url({% static 'img/zmpictures/f3.jpg' %})"></div>
+      <div class="carousel-item" style="background-image: url({% static 'img/zmpictures/m9.jpg' %})"></div>
+
+      <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+      </a>
+
+      <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+      </a>
+
+    </div>
+
+  </section><!-- End Hero Section -->
+
+  <main id="main">
+
+    <!-- ======= Get Started Section ======= -->
+    <section id="get-started" class="get-started section-bg">
+      <div class="container">
+
+        <div class="row justify-content-between gy-4">
+
+          <div class="col-lg-6 d-flex align-items-center" data-aos="fade-up">
+            <div class="content">
+              <h3 style="text-align:left" >Zambia malayalee cultural association(ZMCA).</h3>
+              <div class="animated-paragraph">
+              <p style="text-align: justify;font-size: 20px;">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Established in 1980 and registered under the
+                 Societies Act of Zambia, the Zambia Malayalee Cultural Association (ZMCA) stands as a
+                  testament to the enduring commitment to cultural exchange and charitable endeavors.
+              </p>
+              <p style="text-align: justify;font-size: 20px;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Rooted in the vibrant heritage of " God's own Country " ,Kerala,
+                 the association actively engages in diverse charitable
+                  and cultural activities to foster a strong connection with Zambia. With a core focus on preserving and upholding the rich identity and traditions of Kerala, ZMCA encourages its members to participate wholeheartedly. By providing various opportunities, the association not only nurtures cultural bonds but also serves
+                as a platform for members to enhance their skills and talents.
+              </p>
+              </div>
+            </div>
+          </div>
+<!-- -------------------start login form-------------------- -->
+<div class="col-lg-5" data-aos="fade" style="margin: 0 auto;">
+  <!-- Display Messages -->
+  
+  <!-- {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %} -->
+
+
+
+
+  <!-- Login Form -->
+  <form id="login-form" action="{% url 'memberlogin' %}" method="POST">
+      {% csrf_token %}
+    
+            <!-- {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %} -->
+      <h2 data-aos="fade-up" data-aos-delay="100" class="custom-h3">Sign In</h2>
+   
+      <br><br>
+    
+      <div class="row gy-3" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-md-12">
+              <input type="text" name="username" class="form-control" placeholder="Enter your User Name" required autocomplete="off">
+          </div>
+          <div class="col-md-12">
+              <input type="password" class="form-control" name="password" placeholder="Enter your Password" required autocomplete="off">
+              <br>
+            </div>
+            <div>
+            <button type="submit" style="background-color: #eed028; color: #fff; width: 30%; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; display: block;">SignIn</button>
+            <!-- {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}" style="background-color: #3c679f;color:#fff" role="alert">
+                {{ message|safe }}
+              </div>
+            {% endfor %}
+          {% endif %} -->
+          <!-- Display Messages Container -->
+<div id="messages-container">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}" role="alert">
+        {{ message|safe }}
+      </div>
+    {% endfor %}
+    <button id="dismiss-messages" style="width: 35%;">Ok</button>
+  {% endif %}
+</div>
+
+          <!-- <button type="submit" style=" background-color: #3c679f; color: #fff; width: 40%; margin: 0 auto; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; display: block;">SignIn</button> -->
+         
+        <br>  <a href="{% url 'forgetpassword' %}"  data-aos="fade-up" data-aos-delay="100"   style="color: #3c679f;">Forget Password?</a>
+
+        
+        </div>
+        
+        </form>
+          <div>
+            <a href="#" id="show-signup"   data-aos="fade-up" data-aos-delay="100"   style="color: #3c679f;">Don't have an account? Sign Up</a>
+
+          </div>
+
+        </div>
+  
+
+
+
+
+<!-- -------------------signup---------- -->
+<div id="signup-container" style="display: none;" data-aos="fade-up" data-aos-delay="100">
+  <form id="signup-form" action="{% url 'membersignup' %}" method="POST">
+    {% csrf_token %}
+    <h2 data-aos="fade-up">Sign Up</h2>
+    <br>
+
+    <div class="row gy-3">
+      <div class="col-md-6">
+        <input type="text" name="firstname" placeholder="First Name" style="width: 100%;" required>
+      </div>
+
+      <div class="col-md-6">
+        <input type="text" name="lastname" placeholder="Last Name" style="width: 100%;" required>
+      </div>
+
+      <div class="col-md-6">
+        <input type="text" name="familyname" placeholder="Family Name" style="width: 100%;" required>
+      </div>
+
+      <div class="col-md-6">
+        <input type="tel" id="contactno" name="phonenumber" placeholder="Phone Number" style="width: 100%;" required>
+      </div>
+
+      <div class="col-md-12">
+        <input type="email" name="email" placeholder="Email" style="width: 100%;" required autocomplete="off">
+      </div>
+
+      <div class="col-md-12">
+        <input type="password" name="password" placeholder="Password" style="width: 100%;" required autocomplete="off">
+      </div>
+      <div class="col-md-12">
+        <input type="password" name="cpassword" placeholder="Confirm Password"  style="width: 100%;" required>
+      </div>
+
+
+    </div>
+<br>
+    <button type="submit" style="background-color: #f1c618; color: #fff; width: 40%; margin: 0 auto; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; display: block;">Create Account</button>
+   
+    <br><a href="#" id="show-login" style="color: brown;">Already have an account? Login</a>
+  </form>
+</div>
+
+<!-- -------------------end signup------------------->
+</div></div></section>
+
+<!-- =====================signup========================== -->
+
+
+       <!-- End Get Started Section -->
+
+    <!-- ======= Constructions Section ======= -->
+    <!-- <section id="constructions" class="constructions">
+      <div class="container" data-aos="fade-up"> -->
+
+        <!-- <div class="section-header">
+          <h2>Constructions</h2>
+          <p>Nulla dolorum nulla nesciunt rerum facere sed ut inventore quam porro nihil id ratione ea sunt quis dolorem
+            dolore earum</p>
+        </div> -->
+
+        <!-- <div class="row gy-4">
+
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="card-item">
+              <div class="row">
+                <div class="col-xl-5">
+                  <div class="card-bg" style="background-image: url({% static 'img/constructions-1.jpg' %});"></div>
+                </div>
+                <div class="col-xl-7 d-flex align-items-center">
+                  <div class="card-body">
+                    <h4 class="card-title">Eligendi omnis sunt veritatis.</h4>
+                    <p>Fuga in dolorum et iste et culpa. Commodi possimus nesciunt modi voluptatem placeat deleniti
+                      adipisci. Cum delectus doloribus non veritatis. Officia temporibus illo magnam. Dolor eos et.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!-- End Card Item -->
+
+          <!-- <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="card-item">
+              <div class="row">
+                <div class="col-xl-5">
+                  <div class="card-bg" style="background-image: url({% static 'img/constructions-2.jpg' %});"></div>
+                </div>
+                <div class="col-xl-7 d-flex align-items-center">
+                  <div class="card-body">
+                    <h4 class="card-title">Possimus ut sed velit assumenda</h4>
+                    <p>Sunt deserunt maiores voluptatem autem est rerum perferendis rerum blanditiis. Est laboriosam qui
+                      iste numquam laboriosam voluptatem architecto. Est laudantium sunt at quas aut hic. Eum
+                      dignissimos.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!-- End Card Item -->
+
+          <!-- <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="card-item">
+              <div class="row">
+                <div class="col-xl-5">
+                  <div class="card-bg" style="background-image: url({% static 'img/constructions-3.jpg' %});"></div>
+                </div>
+                <div class="col-xl-7 d-flex align-items-center">
+                  <div class="card-body">
+                    <h4 class="card-title">Error beatae dolor inventore aut</h4>
+                    <p>Dicta porro nobis. Velit cum in. Nesciunt dignissimos enim molestiae facilis numquam quae quaerat
+                      ipsam omnis. Neque debitis ipsum at architecto officia laboriosam odit. Ut sunt temporibus nulla
+                      culpa.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!-- End Card Item -->
+
+          <!-- <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="card-item">
+              <div class="row">
+                <div class="col-xl-5">
+                  <div class="card-bg" style="background-image: url({% static 'img/constructions-4.jpg' %});"></div>
+                </div>
+                <div class="col-xl-7 d-flex align-items-center">
+                  <div class="card-body">
+                    <h4 class="card-title">Expedita voluptas ut ut nesciunt</h4>
+                    <p>Aut est quidem doloremque voluptatem magnam quis excepturi vero quia. Eum eos doloremque
+                      architecto illo at beatae dolore. Fugiat suscipit et sint ratione dolores. Aut aliquid ea dolores
+                      libero nobis.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!-- End Card Item -->
+
+        <!-- </div>
+
+      </div>
+    </section> -->
+    <!-- End Constructions Section -->
+
+    <!-- ======= Services Section ======= -->
+    <!-- <section id="services" class="services section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>Services</h2>
+          <p>Voluptatem quibusdam ut ullam perferendis repellat non ut consequuntur est eveniet deleniti fignissimos eos
+            quam</p>
+        </div>
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item  position-relative">
+              <div class="icon">
+                <i class="fa-solid fa-mountain-city"></i>
+              </div>
+              <h3>Nesciunt Mete</h3>
+              <p>Provident nihil minus qui consequatur non omnis maiores. Eos accusantium minus dolores iure perferendis
+                tempore et consequatur.</p>
+              <a href="service-details.html" class="readmore stretched-link">Learn more <i
+                  class="bi bi-arrow-right"></i></a>
+            </div>
+          </div>-->
+          <!-- End Service Item -->
+
+          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="fa-solid fa-arrow-up-from-ground-water"></i>
+              </div>
+              <h3>Eosle Commodi</h3>
+              <p>Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum hic non ut
+                nesciunt dolorem.</p>
+              <a href="service-details.html" class="readmore stretched-link">Learn more <i
+                  class="bi bi-arrow-right"></i></a>
+            </div>
+          </div> -->
+          <!-- End Service Item -->
+
+          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="fa-solid fa-compass-drafting"></i>
+              </div>
+              <h3>Ledo Markt</h3>
+              <p>Ut excepturi voluptatem nisi sed. Quidem fuga consequatur. Minus ea aut. Vel qui id voluptas adipisci
+                eos earum corrupti.</p>
+              <a href="service-details.html" class="readmore stretched-link">Learn more <i
+                  class="bi bi-arrow-right"></i></a>
+            </div>
+          </div> -->
+          <!-- End Service Item -->
+<!-- 
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="fa-solid fa-trowel-bricks"></i>
+              </div>
+              <h3>Asperiores Commodit</h3>
+              <p>Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga sit provident
+                adipisci neque.</p>
+              <a href="service-details.html" class="readmore stretched-link">Learn more <i
+                  class="bi bi-arrow-right"></i></a>
+            </div>
+          </div> -->
+          <!-- End Service Item -->
+
+          <!-- <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="fa-solid fa-helmet-safety"></i>
+              </div>
+              <h3>Velit Doloremque</h3>
+              <p>Cumque et suscipit saepe. Est maiores autem enim facilis ut aut ipsam corporis aut. Sed animi at autem
+                alias eius labore.</p>
+              <a href="service-details.html" class="readmore stretched-link">Learn more <i
+                  class="bi bi-arrow-right"></i></a>
+            </div>
+          </div> -->
+          <!-- End Service Item -->
+<!-- 
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="fa-solid fa-arrow-up-from-ground-water"></i>
+              </div>
+              <h3>Dolori Architecto</h3>
+              <p>Hic molestias ea quibusdam eos. Fugiat enim doloremque aut neque non et debitis iure. Corrupti
+                recusandae ducimus enim.</p>
+              <a href="service-details.html" class="readmore stretched-link">Learn more <i
+                  class="bi bi-arrow-right"></i></a>
+            </div>
+          </div> -->
+          <!-- End Service Item -->
+
+        <!-- </div>
+
+      </div>
+    </section>  -->
+        <!-- End Services Section -->
+
+    <!-- ======= Alt Services Section ======= -->
+    <!-- <section id="alt-services" class="alt-services">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row justify-content-around gy-4">
+          <div class="col-lg-6 img-bg" style="background-image: url({% static 'img/alt-services.jpg' %});" data-aos="zoom-in"
+            data-aos-delay="100"></div>
+
+          <div class="col-lg-5 d-flex flex-column justify-content-center">
+            <h3>Enim quis est voluptatibus aliquid consequatur fugiat</h3>
+            <p>Esse voluptas cumque vel exercitationem. Reiciendis est hic accusamus. Non ipsam et sed minima temporibus
+              laudantium. Soluta voluptate sed facere corporis dolores excepturi</p>
+
+            <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="100">
+              <i class="bi bi-easel flex-shrink-0"></i>
+              <div>
+                <h4><a href="" class="stretched-link">Lorem Ipsum</a></h4>
+                <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate
+                  non provident</p>
+              </div>
+            </div>-->
+            <!-- End Icon Box -->
+
+            <!-- <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="200">
+              <i class="bi bi-patch-check flex-shrink-0"></i>
+              <div>
+                <h4><a href="" class="stretched-link">Nemo Enim</a></h4>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
+                  deleniti atque</p>
+              </div>
+            </div> -->
+            <!-- End Icon Box -->
+
+            <!-- <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="300">
+              <i class="bi bi-brightness-high flex-shrink-0"></i>
+              <div>
+                <h4><a href="" class="stretched-link">Dine Pad</a></h4>
+                <p>Explicabo est voluptatum asperiores consequatur magnam. Et veritatis odit. Sunt aut deserunt minus
+                  aut eligendi omnis</p>
+              </div>
+            </div> -->
+            <!-- End Icon Box -->
+
+            <!-- <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="400">
+              <i class="bi bi-brightness-high flex-shrink-0"></i>
+              <div>
+                <h4><a href="" class="stretched-link">Tride clov</a></h4>
+                <p>Est voluptatem labore deleniti quis a delectus et. Saepe dolorem libero sit non aspernatur odit amet.
+                  Et eligendi</p>
+              </div>
+            </div> -->
+            <!-- End Icon Box -->
+<!-- 
+          </div>
+        </div>
+
+      </div>
+    </section>  -->
+    <!-- End Alt Services Section -->
+
+    <!-- ======= Features Section ======= -->
+    <!-- <section id="features" class="features section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <ul class="nav nav-tabs row  g-2 d-flex">
+
+          <li class="nav-item col-3">
+            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#tab-1">
+              <h4>Modisit</h4>
+            </a>
+          </li> -->
+          <!-- End tab nav item -->
+
+          <!-- <li class="nav-item col-3">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-2">
+              <h4>Praesenti</h4>
+            </a> -->
+            <!-- End tab nav item -->
+
+          <!-- <li class="nav-item col-3">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-3">
+              <h4>Explica</h4>
+            </a>
+          </li> -->
+          <!-- End tab nav item -->
+
+          <!-- <li class="nav-item col-3">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-4">
+              <h4>Nostrum</h4>
+            </a>
+          </li> -->
+          <!-- End tab nav item -->
+
+      
+          <!-- End tab content item -->
+<!-- 
+          <div class="tab-pane" id="tab-2">
+            <div class="row">
+              <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
+                <h3>Neque exercitationem debitis</h3>
+                <p class="fst-italic">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                  dolore
+                  magna aliqua.
+                </p>
+                <ul>
+                  <li><i class="bi bi-check2-all"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+                  <li><i class="bi bi-check2-all"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+                  <li><i class="bi bi-check2-all"></i> Provident mollitia neque rerum asperiores dolores quos qui a.
+                    Ipsum neque dolor voluptate nisi sed.</li>
+                  <li><i class="bi bi-check2-all"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+                    aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla
+                    pariatur.</li>
+                </ul>
+              </div>
+              <div class="col-lg-6 order-1 order-lg-2 text-center">
+                <img src="{% static 'img/features-2.jpg' %}" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div> -->
+          <!-- End tab content item -->
+<!-- 
+          <div class="tab-pane" id="tab-3">
+            <div class="row">
+              <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
+                <h3>Voluptatibus commodi accusamu</h3>
+                <ul>
+                  <li><i class="bi bi-check2-all"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+                  <li><i class="bi bi-check2-all"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+                  <li><i class="bi bi-check2-all"></i> Provident mollitia neque rerum asperiores dolores quos qui a.
+                    Ipsum neque dolor voluptate nisi sed.</li>
+                </ul>
+                <p class="fst-italic">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                  dolore
+                  magna aliqua.
+                </p>
+              </div>
+              <div class="col-lg-6 order-1 order-lg-2 text-center">
+                <img src="{% static 'img/features-3.jpg' %}" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div> -->
+          <!-- End tab content item -->
+
+          <!-- <div class="tab-pane" id="tab-4">
+            <div class="row">
+              <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
+                <h3>Omnis fugiat ea explicabo sunt</h3>
+                <p class="fst-italic">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                  dolore
+                  magna aliqua.
+                </p>
+                <ul>
+                  <li><i class="bi bi-check2-all"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+                  <li><i class="bi bi-check2-all"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+                  <li><i class="bi bi-check2-all"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+                    aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla
+                    pariatur.</li>
+                </ul>
+              </div>
+              <div class="col-lg-6 order-1 order-lg-2 text-center">
+                <img src="{% static 'img/features-4.jpg' %}" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div> -->
+          <!-- End tab content item -->
+
+          <!-- </div>
+
+        </div>
+      </section> -->
+    <!-- End Features Section -->
+
+    <!-- ======= Our Projects Section ======= -->
+    <section id="projects" class="projects">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>Gallery</h2>
+          <p style="text-align: justify; width: 200%;">Explore our gallery to witness a vibrant collection showcasing the diverse range of programs and events hosted by our esteemed ZMCA association, encapsulating the essence of our cultural, social, and charitable endeavors.</p>
+        </div>
+
+        <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry"
+          data-portfolio-sort="original-order">
+
+          <ul class="portfolio-flters" data-aos="fade-up" data-aos-delay="100">
+            <li data-filter="*" class="filter-active">All</li>
+            <li data-filter=".filter-remodeling">Onam</li>
+            <li data-filter=".filter-construction">Food Fete</li>
+            <li data-filter=".filter-repairs">Cultural Programme</li>
+            <li data-filter=".filter-design">Sports day</li>
+          </ul><!-- End Projects Filters -->
+
+          <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-remodeling">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'img/zmpictures/f1.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Onam</h4>
+                  <!-- <p>Lorem ipsum, dolor sit amet consectetur</p> -->
+                  <a href="{% static 'img/zmpictures/f2.jpg' %}" title="Remodeling 1"
+                    data-gallery="portfolio-gallery-remodeling" class="glightbox preview-link"><i
+                      class="bi bi-zoom-in"></i></a>
+                  <a href="project-details.html" title="More Details" class="details-link"><i
+                      class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Projects Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-construction">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'img/zmpictures/f3.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Food fete</h4>
+                  <!-- <p>Lorem ipsum, dolor sit amet consectetur</p> -->
+                  <a href="{% static 'img/zmpictures/q1.jpg' %}" title="Construction 1"
+                    data-gallery="portfolio-gallery-construction" class="glightbox preview-link"><i
+                      class="bi bi-zoom-in"></i></a>
+                  <a href="project-details.html" title="More Details" class="details-link"><i
+                      class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Projects Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-repairs">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'img/zmpictures/q1.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Cultural</h4>
+                  <!-- <p>Lorem ipsum, dolor sit amet consectetur</p> -->
+                  <a href="{% static 'img/zmpictures/q2.jpg' %}" title="Repairs 1" data-gallery="portfolio-gallery-repairs"
+                    class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="project-details.html" title="More Details" class="details-link"><i
+                      class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Projects Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-design">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'img/zmpictures/q3.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Design 1</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'img/zmpictures/q4.jpg' %}" title="Repairs 1" data-gallery="portfolio-gallery-book"
+                    class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="project-details.html" title="More Details" class="details-link"><i
+                      class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Projects Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-remodeling">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'img/zmpictures/q5.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Remodeling 2</h4>
+                  <!-- <p>Lorem ipsum, dolor sit amet consectetur</p> -->
+                  <a href="{% static 'img/zmpictures/q6.jpg' %}" title="Remodeling 2"
+                    data-gallery="portfolio-gallery-remodeling" class="glightbox preview-link"><i
+                      class="bi bi-zoom-in"></i></a>
+                  <a href="project-details.html" title="More Details" class="details-link"><i
+                      class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Projects Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-construction">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'img/zmpictures/q7.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Onam</h4>
+                  <!-- <p>Lorem ipsum, dolor sit amet consectetur</p> -->
+                  <a href="{% static 'img/zmpictures/q8.jpg' %}" title="Construction 2"
+                    data-gallery="portfolio-gallery-construction" class="glightbox preview-link"><i
+                      class="bi bi-zoom-in"></i></a>
+                  <a href="project-details.html" title="More Details" class="details-link"><i
+                      class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Projects Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-repairs">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'img/zmpictures/q9.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Repairs 2</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'img/zmpictures/q10.jpg' %}" title="Repairs 2" data-gallery="portfolio-gallery-repairs"
+                    class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="project-details.html" title="More Details" class="details-link"><i
+                      class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Projects Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-design">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'img/zmpictures/onam.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Design 2</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'img/zmpictures/onam1.jpg' %}" title="Repairs 2" data-gallery="portfolio-gallery-book"
+                    class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="project-details.html" title="More Details" class="details-link"><i
+                      class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Projects Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-remodeling">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'img/zmpictures/m1.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Onam</h4>
+                  <!-- <p>Lorem ipsum, dolor sit amet consectetur</p> -->
+                  <a href="{% static 'img/zmpictures/m2.jpg' %}" title="Remodeling 3"
+                    data-gallery="portfolio-gallery-remodeling" class="glightbox preview-link"><i
+                      class="bi bi-zoom-in"></i></a>
+                  <a href="project-details.html" title="More Details" class="details-link"><i
+                      class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Projects Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-construction">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'img/zmpictures/m3.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Construction 3</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'img/zmpictures/m4.jpg' %}" title="Construction 3"
+                    data-gallery="portfolio-gallery-construction" class="glightbox preview-link"><i
+                      class="bi bi-zoom-in"></i></a>
+                  <a href="project-details.html" title="More Details" class="details-link"><i
+                      class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Projects Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-repairs">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'img/zmpictures/m5.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Repairs 3</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'img/zmpictures/fd2.jpg' %}" title="Repairs 2" data-gallery="portfolio-gallery-repairs"
+                    class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="project-details.html" title="More Details" class="details-link"><i
+                      class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Projects Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-design">
+              <div class="portfolio-content h-100">
+                <img src="{% static 'img/zmpictures/fd1.jpg' %}" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>Design 3</h4>
+                  <p>Lorem ipsum, dolor sit amet consectetur</p>
+                  <a href="{% static 'img/zmpictures/10.jpg' %}" title="Repairs 3" data-gallery="portfolio-gallery-book"
+                    class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="project-details.html" title="More Details" class="details-link"><i
+                      class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Projects Item -->
+
+          </div><!-- End Projects Container -->
+
+        </div>
+
+      </div>
+    </section><!-- End Our Projects Section -->
+
+    <!-- ======= Testimonials Section ======= -->
+    <!-- <section id="testimonials" class="testimonials section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>Testimonials</h2>
+          <p>Quam sed id excepturi ccusantium dolorem ut quis dolores nisi llum nostrum enim velit qui ut et autem uia
+            reprehenderit sunt deleniti</p>
+        </div>
+
+        <div class="slides-2 swiper">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'img/testimonials/testimonials-1.jpg' %}" class="testimonial-img" alt="">
+                  <h3>Saul Goodman</h3>
+                  <h4>Ceo &amp; Founder</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus.
+                    Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div>-->
+            <!-- End testimonial item -->
+
+            <!-- <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'img/testimonials/testimonials-2.jpg' %}" class="testimonial-img" alt="">
+                  <h3>Sara Wilsson</h3>
+                  <h4>Designer</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis
+                    quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div> -->
+            <!-- End testimonial item -->
+
+            <!-- <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'img/testimonials/testimonials-3.jpg' %}" class="testimonial-img" alt="">
+                  <h3>Jena Karlis</h3>
+                  <h4>Store Owner</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim
+                    tempor labore quem eram duis noster aute amet eram fore quis sint minim.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div> -->
+            <!-- End testimonial item -->
+
+            <!-- <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="testimonial-img" alt="">
+                  <h3>Matt Brandon</h3>
+                  <h4>Freelancer</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit
+                    minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div> -->
+            <!-- End testimonial item -->
+<!-- 
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="{% static 'img/testimonials/testimonials-5.jpg' %}" class="testimonial-img" alt="">
+                  <h3>John Larson</h3>
+                  <h4>Entrepreneur</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim
+                    culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum
+                    quid.
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div> -->
+            <!-- End testimonial item -->
+
+         <!-- </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section> -->
+    <!-- End Testimonials Section -->
+
+    <!-- ======= Recent Blog Posts Section ======= -->
+    <section id="recent-blog-posts" class="recent-blog-posts">
+      <div class="container" data-aos="fade-up">
+
+    
+    
+  <div class=" section-header">
+        <h2>Recent Blog Posts</h2>
+        <p>
+
+          Discover our ZMCA blog, where each post captures the essence of our association's diverse programs and events, offering insights into our cultural heritage, community engagements, and philanthropic endeavors.        </p>
+      </div>
+
+      <div class="row gy-5">
+
+        <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="post-item position-relative h-100">
+
+            <div class="post-img position-relative overflow-hidden">
+              <img src="{% static 'img/blog/blog-1.jpg' %}" class="img-fluid" alt="">
+              <span class="post-date">December 12</span>
+            </div>
+
+            <div class="post-content d-flex flex-column">
+
+              <h3 class="post-title">Eum ad dolor et. Autem aut fugiat debitis</h3>
+
+              <div class="meta d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-person"></i> <span class="ps-2">Julia Parker</span>
+                </div>
+                <span class="px-3 text-black-50">/</span>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-folder2"></i> <span class="ps-2">Politics</span>
+                </div>
+              </div>
+
+              <hr>
+
+              <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i
+                  class="bi bi-arrow-right"></i></a>
+
+            </div>
+
+          </div>
+        </div><!-- End post item -->
+
+        <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="post-item position-relative h-100">
+
+            <div class="post-img position-relative overflow-hidden">
+              <img src="{% static 'img/blog/blog-2.jpg' %}" class="img-fluid" alt="">
+              <span class="post-date">July 17</span>
+            </div>
+
+            <div class="post-content d-flex flex-column">
+
+              <h3 class="post-title">Et repellendus molestiae qui est sed omnis</h3>
+
+              <div class="meta d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-person"></i> <span class="ps-2">Mario Douglas</span>
+                </div>
+                <span class="px-3 text-black-50">/</span>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-folder2"></i> <span class="ps-2">Sports</span>
+                </div>
+              </div>
+
+              <hr>
+
+              <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i
+                  class="bi bi-arrow-right"></i></a>
+
+            </div>
+
+          </div>
+        </div><!-- End post item -->
+
+        <div class="col-xl-4 col-md-6">
+          <div class="post-item position-relative h-100" data-aos="fade-up" data-aos-delay="300">
+
+            <div class="post-img position-relative overflow-hidden">
+              <img src="{% static 'img/blog/blog-3.jpg' %}" class="img-fluid" alt="">
+              <span class="post-date">September 05</span>
+            </div>
+
+            <div class="post-content d-flex flex-column">
+
+              <h3 class="post-title">Quia assumenda est et veritati tirana ploder</h3>
+
+              <div class="meta d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-person"></i> <span class="ps-2">Lisa Hunter</span>
+                </div>
+                <span class="px-3 text-black-50">/</span>
+                <div class="d-flex align-items-center">
+                  <i class="bi bi-folder2"></i> <span class="ps-2">Economics</span>
+                </div>
+              </div>
+
+              <hr>
+
+              <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i
+                  class="bi bi-arrow-right"></i></a>
+
+            </div>
+
+          </div>
+        </div><!-- End post item -->
+
+      </div>
+
+      </div>
+    </section>
+    <!-- End Recent Blog Posts Section -->
+
+  </main><!-- End #main -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var loginForm = document.getElementById("login-form");
+      var signupContainer = document.getElementById("signup-container");
+  
+      if (loginForm && signupContainer) {
+        // Show login form, hide signup container
+        loginForm.style.display = "block";
+        signupContainer.style.display = "none";
+  
+        // Add event listener to show signup form
+        document.getElementById("show-signup").addEventListener("click", function(event) {
+          event.preventDefault();
+          loginForm.style.display = "none";
+          signupContainer.style.display = "block";
+        });
+  
+        // Add event listener to show login form
+        document.getElementById("show-login").addEventListener("click", function(event) {
+          event.preventDefault();
+          signupContainer.style.display = "none";
+          loginForm.style.display = "block";
+        });
+      }
+    });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // For the login form
+        var loginForm = document.getElementById("login-form");
+        if (loginForm) {
+          loginForm.username.setAttribute("autocomplete", "off");
+          loginForm.password.setAttribute("autocomplete", "off");
+        }
+    
+        // For the signup form
+        var signupForm = document.getElementById("signup-form");
+        if (signupForm) {
+          signupForm.firstname.setAttribute("autocomplete", "off");
+          signupForm.lastname.setAttribute("autocomplete", "off");
+          signupForm.familyname.setAttribute("autocomplete", "off");
+          signupForm.phonenumber.setAttribute("autocomplete", "off");
+          signupForm.email.setAttribute("autocomplete", "off");
+          signupForm.password.setAttribute("autocomplete", "off");
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        var loginForm = document.getElementById("login-form");
+        var signupForm = document.getElementById("signup-form");
+    
+        if (loginForm) {
+          loginForm.reset();
+        }
+    
+        if (signupForm) {
+          signupForm.reset();
+        }
+      });
+    </script>
+    
+
+    
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var dismissButton = document.getElementById('dismiss-messages');
+
+    if (dismissButton) {
+      dismissButton.addEventListener('click', function () {
+        // Remove the messages container when the button is clicked
+        document.getElementById('messages-container').innerHTML = '';
+      });
+    }
+  });
+</script>
+
+
+<script>
+  var inputElement1 = document.querySelector("#contactno");
+ 
+  var iti1 = window.intlTelInput(inputElement1, {
+      separateDialCode: true,
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+      initialCountry: "in", // Set default country to india
+      dropdownContainer: document.body
+  });
+
+</script>
+    
+    
+
+
+ 
+  {% endblock %}
+ 
+ 
+<!-- ------------------familyregister------------- -->
+{% extends 'memberbase.html' %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 1200px; /* Adjust the maximum width as needed */
+        margin: 0 auto; /* Center the container */
+    }
+
+    .col-lg-3 {
+        width: 25%; /* Adjust the width as needed */
+    }
+
+    .col-lg-9 {
+        width: 75%; /* Adjust the width as needed */
+    }
+
+    h4 {
+        display: inline-block;
+        position: relative;
+        padding-bottom: 5px; /* Adjust as needed */
+    }
+
+    h4::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 40%; /* Underline spans the entire width */
+        height: 5px; /* Adjust as needed */
+        background-color: #e0a905; /* Adjust the color as needed */
+    }
+
+    .vertical-steps {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .vertical-steps li {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .vertical-steps li::after {
+        content: '';
+        display: inline-block;
+        width: 1px;
+        height: 100%;
+        background-color: #057166; /* Adjust the color as needed */
+        margin-left: 10px; /* Adjust the margin as needed */
+    }
+
+    .dashboard {
+        border-right: 4px solid #057166; /* Adjust the color as needed */
+        padding-right: 30px; /* Adjust the padding as needed */
+        height: 900px;
+    }
+
+    .content {
+        padding-left: 20px; /* Adjust the padding as needed */
+    }
+
+    /* Styling for the progress container */
+    .progress-container {
+        display: flex;
+        justify-content: center; 
+        align-items: center;
+        margin-top: 20px; /* Adjust margin as needed */
+        perspective: 1000px; /* Set the perspective for 3D effect */
+    }
+
+    .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #007BFF; /* Adjust the color as needed */
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: transform 0.5s; 
+    }
+
+    .line {
+        flex: 1;
+        height: 2px;
+        background-color: #057166;/* Adjust the color as needed */
+        transition: transform 0.5s; 
+    }
+
+    .active-circle {
+        background-color:#e0a905; /* Adjust the color as needed */
+    }
+      /* Increase the height of the entire section */
+      #get-started {
+        min-height: 400px; /* Adjust the minimum height as needed */
+        margin-top: 10px; /* Adjust the top margin as needed */
+    }
+    
+    .content-section h2 {
+        margin-bottom: 20px;
+    }
+
+    .progress-title {
+        text-align: left;
+        font-size: 18px;
+        font-weight: bold;
+        font-family: 'Your Desired Font', sans-serif;
+        margin-bottom: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    td {
+        padding: 10px;
+    }
+
+    input, textarea, select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    button {
+        padding: 10px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3; /* Change color on hover */
+    }
+    .progress-link {
+        position: relative;
+        display: flex;
+        align-items: center;
+        color: #000;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s, transform 0.5s; /* Added transform transition */
+        height: 50px;
+        width: 100%;
+        border: 2px solid #02635b;
+    }
+    .progress-link.active {
+        background-color: #ffd700; /* Adjust the background color for the active step */
+    }
+    .progress-link.active .finger-symbol {
+        color: green; /* Adjust the color for the active finger symbol */
+        transform: rotateZ(360deg); /* Rotate the active finger 360 degrees on the Z-axis */
+    }
+
+
+    .progress-link::before {
+        margin-right: 5px;
+        content: ''; /* Remove the content property */
+    }
+
+    .finger-symbol {
+        margin-right: 10px;
+        font-size: 20px;
+        color: red;
+        transition: transform 0.5s; /* Added transform transition */
+    }
+
+.finger-symbol.active-finger {
+    transform: rotateZ(360deg); /* Rotate the active finger 360 degrees on the Z-axis */
+}
+
+.progress-link:hover {
+        color: #0f0000;
+        border-color: #007BFF;
+        transform: scale(1.05); /* Scale up on hover */
+    }
+ 
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.6/jquery.inputmask.min.js"></script>
+
+
+<br><br><br>
+<section id="get-started" class="get-started section-bg">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-lg-3" data-aos="fade-up">
+                <div class="dashboard">
+                    <div class="dashboard-heading"><h4 class="underline-below">Registration Process</h4></div>
+                    <br>
+                    <div class="vertical-steps">
+                        <!-- Step 1: Owner Details -->
+                        <a href="{% url 'save_owner' %}" class="progress-link">
+                            <span class="finger-symbol"style="color: rgb(5, 68, 109);"><i class="fa-regular fa-hand-point-right"></i></span> Step 1: Owner Details
+                        </a> 
+                        <br>                                   
+                        <!-- Step 2: Spouse Details -->
+                        <a href="#" class="progress-link">Step 2: Spouse Details</a>
+                        <br>
+                        <!-- Step 3: Children's Details -->
+                        <a href="#" class="progress-link">Step 3: Children's Details</a>
+                        <br>
+                        <!-- Step 4: Other Details -->
+                        <a href="#" class="progress-link">Step 4: Other Details</a>
+                        <br>
+                        <!-- Step 5: Other Details -->
+                        <a href="#" class="progress-link">Step 5: Upload family photo</a>
+                        <br>
+                        <!-- Step 6: Other Details -->
+                        <a href="#" class="progress-link">Step 6: Review and Submit</a>
+                      </div> 
+                </div>
+            <div class="col-lg-9" data-aos="fade-up">
+                <div class="content">
+                    <!-- <div class="progress-title" id="progress-title">Step 1: Owner Details</div> -->
+                    <!-- Progress Container -->
+                    <!-- <div class="progress-container" id="progress-container">
+                        Circles with Connecting Lines
+                        <div class="circle active-circle" onclick="showParentsPage()">1</div>
+                        <div class="line"></div>
+                        <div class="circle {% if parent_details_exist %}active-circle{% endif %}" onclick="showChildrenPage()">2</div>
+                        <div class="line"></div>
+                        <div class="circle {% if parent_details_exist and children_details_exist %}active-circle{% endif %}" onclick="showOtherPage()">3</div>
+                        <div class="line"></div>
+                        <div class="circle {% if parent_details_exist and children_details_exist and other_details_exist %}active-circle{% endif %}" onclick="showFinishPage()">4</div>
+                    </div> -->
+
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br><br>
+
+
+                     
+          
+                    <script>
+                        function showParentsPage() {
+                            // Implement logic to show content for Step 1
+                            console.log("Showing Step 1 content");
+                        }
+                    
+                        function showChildrenPage() {
+                            // Implement logic to show content for Step 2
+                            console.log("Showing Step 2 content");
+                        }
+                    
+                        function showOtherPage() {
+                            // Implement logic to show content for Step 3
+                            console.log("Showing Step 3 content");
+                        }
+                    
+                        function showFinishPage() {
+                            // Implement logic to show content for Step 4
+                            console.log("Showing Step 4 content");
+                        }
+                    </script>
+                    <script>
+                        function loadContent(url) {
+                            var xhr = new XMLHttpRequest();
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState == 4) {
+                                    console.log('Response Status:', xhr.status);
+                                    console.log('Response Text:', xhr.responseText);
+                    
+                                    if (xhr.status == 200) {
+                                        document.getElementById('step-content').innerHTML = xhr.responseText;
+                                    } else {
+                                        console.error('Failed to load content:', xhr.statusText);
+                                    }
+                                }
+                            };
+                            xhr.open('GET', url, true);
+                            xhr.send();
+                        }
+                    
+                      
+
+                      
+                    </script>
+              
+                
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      var dobInput = document.getElementById('dob');
+
+      dobInput.addEventListener('input', function (event) {
+          var input = event.target.value;
+          // Remove any non-digit characters
+          var sanitizedInput = input.replace(/\D/g, '');
+
+          if (sanitizedInput.length > 2) {
+              // Add a '/' after the second character
+              sanitizedInput = sanitizedInput.slice(0, 2) + '/' + sanitizedInput.slice(2);
+          }
+
+          // Update the input field with the formatted value
+          dobInput.value = sanitizedInput;
+      });
+  });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check if the URL has a 'success' parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const successParam = urlParams.get('success');
+
+        // If 'success' is present and truthy, update the UI
+        if (successParam) {
+            // Add a green tick or update the style for Step 1 in the dashboard
+            document.querySelector('.progress-container .circle').classList.add('active-circle');
+        }
+    });
+</script>   
+                    
+       
+
+{% endblock %}
+
+<!-- -----owner--- -->
+{% extends 'memberbase.html' %}
+{% block content %}
+<style type="text/css">
+  /* Add this to your main.css or create a new CSS file */
+
+  /* Add more styling as needed */
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .dashboard {
+    /* border-right: 4px solid #3c679f; */
+    padding-right: 30px;
+    height: 1000px; /* Adjust height as needed */
+  }
+
+  .dashboard-heading h4 {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 5px;
+  }
+
+  .dashboard-heading h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40%;
+    height: 5px;
+    background-color: #eee205;
+  }
+
+  .vertical-steps {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .vertical-steps a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    margin-bottom: 10px;
+  }
+
+  .vertical-steps a:hover {
+    text-decoration: underline;
+  }
+
+  .right-content {
+    padding-left: 20px;
+  }
+
+  table {
+    width: 100%; /* Adjust as needed */
+    max-width: 100%;
+  }
+
+  table tr {
+    display: flex;
+    margin-bottom: 15px;
+  }
+
+  table td {
+    flex: 1; /* Each column takes up equal space */
+    /* width: 50%; */
+    box-sizing: border-box;
+    padding-right: 10px;
+  }
+
+  /* --------------button */
+  .button-container {
+  display: flex;
+  justify-content: space-between;
+}
+.button-container button {
+    width: 150px;
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #3c679f;
+    color: white;
+    border: none;
+}
+
+button {
+    width: 180px; /* Adjust the width as needed */
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #3c679f;
+    color: white;
+    border: none;
+}
+.button-container button:hover {
+    background-color: #7eb1e3;
+}
+
+  button:hover {
+    background-color: #7eb1e3;
+  }
+/* -------------------endbutton */
+
+
+  input,
+  textarea,
+  select,
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+  }
+  .progress-link {
+        color: #000; /* Black text */
+        background-color:#e0a905; /* Yellow background */
+        display: block;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .progress-link:hover {
+        background-color: #a68408; /* Darker yellow on hover */
+        color: #ffffff;
+    }
+    /* Styling for the progress container */
+
+    .progress-title {
+        text-align: left;
+        font-size: 18px;
+        font-weight: bold;
+        font-family: 'Your Desired Font', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .progress-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px; /* Adjust margin as needed */
+    }
+
+    .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color:#3c679f; /* Adjust the color as needed */
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .line {
+        flex: 1;
+        height: 2px;
+        background-color: #3c679f; /* Adjust the color as needed */
+    }
+
+    .active-circle {
+        background-color:#e0a905; /* Adjust the color as needed */
+    }
+    /* ----------------/ */
+    .custom-blue {
+    background-color: #3c679f;/* Blue background */
+    color: #fff; /* White text */
+    /* Add any other styles you need */
+}
+.custom-green {
+    background-color: #9be722; /* Blue background */
+    color: #fff; /* White text */
+    /* Add any other styles you need */
+}
+/* .full-width {
+    width: 100% !important;
+} */
+
+  /* Add new styles for animation */
+  form {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 5px;
+  }
+  .form-container {
+    width: 100%;
+    max-width: 100%;
+    animation: slideInFromBottom 1s ease-out;
+  }
+
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  /* ---- */
+    .finger-symbol {
+        margin-right: 10px;
+        font-size: 20px;
+        color: red;
+        transition: transform 0.5s;
+    }
+
+</style>
+
+<br><br><br><br><br><br>
+
+<div class="container">
+  <div class="row gy-4">
+    <div class="col-lg-3" data-aos="fade-up">
+      <div class="dashboard">
+        <div class="dashboard-heading">
+          <h4 class="underline-below">Registration Process</h4>
+         
+        </div>
+        <div class="vertical-steps"> <br>
+          <!-- Step 1: Owner Details -->
+          <a href="{% url 'save_owner' %}" class="progress-link custom-blue" style="color: #fff;;">  <span class="finger-symbol" style="color: rgb(233, 235, 237);">
+            <i class="fa-regular fa-hand-point-right"></i>
+        </span><strong>1: Owner Details</strong> </a>
+          <br>
+          <!-- Step 2: Spouse Details -->
+          <a href="#" class="progress-link">Step 2: Spouse Details</a>
+          <br>
+          <!-- Step 3: Children's Details -->
+          <a href="#" class="progress-link">Step 3: Children's Details</a>
+          <br>
+          <!-- Step 4: Other Details -->
+          <a href="#" class="progress-link">Step 4: Other Details</a>
+          <br>
+          <!-- Step 5: Other Details -->
+          <a href="#" class="progress-link">Step 5: Upload family photo</a>
+          <br>
+          <!-- Step 6: Other Details -->
+          <a href="#" class="progress-link">Step 6: Review and Submit</a>
+        </div>
+      </div>
+    </div>
+   
+    <div class="col-lg-9 right-content" data-aos="fade-up">
+      <div class="progress-title" id="progress-title">Step 1: Owner Details</div>
+
+       <!-- Progress Container -->
+       <div class="progress-container" id="progress-container">
+        <!-- Circles with Connecting Lines -->
+        <div class="circle active-circle">1</div>
+        <div class="line"></div>
+        <div class="circle">2</div>
+        <div class="line"></div>
+        <div class="circle">3</div>
+        <div class="line"></div>
+        <div class="circle">4</div>
+        <div class="line"></div>
+        <div class="circle">5</div>
+        <div class="line"></div>
+        <div class="circle ">6</div>
+    </div>
+    <br>
+    <div class="form-container">
+    <div class="col-lg-9 right-content form-container" data-aos="fade-up">
+      <!-- Owner Details Form -->
+      <form method="post" action="{% url 'save_owner' %}">
+        {% csrf_token %}
+        <table>
+          <tr class="form-row">
+            <td><input type="text" name="owner_first_name" placeholder="Owner First Name" required></td>
+            <td><input type="text" name="owner_last_name" placeholder="Owner Last Name" required></td>
+          <!-- </tr>
+          <tr class="form-row"> -->
+            <td><input type="text" name="family_name" class="full-width" placeholder="Family Name" required></td></tr>
+          </tr>
+            <tr class="form-row">
+              <td>
+                  <select name="gender" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="O">Other</option>
+                  </select>
+                </td>
+                <td>
+                  <input type="text" name="dob" id="dob" placeholder="Enter your DOB (DD/MM)" maxlength="5" pattern="\d{2}/\d{2}" title="Enter a valid date (DD/MM)" required>
+                </td>
+              </tr>
+              <tr class="form-row">
+                <td>
+                  <select name="blood_group" required>
+                    <option value="" disabled selected>Select Blood Group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                  </select>
+                </td>   
+                <td>
+                  <select name="zmstatus" required>
+                    <option value=""disabled selected>Select Living status</option>
+                    <option value="With Family">With Family</option>
+                    <option value="Alone">Alone</option>
+                  </select>
+                </td>
+              </tr>
+
+                 <tr class="form-row">
+            <td><textarea name="address_india" placeholder="Address India" rows="3" required></textarea></td>
+            <td><textarea name="address_zambia" placeholder="Address Zambia" rows="3" required></textarea></td>
+          </tr>
+          <tr class="form-row">
+            <td><input type="text" name="lcity" placeholder="Living City in Zambia" required></td>
+            <td><input type="text" name="lprovince" placeholder="Living Province in Zambia" required></td>
+          </tr>
+        
+          <tr class="form-row">
+            <td><input type="text" name="company_name" placeholder="Company Name" required></td>
+            <td><input type="text" name="work_name" placeholder="Work Name" required ></td>
+          </tr>
+          <tr class="form-row">
+            <td><input type="text" name="contact_no_india" placeholder="Contact Number India" required></td>
+            <td><input type="text" name="contact_no_zm" placeholder="Contact Number Zambia" required></td>
+            <td><input type="text" name="whatsapp_no" placeholder="WhatsApp Number" required></td>
+
+          </tr>
+          <tr class="form-row">
+            <td><input type="email" name="email" placeholder="Email" required ></td>
+          </tr>
+        </table>
+        <div class="form-actions">
+          <div class="button-container">
+            <button type="button" onclick="goBack()">Back</button>
+            <button type="submit">SAVE</button>
+            <button type="button" onclick="goToNext()">Next</button>
+            
+          </div>
+        </div>
+        
+      </form>
+    </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<script>
+  function goBack() {
+    // Handle logic to navigate back (e.g., redirect to the previous step)
+    // For example, redirect to familyregister.html
+    window.location.href = "{% url 'fr' %}";
+  }
+</script>
+<script>
+  function goToNext() {
+    // Redirect to the next step (children.html)
+    window.location.href = "{% url 'save_spouse' %}";
+  }
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      var dobInput = document.getElementById('dob');
+
+      dobInput.addEventListener('input', function (event) {
+          var input = event.target.value;
+          // Remove any non-digit characters
+          var sanitizedInput = input.replace(/\D/g, '');
+
+          if (sanitizedInput.length > 2) {
+              // Add a '/' after the second character
+              sanitizedInput = sanitizedInput.slice(0, 2) + '/' + sanitizedInput.slice(2);
+          }
+
+          // Update the input field with the formatted value
+          dobInput.value = sanitizedInput;
+      });
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      // Check if the URL has a 'success' parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const successParam = urlParams.get('success');
+
+      // If 'success' is present and truthy, update the UI
+      if (successParam) {
+          // Add a green tick or update the style for Step 1 in the dashboard
+          document.querySelector('.progress-container .circle').classList.add('active-circle');
+      }
+  });
+</script>
+
+
+
+
+
+{% endblock %}
+
+
+
+<!-- blogdetails -->
+
+{% extends 'fcbase.html' %}
+{% load static %}
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(to bottom, #3d6a95, #ffffff);
+  }
+  
+  /* Add your custom CSS rules here */
+  .post-item {
+    margin-bottom: 30px;
+
+  }
+
+  .post-img img {
+  height: 350px; /* Adjust the height as needed */
+  width: 100%;
+  object-fit: cover; /* Maintain aspect ratio and cover container */
+  padding-left: 10px;
+}
+
+
+  .post-img img {
+    width: 100%;
+    /* height: 100%; */
+    object-fit: cover; /* Ensure the image covers the entire container */
+    transition: transform 0.3s ease; /* Add a smooth transition effect */
+  }
+
+  .post-img:hover img {
+    transform: scale(1.1); /* Zoom effect on hover */
+  }
+
+  .post-content {
+    background-color: #fff; /* Background color for post content */
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  }
+
+  .post-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .post-date {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+
+  .meta {
+    margin-top: 10px;
+    color: #777;
+  }
+
+  .meta i {
+    font-size: 18px;
+  }
+
+  .meta span {
+    margin-left: 5px;
+  }
+
+  .readmore {
+    margin-top: 10px;
+    display: inline-block;
+    color: #fff;
+    background-color: #cedbe8;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .readmore:hover {
+    background-color: #0056b3; /* Darker color on hover */
+  }
+</style>
+
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <br><br>
+    <div class="abouthead custom-abouthead">
+      <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+        <br><br><br><h2 style="color: rgb(232, 227, 227); font-size: 45px; font-weight: bold;">Blog</h2>
+        <div class="abouttitle">
+          <a href="/" style="color: rgb(3, 54, 67);font-weight: bold;">&nbsp;Back</a>&nbsp;/&nbsp;<span style="color:#f1f3f5;font-weight: bold;"> Blog</span>
+        </div>
+      </div>
+    </div><!-- End Breadcrumbs -->
+    
+    <!-- ======= Blog Details Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up" data-aos-delay="100" style="background-color: #f1f3f5;">
+
+        <div class="row g-5">
+
+          <div class="col-lg-8">
+
+            <article class="blog-details">
+
+              <div class="post-img">
+                <div>
+                {% if blog.image %}
+                    <img src="{{ blog.image.url }}" alt="{{ blog.name }}">
+                {% else %}
+                    <p>No image available</p>
+                {% endif %}
+              </div>
+
+              &nbsp; &nbsp; <h2 class="title">{{blog.title}}</h2>
+
+              <div class="meta-top">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="" style="align-items: center;">{{blog.author_name}}</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href=""><time
+                        datetime="2020-01-01">{{blog.date}}&nbsp;{{blog.timestamp|time}}</time></a></li>
+                  <!-- <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="">12
+                      Comments</a></li> -->
+                </ul>
+              </div><!-- End meta top -->
+
+              <div class="content">
+                
+               <!-- <p>
+                {{blog.description}}
+                </p> -->
+
+              
+
+              </div><!-- End post content -->
+
+            </article><!-- End blog post -->
+
+            <div class="comments">
+
+              <div id="comment-2" class="comment">
+             
+
+                <div id="comment-reply-1" class="comment comment-reply">
+                 
+                </div>
+                <!-- End comment reply #1-->
+
+              </div>
+              <!-- End comment #2-->
+
+            
+
+            </div><!-- End blog comments -->
+
+          </div>
+
+          <div class="col-lg-4">
+
+            <div class="sidebar">
+
+
+              <div class="sidebar-item recent-posts">
+                <h3 class="sidebar-title">{{blog.subtitle}}</h3>
+
+                <div class="mt-3">
+
+                  <div class="post-item mt-3">
+                    <!-- <img src="assets/img/blog/blog-recent-1.jpg" alt=""> -->
+                    <div class="content">
+                      <p style="font-size: large;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">{{blog.description}}</p>
+                      <time datetime="2020-01-01">{{blog.date}}&nbsp;{{blog.timestamp|time}}</time>
+                    </div>
+                  </div><!-- End recent post item-->
+
+                
+              
+                </div>
+
+              </div><!-- End sidebar recent posts-->
+
+             
+            </div><!-- End Blog Sidebar -->
+
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Blog Details Section -->
+
+  </main><!-- End #main -->
+
+  <br><br><br><br><br><br>
+  <br><br><br>
+    
+  {% endblock %}
+  
+<!-- blog in index -->
+<div class="row gy-5">
+  {% for blog in b %}
+  {% if blog.status == 'Published' %}
+  <div class="col-xl-4 col-md-6" data-aos="fade-up" data-aos-delay="">
+    <div class="post-item position-relative h-100">
+      <div class="post-img position-relative overflow-hidden" style="height: 50%;width:100%;">
+        <img src="{{ blog.image.url }}" class="img-fluid" alt="{{ blog.title }}">
+        <span class="post-date">{{ blog.date }}</span>
+      </div>
+      <div class="post-content d-flex flex-column">
+        <h3 class="post-title">{{ blog.title }}</h3>
+
+        <div class="meta d-flex align-items-center">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-person"></i> <span class="ps-2">{{ blog.author_name }}</span>
+          </div>
+          <span class="px-3 text-black-50">/</span>
+          <div class="d-flex align-items-center">
+            <i class="bi bi-folder2"></i> <span class="ps-2">{{ blog.subtitle }}</span>
+          </div>
+        </div>
+        <hr>
+        <p>{{blog.description|truncatewords:10}}</p>
+        <a href="" class="readmore stretched-link">
+          <span>Read More</span>
+          <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div><!-- End post item -->
+  {% endif %}
+  {% endfor %}
+</div>
+
+
+<!-- --------------signup&signin -->
+<!-- -------------------start login form-------------------- -->
+<!-- <div class="col-lg-5" data-aos="fade" style="margin: 0 auto;">
+  <form id="login-form" action="{% url 'memberlogin' %}" method="POST">
+      {% csrf_token %}
+    
+            
+      <h2 data-aos="fade-up" data-aos-delay="100" class="custom-h3">Sign In</h2>
+   
+      <br><br>
+    
+      <div class="row gy-3" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-md-12">
+              <input type="text" name="username" class="form-control" placeholder="Enter your User Name" required autocomplete="off">
+          </div>
+          <div class="col-md-12">
+              <input type="password" class="form-control" name="password" placeholder="Enter your Password" required autocomplete="off">
+              <br>
+            </div>
+            <div>
+            <button type="submit" style="background-color: #eed028; color: #fff; width: 30%; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; display: block;">SignIn</button>
+           
+<div id="messages-container">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}" role="alert">
+        {{ message|safe }}
+      </div>
+    {% endfor %}
+    <button id="dismiss-messages" style="width: 35%;">Ok</button>
+  {% endif %}
+</div>
+
+         
+        <br>  <a href="{% url 'forgetpassword' %}"  data-aos="fade-up" data-aos-delay="100"   style="color: #3c679f;">Forget Password?</a>
+
+        
+        </div>
+        
+        </form>
+          <div>
+            <a href="#" id="show-signup"   data-aos="fade-up" data-aos-delay="100"   style="color: #3c679f;">Don't have an account? Sign Up</a>
+
+          </div>
+
+        </div>
+   -->
+
+
+
+
+<!-- -------------------signup---------- -->
+<!-- <div id="signup-container" style="display: none;" data-aos="fade-up" data-aos-delay="100">
+  <form id="signup-form" action="{% url 'membersignup' %}" method="POST">
+    {% csrf_token %}
+    <h2 data-aos="fade-up">Sign Up</h2>
+    <br>
+
+    <div class="row gy-3">
+      <div class="col-md-6">
+        <input type="text" name="firstname" placeholder="First Name" style="width: 100%;" required>
+      </div>
+
+      <div class="col-md-6">
+        <input type="text" name="lastname" placeholder="Last Name" style="width: 100%;" required>
+      </div>
+
+      <div class="col-md-6">
+        <input type="text" name="familyname" placeholder="Family Name" style="width: 100%;" required>
+      </div>
+
+      <div class="col-md-6">
+        <input type="tel" id="contactno" name="phonenumber" placeholder="Phone Number" style="width: 100%;" required>
+      </div>
+
+      <div class="col-md-12">
+        <input type="email" name="email" placeholder="Email" style="width: 100%;" required autocomplete="off">
+      </div>
+
+      <div class="col-md-12">
+        <input type="password" name="password" placeholder="Password" style="width: 100%;" required autocomplete="off">
+      </div>
+      <div class="col-md-12">
+        <input type="password" name="cpassword" placeholder="Confirm Password"  style="width: 100%;" required>
+      </div>
+
+
+    </div>
+<br>
+    <button type="submit" style="background-color: #f1c618; color: #fff; width: 40%; margin: 0 auto; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; display: block;">Create Account</button>
+   
+  </form>
+  <br><a href="#" id="show-login" style="color: brown;">Already have an account? Login</a>
+
+</div> -->
+
+<!-- -------------------end signup------------------->
+</div></div></section>
+<!-- aboutus -->
+<div class="row position-relative">
+      
+  <!-- <div class="col-lg-7 about-img" style="width:42%;height: 100%;   background-image: url({% static 'img/common/a5.jpg' %});"></div> -->
+  <div>
+    <h2 style="color:rgb(57, 56, 54); font-weight: bold;">ZMCA</h2>
+    <div class="our-story"  >
+      <h4 style="color: rgb(84, 75, 75); font-size: 30px; font-weight: bold;">Est 1980</h4>
+      <br><h3>Our Story</h3>
+      <p>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+        Inaugurated in 1980 and officially recognized under the Societies Act of Zambia, the Zambia Malayalee Cultural Association (ZMCA) has been an unwavering force in fostering cultural exchange and charitable initiatives. From its inception, ZMCA dedicated itself to a dual mission: preserving the rich heritage of 'God's own Country,' Kerala, and actively engaging in charitable pursuits in Zambia.
+       
+                  
+      </p>
+      <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Embodying the spirit of cultural preservation, the association endeavors to maintain the identity and traditions that define Kerala. This commitment is reflected in various charitable and cultural activities undertaken by ZMCA. Beyond geographical borders, the association seeks to establish and nurture a profound connection with Zambia.
+
+      </p>
+      <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Moreover, ZMCA goes beyond mere cultural preservation by providing its members with diverse opportunities. The association actively encourages participation in a myriad of activities, aiming to not only bolster cultural ties but also to enhance the skills and talents of its members.
+
+      </p>
+      <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        In essence, the Zambia Malayalee Cultural Association (ZMCA) serves as a bridge between 'God's own Country' and the heart of Africa, tirelessly working towards cultural enrichment and charitable impact in the Zambian community.
+
+      </p>
+    </div>
+  </div>
+</div>
+<!-- ===================image========== -->
+ <!-- Inside the 'get-started' section -->
+ <div class="col-lg-5" data-aos="fade" style="margin: 0 auto;">
+  <br><br>
+  <div class="committee-members">
+      <div class="custom-h3">
+          <h3 style="text-transform:capitalize;font-weight: bold;color: rgb(88, 88, 88);font-family: poppins,sans-serif;">Our Team<spna class="underline"></spna></h3>
+      </div>
+      <br><br>
+      <div class="row">
+          <!-- First two committee members -->
+          {% for member in committee_members %}
+          <div class="col-md-5">
+              <div class="card">
+                <br>
+                  <img src="{{ member.image.url }}" class="card-img-top" alt="{{ member.member_name }}">
+                  <div class="card-body">
+                      <h5 class="card-title">{{ member.member_name }}</h5>
+                      <p class="card-text">{{ member.post }}</p>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+  </div>
+</div>

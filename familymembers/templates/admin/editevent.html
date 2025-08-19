@@ -1,0 +1,376 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block content %}    
+
+<style>  
+
+
+/* Style for the link container */
+.link-container {
+  display: inline-block;
+  padding: 1px 2px;
+  background-color: #3d6a95;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.link-container:hover {
+  background-color: #2b3348;
+}
+/* Body styles */
+body {
+  /* text-transform: uppercase; */
+    font-family: Poppins, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+    /* overflow: hidden; */
+     /* Hide scrollbar */
+}
+/* Container styles */
+.recent-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+.projects {
+    width: 100%;
+    max-width: 600px;
+}
+
+.card {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #3d6a95;
+    padding: 20px;
+    color: #fff;
+}
+
+.card-header h3 {
+    margin: 0;
+}
+
+.form-container {
+    padding: 20px;
+}
+
+/* Form styles */
+form {
+    display: grid;
+    gap: 10px;
+    height: auto;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"],
+textarea,select,
+button,
+input[type="file"] {
+    width: calc(100% - 20px); /* Adjust width to allow for padding */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    text-transform: uppercase;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    background-color: #3d6a95;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2e5275;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+    .card {
+        max-width: 90%; /* Adjust max-width for smaller screens */
+    }
+}
+
+        /* CSS for table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+/* CSS for form elements */
+.form-container input[type="text"],
+.form-container textarea,
+.form-container select,
+.form-container input[type="date"],
+.form-container input[type="time"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Style for file input */
+.form-container input[type="file"] {
+    margin-bottom: 15px;
+}
+
+/* Style for buttons */
+.form-container button {
+    background-color: #3d6a95;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Hover effect for buttons */
+.form-container button:hover {
+    background-color: #2e5275;
+}
+
+/* Zoom effect for form inputs on hover */
+.form-container input:hover,
+.form-container textarea:hover,
+.form-container select:hover,
+.form-container input[type="date"]:hover,
+.form-container input[type="time"]:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s;
+}
+/* CSS for form elements focus and hover states */
+.form-container input[type="text"]:focus,
+.form-container textarea:focus,
+.form-container select:focus,
+.form-container input[type="date"]:focus,
+.form-container input[type="time"]:focus {
+    border-color: #3d6a95; /* Change border color on focus */
+    box-shadow: 0 0 5px rgba(61, 106, 149, 0.5); /* Add box shadow on focus */
+}
+
+/* Hover effect for form inputs */
+.form-container input:hover,
+.form-container textarea:hover,
+.form-container select:hover,
+.form-container input[type="date"]:hover,
+.form-container input[type="time"]:hover {
+    background-color: #f2f2f2; /* Change background color on hover */
+}
+
+</style>
+    
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar"> 
+      <div class="sidebar-brand">
+        <h2><span class="las la-user-circle"></span><span>ZMCA</span></h2>
+
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li>
+            <a href="{% url 'adminindex' %}" class="active"><span class="fas fa-home"></span>
+            <span>Home</span></a>
+          </li>
+          <!-- <li>
+            <a href="{% url 'adminindex' %}"><span class="fas fa-home"></span>
+            <span></span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'members_view' %}"><span class="las la-home"></span>
+              <span>Families</span></a>
+          <li>
+            <a href="{% url 'committe' %}"><span class="las la-users"></span>
+            <span>Committee Members</span></a>
+          </li>
+          <li>
+            <a href="{% url 'fam_view' %}">
+            <span class="fas fa-id-badge"></span>
+            <span>Membership</span></a>
+          </li>
+          
+          <li>
+            <a href="{% url 'enquiry_list' %}"><span class="fas fa-envelope"></span>
+            <span>Enqueries</span></a>
+            <!-- <ul class="submenu">
+              <li></li>
+              <li><a href="{% url 'allenquiry_list' %}"><span class="fas fa-envelope"></span><span>(All)</span></a></li>            
+           -->
+           </ul>
+          </li>
+          <li>
+            <a href="{% url 'bloodgroupadmin' %}">
+              <span class="fas fa-tint" style="color: red;"></span>
+            <span>Blood Group</span></a>
+          </li>
+          <li>
+            <a href="{% url 'birthdaydetails1' %}">
+              <span class="fas fa-birthday-cake"></span>
+            <span>Birthday</span></a>
+          </li>
+
+          </li>
+          <li>
+            <a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-image"></span>
+            <span>Gallery</span></a>
+            <ul class="submenu">
+              <!-- <li></li>
+              <li><a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Add Gallery</a></li>
+              <li><a href="{% url 'galleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Gallery</a></li> -->
+         
+          
+           </ul>
+           <li>
+            <a href="{% url 'addhomegallery' %}"><span class="fa-solid fa-image"></span>
+            <span>Home Gallery</span></a>
+           
+              </ul>
+          </li>
+          <!-- <li>
+            <a href="{% url 'gallery'%}"><span class="fa-solid fa-image"></span>
+            <span>Gallery</span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'addblogview' %}"><span class="las la-blog"></span>
+            <span>Blog</span></a>
+          </li>
+          <li>
+            <a href="{% url 'eventview' %}"><span class="fa fa-bell"></span>
+            <span>Events</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- --------end link---------- -->
+    <div class="main-content">
+      <header>
+           
+        <h2> 
+          <label for="nav-toggle">
+            <span class="las la-bars"></span>
+          </label>       
+        ZMCA Admin
+        </h2>
+      <!-- Add this div to contain the search input -->
+    
+
+        <div class="user-wrapper">
+          <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+        
+          <div>
+            <!-- <h4>ZMCA</h4> -->
+            <h4>        <a href="{% url 'logout' %}" style="font-size: 16px;"> <i class="fa-solid fa-right-from-bracket"></i></a>
+            </h4>
+            <small>Super Admin</small>
+
+          </div>
+
+          
+        </div>
+
+      </header>
+      <!-- ----------end header---------- -->
+      <main>
+        
+     
+     <br><br><br>
+     <br>
+     <br><br>
+       <div class="recent-grid">
+       
+            <div class="projects" >
+                <div class="card"style="width: 80%;" >
+                    <div class="card-header" style="background-color:#3d6a95;" >
+                        <h3 style="color: white;"> 
+                            <span class="fa fa-bell" style="color: #f1f2f3;"></span> &nbsp;Edit Your Events
+                        </h3>
+                    </div>
+
+    <div class="form-container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+          
+            <input type="text" id="event_name" name="event_name" value="{{ event.event_name }}">
+      
+            <textarea id="description" name="description">{{ event.description }}</textarea>
+            <input type="date" id="date" name="date" value="{{ event.date|date:'Y-m-d' }}">
+            <input type="time" id="timestamp" name="timestamp" value="{{ event.timestamp|time:'H:i:s' }}">
+            
+            <select id="status" name="status">
+                <option value="Active" {% if event.status == 'Active' %}selected{% endif %}>Active</option>
+                <option value="Pending" {% if event.status == 'Pending' %}selected{% endif %}>Pending</option>
+                <option value="Finish" {% if event.status == 'Finish' %}selected{% endif %}>Finish</option>
+            </select>
+            <label for="image">Edit Image:</label>
+            <input type="file" id="image" name="image"> <!-- This allows users to upload a new image -->
+            {% if event.image %}
+                <img src="{{ event.image.url }}" alt="{{ event.event_name }}" style="max-width: 300px;"><br>
+            {% endif %}
+            <button type="submit">Update</button>
+            <button type="submit" onclick="window.history.back()">Cancel</button>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+<br><br><br>
+
+
+
+<!-- -------------------endcards------------- -->
+
+</main>
+
+<!-- Pagination Controls -->
+<!-- Pagination Controls -->
+
+<!-- ------------------------------endpaginator--------- -->
+
+
+
+</div>
+
+
+
+{% endblock %}    

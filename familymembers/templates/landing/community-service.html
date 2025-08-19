@@ -1,0 +1,189 @@
+
+{% extends 'landing/fcbase.html' %}
+{% load static %}
+{% block content %}
+<style>
+  /* Typography styles */
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap');
+  :root {
+    --primary: #1a365d;
+    --accent: #f7b733;
+    --light: #f8f9fa;
+    --dark: #032b51;
+  }
+  body { font-family: 'Montserrat', sans-serif; background-color: var(--light); color: var(--dark); margin: 0; }
+
+  /* Hero Section Styles with Refined Heading */
+  .cs-hero {
+    height: 35vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary) 0%, #153a6e 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .cs-hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url('{% static "img/abstract-bg.jpg" %}') center/cover;
+    opacity: 0.15;
+    z-index: 1;
+  }
+  .cs-hero-content {
+    z-index: 2;
+    text-align: center;
+  }
+  .cs-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.8rem;
+    font-weight: 700;
+    color: var(--light);
+    margin: 0;
+    letter-spacing: -1px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    animation: fadeIn 1s ease-out;
+    position: relative;
+    display: inline-block;
+  }
+  .cs-hero h1::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+  }
+  .cs-hero-subtitle {
+    color: var(--accent);
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-top: 0.8rem;
+  }
+
+  .teaser-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #eee;
+}
+
+.teaser-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.teaser-card .post-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a365d;
+  margin-bottom: 0.5rem;
+}
+
+.teaser-card p {
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Card Styles (from previous teaser design) */
+  .blog-card { /* include your existing styling or import from CSS */ }
+  .cta-button { /* same; ensure consistency */ }
+</style>
+
+<!-- Hero Section with Refined Heading -->
+<div class="cs-hero">
+  <div class="cs-hero-content"><br><br>
+    <h1>Community Services</h1>
+    <div class="cs-hero-subtitle">
+      Connecting you with trusted domestic helpers — login to discover more
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- Feature Introduction -->
+  <section class="get-started section-bg zoom-effect">
+    <div class="container">
+      <div class="row align-items-center gy-5">
+        <div class="col-lg-6" data-aos="fade-up">
+          <h3 class="custom-h3">What is the Domestic Helpers Feature?</h3>
+          <p style="text-align: justify;">
+            ZMCA's Community Services feature is designed to help members find trustworthy domestic helpers (cleaners, cooks, nannies, and more) who have been recommended and listed by fellow members. This promotes safer, more reliable hiring within our community.
+          </p>
+          <p style="text-align: justify;">
+            Only registered and verified members can access full helper details or submit new listings. Our aim is to create a safe space for families to connect with verified individuals through community-based recommendations.
+          </p>
+          <a href="{% url 'msignup' %}" class="cta-button mt-3">Become a Member</a>  |
+          <a href="{% url 'agency_signup' %}" class="cta-button mt-3">  are you run a agency</a>
+        </div>
+        <div class="col-lg-6 d-flex justify-content-center" data-aos="fade-left">
+          <div class="image-section">
+            <img src="{% static 'img/alt-services.jpg' %}" width="550px" height="500px" alt="Domestic Helper Service">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="projects">
+  <div class="container" data-aos="fade-up">
+    <div class="section-header text-center">
+      <h2>Explore Available Roles (Preview)</h2>
+      <p>Below are examples of helper types you’ll find once you're logged in.</p>
+    </div>
+
+    <div class="row gy-4">
+      {% comment %} Static teaser cards – no images, styled {% endcomment %}
+      <div class="col-xl-4 col-md-6">
+        <div class="teaser-card">
+          <h3 class="post-title">Cleaner (Part-Time)</h3>
+          <p class="text-muted small">Available in Ibex Hill. Experience in household and office cleaning.</p>
+          <span class="badge bg-warning text-dark">Live-out</span>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-md-6">
+        <div class="teaser-card">
+          <h3 class="post-title">Nanny (Full-Time)</h3>
+          <p class="text-muted small">Great with children aged 0-5. Speaks English and Bemba fluently.</p>
+          <span class="badge bg-primary text-dark">Live-in</span>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-md-6">
+        <div class="teaser-card">
+          <h3 class="post-title">Cook (Daily Basis)</h3>
+          <p class="text-muted small">Skilled in Indian and Zambian cuisine. Available on weekdays.</p>
+          <span class="badge bg-warning text-dark">Live-out</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="{% url 'mlogin' %}" class="cta-button">Login to See Full Listings</a>
+    </div>
+  </div>
+</section>
+
+
+
+</main>
+{% endblock %}

@@ -1,0 +1,553 @@
+<html>
+  <head>
+    {% load static %}
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <title>ZMCA Admin</title>
+    <link href="{% static 'img/logo.jpg' %}" rel="icon">
+
+  <!-- Add the scripts for html2canvas and jsPDF -->
+
+<style>
+    /* Reset some default styles */
+     /* Reset some default styles */
+     body,
+        h1,
+        h2,
+        h3,
+        p,
+        ul,
+        ol,
+        table {
+            margin: 0;
+            padding: 0;
+            height: 30%;
+        }
+
+        body {
+            font-family: 'Courier New', sans-serif;
+            line-height: 1.3;
+            background-color: #f2f2f2; /* Set a background color */
+        }
+
+        header,
+        footer {
+            background-color: #3d6a95;/* Header and footer background color */
+            color: #fff; /* Header and footer text color */
+            padding: 10px;
+            text-align: center;
+        }
+
+        .main-content {
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%; 
+            background-color: #fff; 
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .card {
+            margin: 0 auto; /* This will center the card within the main-content */
+            /* Add any other styles for your card as needed */
+        }
+
+        /* ... (existing styles) ... */
+
+        footer {
+            margin-top: 20px;
+        }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        line-height: 1.6;
+    }
+
+ 
+
+.card {
+    margin: 0 auto; /* This will center the card within the main-content */
+    /* Add any other styles for your card as needed */
+}
+
+    /* .form-actions {
+        margin-top: 20px;
+    }
+
+   */
+
+    table th, table td {
+        padding: 5px;
+        text-align: left;
+        width: 50%; /* Set the width to 50% */
+    }
+    table {
+    width: 100%; /* Adjust as needed */
+    max-width: 100%;
+  }
+  table tr {
+    display: flex;
+    margin-bottom: 15px;
+  }
+
+  table td {
+    flex: 1; /* Each column takes up equal space */
+    /* width: 50%; */
+    box-sizing: border-box;
+    padding-right: 10px;
+  }
+  .button-container {
+  display: flex;
+  justify-content: space-between;
+}
+.button-container button {
+    width: 150px;
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #3c679f;
+    color: white;
+    border: none;
+}
+
+button {
+    width: 180px; /* Adjust the width as needed */
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #3c679f;
+    color: white;
+    border: none;
+}
+.button-container button:hover {
+    background-color: #7eb1e3;
+}
+
+  button:hover {
+    background-color: #7eb1e3;
+  }
+/* -------------------endbutton */
+
+
+  input,
+  textarea,
+  select,
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+  }
+  form {
+    width: 80%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 5px;
+  }
+  .form-container {
+    width: 100%;
+    max-width: 100%;
+    animation: slideInFromBottom 1s ease-out;
+  }
+
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+   /* Styles for form elements */
+   input:hover,
+textarea:hover {
+    background-color: #b1cfdf;
+    color: white;
+    transform: scale(1.05); /* Adjust the scale factor as needed */
+    transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+}
+select:hover {
+    transform: scale(1.05); /* Adjust the scale factor as needed */
+    transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+    background-color: #f2f3f4;
+    color: rgb(16, 15, 15);
+}
+header {
+            background-color: #3c679f;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .logo-text {
+            margin-right: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo-image {
+            max-width: 100px; /* Set the maximum width of the image */
+            max-height: 100px; /* Set the maximum height of the image */
+            object-fit: cover; /* Maintain the aspect ratio and cover the container */
+            border-radius: 50%; /* Make the image circular */
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        
+        }
+       
+        .home-icon {
+            font-size: 24px;
+            color: white;
+            text-decoration: none;
+            margin-right: 10px;
+            position: relative;
+            top: 5px; /* Adjust the vertical position as needed */
+        }
+</style>
+</head>
+<body>
+
+ 
+    <header>
+        <div class="logo-container">
+            <a href="{% url 'view_family' user_id=owner.up.id %}" class="home-icon">&#127968;</a>
+            <img src="{% static 'img/logo.jpg' %}" alt="Logo" class="logo-image">
+        </div>
+    </header>
+    <div class="main-content">
+
+
+
+        
+
+ <!-- Owner Details Form -->
+ <form method="post" action="{% url 'adminedit_owner' user_profile_id=owner.pid %}" enctype="multipart/form-data">        {% csrf_token %}
+    {% csrf_token %}
+    <table>
+      <tr class="form-row">
+        <td><input type="text" name="owner_first_name" value="{{owner.owner_first_name}}" placeholder="Owner First Name" required></td>
+        <td><input type="text" name="owner_last_name" value="{{owner.owner_last_name}}" placeholder="Owner Last Name" required></td>
+      <!-- </tr>-->
+      <tr class="form-row">
+        <td><input type="text" name="family_name" class="full-width" value="{{owner.family_name}}" placeholder="Family Name" required></td>
+   
+          <td>
+            <select name="gender" required>
+                <option value="M" {% if spouse.gender == 'M' %}selected{% endif %}>Male</option>
+                <option value="F" {% if spouse.gender == 'F' %}selected{% endif %}>Female</option>
+                <option value="O" {% if spouse.gender == 'O' %}selected{% endif %}>Other</option>
+              </select>
+            </td>
+          </tr>
+            <tr class="form-row">
+
+            <td>
+            <!-- Month Dropdown -->
+            <select name="dob_month">
+                {% for month in dob_month_names %}
+                    <option value="{{ forloop.counter }}" {% if forloop.counter == dob_month %}selected{% endif %}>{{ month }}</option>
+                {% endfor %}
+            </select>
+</td>
+            </td>
+              <td>         
+           <!-- Day Dropdown -->
+<select name="dob_day">
+{% for day in dob_days %}
+<option value="{{ forloop.counter }}" {% if forloop.counter == dob_day %}selected{% endif %}>{{ day }}</option>
+{% endfor %}
+</select>
+              <!-- <input type="text" name="dob" id="dob" placeholder="Enter your DOB (DD/MM)" maxlength="5" pattern="\d{2}/\d{2}" title="Enter a valid date (DD/MM)" required> -->
+            </td>
+          </tr>
+          <tr class="form-row">
+            <td>
+                <select name="blood_group" required>
+                    <option value="" disabled>Select Blood Group</option>
+                    <option value="A+" {% if owner.blood_group == 'A+' %}selected{% endif %}>A+</option>
+                    <option value="A-" {% if owner.blood_group == 'A-' %}selected{% endif %}>A-</option>
+                    <option value="B+" {% if owner.blood_group == 'B+' %}selected{% endif %}>B+</option>
+                    <option value="B-" {% if owner.blood_group == 'B-' %}selected{% endif %}>B-</option>
+                    <option value="AB+" {% if owner.blood_group == 'AB+' %}selected{% endif %}>AB+</option>
+                    <option value="AB-" {% if owner.blood_group == 'AB-' %}selected{% endif %}>AB-</option>
+                    <option value="O+" {% if owner.blood_group == 'O+' %}selected{% endif %}>O+</option>
+                    <option value="O-" {% if owner.blood_group == 'O-' %}selected{% endif %}>O-</option>
+                  </select>
+            </td>   
+            <td>
+                <select name="zmstatus" required>
+                    <option value="" disabled selected>Select Living status</option>
+                    <option value="With Family" {% if owner.zmstatus == 'With Family' %}selected{% endif %}>With Family</option>
+                    <option value="Alone" {% if owner.zmstatus == 'Alone' %}selected{% endif %}>Alone</option>
+                    <!-- Add additional options as needed -->
+                </select>
+            </td>
+          </tr>
+
+             <tr class="form-row">
+        <td><textarea name="address_india" placeholder="Address India" rows="3" required>{{owner.address_india}} </textarea></td>
+        <td><textarea name="address_zambia" placeholder="Address Zambia" rows="3" required>{{owner.address_zambia}}</textarea></td>
+      </tr>
+      <tr class="form-row">
+        <td><input type="text" name="lcity" placeholder="Living City in Zambia" value="{{owner.lcity}}" required></td>
+        <!-- <td><input type="text" name="lprovince" placeholder="Living Province in Zambia" required></td> -->
+       <td> 
+        <select name="lprovince" required>
+            <option value="" disabled selected>Select Living Province in Zambia</option>
+            <option value="central" {% if owner.lprovince == 'central' %}selected{% endif %}>Central Province</option>
+            <option value="copperbelt" {% if owner.lprovince == 'copperbelt' %}selected{% endif %}>Copperbelt Province</option>
+            <option value="eastern" {% if owner.lprovince == 'eastern' %}selected{% endif %}>Eastern Province</option>
+            <option value="luapula" {% if owner.lprovince == 'luapula' %}selected{% endif %}>Luapula Province</option>
+            <option value="lusaka" {% if owner.lprovince == 'lusaka' %}selected{% endif %}>Lusaka Province</option>
+            <option value="muchinga" {% if owner.lprovince == 'muchinga' %}selected{% endif %}>Muchinga Province</option>
+            <option value="northern" {% if owner.lprovince == 'northern' %}selected{% endif %}>Northern Province</option>
+            <option value="northwestern" {% if owner.lprovince == 'northwestern' %}selected{% endif %}>North-Western Province</option>
+            <option value="southern" {% if owner.lprovince == 'southern' %}selected{% endif %}>Southern Province</option>
+            <option value="western" {% if owner.lprovince == 'western' %}selected{% endif %}>Western Province</option>
+            <!-- Add additional options as needed -->
+        </select>
+        
+       </td>
+      </tr>
+    
+      <tr class="form-row">
+        <td><input type="text" name="company_name" placeholder="Company Name" value="{{owner.company_name}}" required></td>
+        <td><input type="text" name="work_name" placeholder="Work Name" value="{{owner.work_name}}" required ></td>
+      </tr>
+      <tr class="form-row">
+        <td><input type="text" name="contact_no_india" minlength="10" maxlength="10" value="{{owner.contact_no_india}}" placeholder="Contact Number India" required></td>
+        <td><input type="text" name="contact_no_zm" minlength="10" maxlength="10" value="{{owner.contact_no_zm}}" placeholder="Contact Number Zambia" required></td>
+        <td><input type="text" name="whatsapp_no" minlength="10" maxlength="10" value="{{owner.whatsapp_no}}" placeholder="WhatsApp Number" required></td>
+
+      </tr>
+      <tr class="form-row">
+        <td><input type="email" name="email" placeholder="Email" value="{{owner.email}}" required ></td>
+      </tr>
+    </table>
+    <div class="form-actions">
+      <div class="button-container">
+        <!-- <button type="button" onclick="goBack()">Back</button> -->
+        <button type="submit">UPDATE</button>
+     
+        
+      </div>
+    </div>
+    
+  </form>
+
+
+</div>
+
+<footer>
+    &copy; 2024 ZMCA Admin@YuAi Technologies. All rights reserved.
+</footer>
+
+
+
+
+<!-- ------number validation--- -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Function to validate for only numbers
+      function validateOnlyNumbers(inputField) {
+        var numbersRegex = /^[0-9]*$/; // Regular expression for only numbers
+        return numbersRegex.test(inputField.value);
+      }
+  
+      // Get the input fields for which you want to enforce the rules
+      var indianContactNumberInput = document.querySelector('input[name="contact_no_india"]'); // Update with your actual input field name
+      var whatsappNumberInput = document.querySelector('input[name="whatsapp_no"]'); // Update with your actual input field name
+      var zambiaContactNumberInput = document.querySelector('input[name="contact_no_zm"]'); // Update with your actual input field name
+  
+      // Add an event listener to the Indian contact number input field
+      indianContactNumberInput.addEventListener('input', function () {
+        validateAndAlert(indianContactNumberInput);
+      });
+  
+      // Add an event listener to the WhatsApp number input field
+      whatsappNumberInput.addEventListener('input', function () {
+        validateAndAlert(whatsappNumberInput);
+      });
+  
+      // Add an event listener to the Zambia contact number input field
+      zambiaContactNumberInput.addEventListener('input', function () {
+        validateAndAlert(zambiaContactNumberInput);
+      });
+  
+      // Function to validate and display alerts
+      function validateAndAlert(inputField) {
+        if (!validateOnlyNumbers(inputField)) {
+          alert('Invalid input. Please enter only numbers without special symbols or text.');
+          inputField.value = inputField.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+        } else {
+          // Check for custom validation messages
+          if (inputField.validity.tooShort) {
+            inputField.setCustomValidity('Please enter at least ' + inputField.minLength + ' digits.');
+          } else if (inputField.validity.tooLong) {
+            inputField.setCustomValidity('Please enter no more than ' + inputField.maxLength + ' digits.');
+          } else {
+            inputField.setCustomValidity(''); // Clear custom validity message
+          }
+        }
+      }
+    });
+  </script>
+  <!-- ----------------------- -->
+  
+  <!-- Text Validation -->
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Function to validate if the input contains only text (no digits)
+      function validateTextOnly(inputField) {
+        var textRegex = /^[a-zA-Z\s]*$/; // Regular expression for only text (no digits)
+        return textRegex.test(inputField.value);
+      }
+  
+      // Get the input fields for which you want to enforce the text-only rule
+      var firstNameInput = document.querySelector('input[name="owner_first_name"]');
+      var lastNameInput = document.querySelector('input[name="owner_last_name"]');
+      var familyNameInput = document.querySelector('input[name="family_name"]');
+      var companyNameInput = document.querySelector('input[name="company_name"]');
+      var workNameInput = document.querySelector('input[name="work_name"]');
+      var livingCityInput = document.querySelector('input[name="lcity"]');
+  
+      // Add an event listener to each input field
+     
+      firstNameInput.addEventListener('input', function () {
+        if (!validateTextOnly(firstNameInput)) {
+          alert('Invalid input. Please use only text (no digits).');
+          firstNameInput.value = '';
+        }
+      });
+  
+      lastNameInput.addEventListener('input', function () {
+        if (!validateTextOnly(lastNameInput)) {
+          alert('Invalid input. Please use only text (no digits).');
+          lastNameInput.value = '';
+        }
+      });
+  
+      familyNameInput.addEventListener('input', function () {
+        if (!validateTextOnly(familyNameInput)) {
+          alert('Invalid input. Please use only text (no digits).');
+          familyNameInput.value = '';
+        }
+      });
+  
+      companyNameInput.addEventListener('input', function () {
+        if (!validateTextOnly(companyNameInput)) {
+          alert('Invalid input. Please use only text (no digits).');
+          companyNameInput.value = '';
+        }
+      });
+  
+      workNameInput.addEventListener('input', function () {
+        if (!validateTextOnly(workNameInput)) {
+          alert('Invalid input. Please use only text (no digits).');
+          workNameInput.value = '';
+        }
+      });
+  
+      livingCityInput.addEventListener('input', function () {
+        if (!validateTextOnly(livingCityInput)) {
+          alert('Invalid input. Please use only text (no digits).');
+          livingCityInput.value = '';
+        }
+      });
+    });
+  </script>
+  
+  <!-- ---------------------- -->
+  <!-- -----------------back &next---------- -->
+  
+  <script>
+    function goBack() {
+      // Handle logic to navigate back (e.g., redirect to the previous step)
+      // For example, redirect to familyregister.html
+      window.location.href = "{% url 'save_owner' %}";
+    }
+  </script>
+  <script>
+    function goToNext() {
+      // Redirect to the next step (children.html)
+      window.location.href = "{% url 'save_spouse' %}";
+    }
+  </script>
+  <!-- --------------active circle------------ -->
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check if the URL has a 'success' parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const successParam = urlParams.get('success');
+  
+        // If 'success' is present and truthy, update the UI
+        if (successParam) {
+            // Add a green tick or update the style for Step 1 in the dashboard
+            document.querySelector('.progress-container .circle').classList.add('active-circle');
+        }
+    });
+  </script>
+  <!-- -----------------email--------------------- -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to validate email format
+        function validateEmail(email) {
+            // Regular expression for a valid email address
+            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            return emailRegex.test(email);
+        }
+    
+        // Get the email input field
+        var emailInput = document.getElementById('email'); // Update with your actual input field ID
+    
+        // Add an event listener to the email input field
+        emailInput.addEventListener('blur', function () {
+            // Get the entered email value
+            var emailValue = emailInput.value.trim();
+    
+            // Validate the email format
+            if (!validateEmail(emailValue)) {
+                // Display an error message (you can customize this part)
+                alert('Invalid email format. Please enter a valid email address.');
+                // Optionally, clear the input field or set focus
+                emailInput.value = '';
+                emailInput.focus();
+            } else {
+                // Check for the presence of a top-level domain
+                if (!emailValue.includes('.')) {
+                    // Display an error message for missing top-level domain
+                    alert('Please enter a valid email address with a top-level domain.');
+                    // Optionally, clear the input field or set focus
+                    emailInput.value = '';
+                    emailInput.focus();
+                }
+            }
+        });
+    });
+    </script>
+  
+
+
+
+</body>
+
+</html>   

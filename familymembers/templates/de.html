@@ -1,0 +1,54 @@
+{% extends 'memberbase.html' %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #f4f4f4;
+  }
+
+  .error-container {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 5px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  h2 {
+    color: #ff5555;
+  }
+
+  p {
+    margin-bottom: 20px;
+  }
+
+  .back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #16836a;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .back-button:hover {
+    background-color: #057166;
+  }
+</style>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+<div class="error-container">
+  <h2>Duplicate Entry</h2>
+  <p>A person with the same name already exists in your Family records. Please enter unique details.</p>
+  
+  <!-- Back button to redirect to the previous page -->
+  <a href="javascript:history.back()" class="back-button">Back</a>
+</div>
+<br><br><br><br>
+{% endblock %}

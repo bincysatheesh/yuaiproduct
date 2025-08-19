@@ -1,0 +1,48 @@
+{% extends 'memberbase.html' %}
+
+{% block content %}
+<style>
+  /* body {
+    background-color: #f4f4f4;
+  } */
+
+  .error-container {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;  /* Reduced padding */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* background-color: #fff; */
+    border-radius: 5px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  h3 {
+    color: #ff5555;
+  }
+
+  .form-button {
+    display: inline-block;
+    margin-top: 10px;  /* Adjusted margin */
+    padding: 10px 20px;
+    background-color: #16836a;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .form-button:hover {
+    background-color: #057166;
+  }
+</style>
+<br><br><br><br><br><br><br><br><br>
+<div class="error-container">
+  <h3>A child with the same name already exists for this parent.</h3>
+  <button class="form-button" onclick="window.location.href='{% url 'save_children' %}'">Go back to the form</button>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

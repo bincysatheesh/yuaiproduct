@@ -1,0 +1,391 @@
+{% extends 'member/customerbase.html' %}
+{% load static %}
+{% block content %}    
+
+<style>
+
+table {
+  width: 100%; /* Set the width of the table to 100% */
+}
+.customers .card-body .table-responsive {
+  max-width: 100%; /* Set your desired maximum width */
+  overflow-x: auto; /* Add horizontal scroll if needed */
+}
+.customers .card-body {
+  max-width: 350px; /* Set the maximum width for the Enquiries section */
+}
+
+/* Add this style for the hover effect */
+table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Style for the link container */
+.link-container {
+  display: inline-block;
+  padding: 1px 2px;
+  background-color: #3d6a95;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.link-container:hover {
+  background-color: #2b3348;
+}
+
+.recent-grid {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-gap: 2rem; /* Adjust the gap between the two grids */
+  grid-template-columns: 75% auto; /* Adjust the width of each grid */
+}
+
+
+/* Add this style for the grid layout */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Display three cards per row */
+  grid-gap: 20px; /* Adjust the gap between cards */
+  
+}
+
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.card:hover {
+  transform: scale(1.02); /* Increase size on hover */
+}
+
+
+/* Style for card header */
+.card-header {
+  text-align: center;
+}
+
+/* Style for card body */
+.card-body {
+  text-align: center;
+}
+
+/* Style for member name */
+.member-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Style for member post */
+.member-post {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Style for member image */
+.member-image {
+  width: 120px; /* Set a fixed width */
+  height: 120px; /* Set a fixed height */
+  object-fit: cover; /* Maintain aspect ratio and cover the container */
+  border-radius: 50%; /* Make the image round */
+  margin-bottom: 10px; /* Add some space below the image */
+}
+ /* Style for the year dropdown */
+ #year {
+        padding: 8px 16px; /* Add padding */
+        font-size: 16px; /* Adjust font size */
+        border: 1px solid #ccc; /* Add border */
+        border-radius: 4px; /* Add border radius */
+        background-color: #fff; /* Set background color */
+        color: #333; /* Set text color */
+        transition: border-color 0.3s; /* Add transition effect for border color */
+    }
+
+    /* Style for the dropdown arrow */
+    #year::after {
+        content: '\25BC'; /* Unicode character for downward arrow */
+        position: absolute; /* Position the arrow */
+        top: 50%; /* Align the arrow vertically */
+        right: 10px; /* Align the arrow to the right */
+        transform: translateY(-50%); /* Adjust vertical alignment */
+        color: #666; /* Set arrow color */
+        transition: color 0.3s; /* Add transition effect for color */
+    }
+
+    /* Style for the dropdown when it's focused */
+    #year:focus {
+        outline: none; /* Remove default focus outline */
+        border-color: #3d6a95; /* Change border color on focus */
+    }
+
+    /* Style for the arrow when the dropdown is focused */
+    #year:focus::after {
+        color: #3d6a95; /* Change arrow color on focus */
+    }
+
+
+  /* ----li item zoom hover--- */
+/* CSS for sidebar list items */
+.sidebar-menu ul li {
+    list-style: none; /* Remove default list styles */
+    transition: transform 0.3s ease; /* Add transition effect for zoom */
+}
+
+/* Zoom effect on hover */
+.sidebar-menu ul li:hover {
+    transform: scale(1.05); /* Increase size on hover */
+}
+
+
+/* Hover effect */
+.sidebar-menu ul li a:hover {
+  background-color:#ffffff;
+  color:#2b3348;
+
+}
+
+/* Style for the tooltip */
+.sidebar-menu ul li a[title]:hover:after {
+  content: attr(title); /* Display the title attribute as a tooltip */
+  display: block;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7); /* Background color for the tooltip */
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%); /* Center the tooltip horizontally */
+}
+
+
+  
+
+</style>
+    
+   
+<input type="checkbox" id="nav-toggle">
+<div class="sidebar"> 
+  <div class="sidebar-brand">
+    <h2><span class="las la-user-circle"></span><span style="text-transform: uppercase;">{{up.firstname}}&nbsp;{{up.lastname}}</span></h2>
+
+  </div>
+  <div class="sidebar-menu">
+    <ul>
+      <li>
+        <a href="{% url 'customerindex' %}" class="active"><span class="fas fa-home"></span>
+        <span>Home</span></a>
+      </li>
+      <!-- <li>
+        <a href="{% url 'customerindex' %}"><span class="fas fa-home"></span>
+        <span>Home</span></a>
+      </li> -->
+      <li>
+        <a href="{% url 'memberaboutus' %}"><span class="fas fa-info-circle"></span>
+
+        <span>About Us</span></a>
+      </li>
+      <li>
+        <a href="{% url 'committemembers' %}"><span class="las la-users"></span>
+        <span>Committe Members&nbsp;({{ccount}})</span></a>
+      </li>
+      <li>
+        <a href="{% url 'members_view1' %}"><span class="las la-home"></span>
+        <span>Families&nbsp;({{uacount}})</span></a>
+      </li>
+      <li>
+        <a href="{% url 'birthdaydetails' %}"><span class="fas fa-birthday-cake"></span>
+        <span>Birthday</span></a>
+      </li>
+      <li>
+        <a href="{% url 'bloodgroup' %}"><span class="fas fa-tint" style="color: red;"></span>
+        <span>Blood Group</span></a>
+      </li>
+
+      <li>
+        <a href="{% url 'payments1' %}">
+        <span class="fas fa-id-badge"></span>
+        <span>Membership</span></a>
+      </li>
+
+      <li>
+        <!-- <a href=""><span class="las la-question-circle"></span>
+        <span>Enqueries</span></a> -->
+        <!-- <ul class="submenu">
+          <li></li>
+          <li><a href="{% url 'allenquiry_list' %}"><span class="fas fa-envelope"></span><span>(All)</span></a></li>            
+      
+       </ul> -->
+      </li>
+      <!-- <li>
+        <a href=""><span class="las la-user-plus"></span>
+        <span>Registration</span></a>
+        <ul class="submenu">
+          <li></li>
+          <li><a href="#"><span class="fa fa-gallery" style="color: #fff;"></span>
+
+            Gallery</a></li>
+          <li><a href="#">Submenu Item 2</a></li>
+      
+       </ul>
+      </li> -->
+      <!-- <li>
+        <a href=""><span class="las la-blog"></span>
+        <span>Blog</span></a>
+      </li> -->
+      <li>
+        <a href="{% url 'cevents' %}"><span class="fa fa-bell"></span>
+        <span>Events&nbsp;({{teventscount}})</span></a>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- --------end link---------- -->
+<div class="main-content">
+  <header>
+       
+    <h2> 
+      <label for="nav-toggle">
+        <span class="las la-bars"></span>
+      </label>Welcome To<span style="color: #3d6a95;text-transform: uppercase;">  {{up.familyname}}     
+  &nbsp;<span class="fas fa-users"></span></span>
+    </h2>
+    <div class="search-wrapper">
+      <form method="GET" action="{% url 'committemembers' %}" id="search-form">
+        <span class="las la-search"></span>
+        <input type="search" id="search-input" name="q" placeholder="Search here" value="{{ request.GET.q|default_if_none:'' }}"/>
+        <select name="year" id="year" onchange="this.form.submit()">
+            <option value="">Select Year</option>
+            {% for year in years %}
+                <option value="{{ year }}">{{ year }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    
+    </div>
+    
+
+    <div class="user-wrapper">
+      <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+    
+      <div>
+        <!-- <h4>ZMCA</h4> -->
+        <h4>        <a href="{% url 'logout' %}" style="font-size: 16px;"> <i class="fa-solid fa-right-from-bracket"></i></a>
+        </h4>
+        <small>{{up.email}}</small>
+
+      </div>
+
+      
+    </div>
+
+  </header>
+      <!-- ----------end header---------- -->
+      <main>
+        <!-- -------------------endcards------------- -->
+        <div class="recent-grid">
+          <div class="projects">
+            <div class="card" style="width: 130%;">
+              <div class="card-header" >
+                <h3>
+                  <span class="las la-users" style="color: #3d6a95;"></span>
+                  &nbsp;<span style="text-transform: uppercase;">Committee Members </span> &nbsp;
+                  {% if committee_members %}
+                      {{ committee_members.first.year }}-{{ committee_members.last.year|add:1 }}
+                  {% endif %}
+                  &nbsp;
+                  &nbsp;
+              </h3>
+                <!-- <h3> <span class="las la-users" style="color: #3d6a95;"></span> &nbsp;Committee Members {{committee_members.year}} &nbsp;:{{ccount}} &nbsp; -->
+                  <!-- <select name="year"  id="year" onchange="handleYearChange(this)">
+                    <option value="">Select Year</option>
+                    {% for year in years %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select> -->
+              </h3>
+             
+              </div>
+              <!-- Inside the card-body div -->
+              <div class="card-body" >
+                <div class="card-container" >
+                  
+                  {% for member in committee_members %}
+                  <div class="card" style="background-color: #3d6a95;">
+                    <br>
+                    <img src="{{ member.image.url }}" alt="{{ member.member_name }}" class="member-image">
+                    <h4 class="member-name" style="color: #fff;text-transform: uppercase;">{{ member.member_name }}</h4>
+                    <p class="member-post" style="color: #fff;text-transform: uppercase;">{{ member.post }}</p>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+<!-- ------------------------------endpaginator--------- -->
+
+
+
+    </div>
+
+    <script>
+      // Get the search input element
+      const searchInput = document.getElementById('search-input');
+  
+      // Add an event listener for the 'input' event to detect changes in the input field
+      searchInput.addEventListener('input', function() {
+          // Get the value entered by the user
+          const searchText = this.value.trim().toLowerCase();
+  
+          // Get all the cards in the card-container
+          const cards = document.querySelectorAll('.card-container .card');
+  
+          let found = false; // Flag to track if any search results were found
+  
+          // Loop through each card
+          cards.forEach(card => {
+              // Get the text content of each card
+              const cardText = card.textContent.toLowerCase();
+  
+              // If the card contains the search text, display it, otherwise hide it
+              if (cardText.includes(searchText)) {
+                  card.style.display = 'block';
+                  found = true; // Set found to true if at least one search result is found
+              } else {
+                  card.style.display = 'none';
+              }
+          });
+  
+          // Show "No results found" message if no search results were found
+          const noResultsMessage = document.getElementById('noResultsMessage');
+          noResultsMessage.style.display = found ? 'none' : 'block';
+      });
+  </script>
+  
+<script>
+  function handleYearChange() {
+    var selectedYear = document.getElementById('year').value;
+
+    // Hide all committee members data
+    var allMembers = document.getElementsByClassName('members');
+    for (var i = 0; i < allMembers.length; i++) {
+      allMembers[i].style.display = 'none';
+    }
+
+    // Show committee members data for the selected year
+    var selectedMembers = document.getElementById('committee-' + selectedYear);
+    if (selectedMembers) {
+      selectedMembers.style.display = 'block';
+    }
+  }
+</script>
+
+  
+
+    {% endblock %}    

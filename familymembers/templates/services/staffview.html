@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ staff.full_name }} - Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Reuse your existing styles from the staff list page */
+        :root {
+            --primary: #3498db;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --purple: #9b59b6;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --gray: #95a5a6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f5f7fa;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            color: var(--dark);
+        }
+        
+        .header h1 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-secondary {
+            background: var(--gray);
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+        }
+        
+        /* Profile Section */
+        .profile-section {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid var(--light);
+        }
+        
+        .profile-initial {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 60px;
+            font-weight: bold;
+            border: 3px solid var(--light);
+        }
+        
+        .profile-name {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .profile-service {
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .badge.submitted { background: #e2e3e5; color: #383d41; }
+        .badge.approved { background: #d4edda; color: #155724; }
+        .badge.pending { background: #fff3cd; color: #856404; }
+        .badge.rejected { background: #f8d7da; color: #721c24; }
+        .badge.suspended { background: #d6d8d9; color: #1b1e21; }
+        
+        .profile-details {
+            margin-top: 20px;
+        }
+        
+        .detail-item {
+            margin-bottom: 15px;
+        }
+        
+        .detail-label {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 3px;
+        }
+        
+        .detail-value {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        
+        /* Info Card */
+        .info-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .info-card h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-card h3 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .info-content {
+            line-height: 1.6;
+        }
+        
+        /* Actions */
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 480px) {
+            .profile-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back and Header -->
+        <div class="header">
+            <h1>
+                <a href="{% url 'staff_list' %}" style="text-decoration: none; color: var(--dark);">
+                    <i class="fas fa-arrow-left"></i> Staff Profile
+                </a>
+            </h1>
+            <div class="profile-actions">
+                <a href="{% url 'edit_staff' staff.id %}" class="btn">
+                    <i class="fas fa-edit"></i> Edit Profile
+                </a>
+                <a href="{% url 'staff_list' %}" class="btn btn-secondary">
+                    <i class="fas fa-users"></i> Back to List
+                </a>
+            </div>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="profile-section">
+            <!-- Left Column - Profile Card -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    {% if staff.photo %}
+                        <img src="{{ staff.photo.url }}" alt="{{ staff.full_name }}" class="profile-photo">
+                    {% else %}
+                        <div class="profile-initial">{{ staff.full_name|first }}</div>
+                    {% endif %}
+                    <h2 class="profile-name">{{ staff.full_name }}</h2>
+                    <div class="profile-service">{{ staff.get_service_type_display }}</div>
+                    <span class="badge {{ staff.status|lower }}">{{ staff.get_status_display }}</span>
+                </div>
+                
+                <div class="profile-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Age</div>
+                        <div class="detail-value">{{ staff.age }} years</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Address</div>
+                        <div class="detail-value">{{ staff.address }}</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Experience</div>
+                        <div class="detail-value">{{ staff.experience_years }} years</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Languages</div>
+                        <div class="detail-value">{{ staff.languages }}</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Availability</div>
+                        <div class="detail-value">{{ staff.availability }}</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">Member Since</div>
+                        <div class="detail-value">{{ staff.created_at|date:"M d, Y" }}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column - Info Cards -->
+            <div>
+                <!-- Skills/Duties Card -->
+                <div class="info-card">
+                    <h3><i class="fas fa-tasks"></i> Skills & Duties</h3>
+                    <div class="info-content">
+                        {{ staff.skills_duties|linebreaks }}
+                    </div>
+                </div>
+                
+                <!-- Notes Card -->
+                {% if staff.notes %}
+                <div class="info-card">
+                    <h3><i class="fas fa-sticky-note"></i> Additional Notes</h3>
+                    <div class="info-content">
+                        {{ staff.notes|linebreaks }}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Status History Card -->
+                <div class="info-card">
+                    <h3><i class="fas fa-history"></i> Status History</h3>
+                    <div class="info-content">
+                        <p><strong>Created:</strong> {{ staff.created_at|date:"M d, Y H:i" }}</p>
+                        <p><strong>Last Updated:</strong> {{ staff.updated_at|date:"M d, Y H:i" }}</p>
+                        <!-- You could add more status history here if you track it -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

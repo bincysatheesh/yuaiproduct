@@ -1,0 +1,230 @@
+{% extends 'allbase.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+
+background: linear-gradient(to bottom, #3d6a95, #ffffff);
+
+}
+.portfolio-item {
+  width: 25%; /* Adjust the width to fit 5 items in a row */
+  height: 300px; /* Set a specific height for the portfolio item */
+  margin-bottom: 5px;
+  /* padding: 1%; */
+  overflow: hidden; /* Hide any overflow from images */
+}
+
+/* Styles for tablets */
+@media screen and (max-width: 992px) {
+    .portfolio-item {
+        width: 33.33%; /* Adjust the width to fit 3 items in a row */
+    }
+}
+
+/* Styles for mobile devices */
+@media screen and (max-width: 768px) {
+    .portfolio-item {
+        width: 50%; /* Adjust the width to fit 2 items in a row */
+    }
+}
+
+/* Additional responsive styles */
+.search-wrapper input[type="text"] {
+    width: 100%; /* Full width for input on smaller screens */
+}
+
+.portfolio-item img {
+  width: auto; /* Automatically adjust width to maintain aspect ratio */
+  height: 100%; /* Set height to 100% of its container */
+  object-fit: cover; /* Ensure the image covers the entire space */
+}
+
+.portfolio-info {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination a {
+  padding: 10px;
+  margin: 0 5px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.pagination a:hover {
+  background-color: #ddd;
+}/* Styles for the search wrapper */
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    border: #3d6a95;
+}
+
+.search-wrapper input[type="text"] {
+    width: 25%;
+    padding: 10px 20px;
+    border: 1px solid black; /* Set initial border color */
+    border-radius: 20px; /* Adjust border-radius to control the oval shape */
+    background-color: #f0f0f0;
+    border-color: goldenrod; /* Change border color on hover to golden yellow */
+
+    background-image: url('oval-left.png'), url('oval-right.png'); /* Add oval background images */
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left center, right center; /* Position the oval shapes */
+    transition: background-color 0.3s, border-color 0.3s; /* Add transition for smooth effect */
+}
+
+.search-wrapper input[type="text"]:hover {
+    border-color: goldenrod; /* Change border color on hover to golden yellow */
+    background-color: #e0e0e0; /* Change background color on hover */
+    transform: scale(1.05); /* Add zoom effect on hover */
+}
+
+/* Styles for the search icon */
+.search-wrapper input[type="text"]::placeholder {
+    font-family: 'Font Awesome 5 Free';
+    content: "\f002";
+    font-weight: 900;
+    font-size: 16px;
+    color: #555;
+    opacity: 0.5;
+    position: absolute;
+    left: 10px; /* Adjust based on icon size */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Zoom icon hover effect */
+.preview-link:hover {
+  background-color: #ccc;
+    color: #3d6a95; /* Change color on hover */
+}
+
+.details-link:hover {
+    color: #3d6a95; /* Change color on hover */
+}
+  
+</style>
+<main id="main">
+  <br><br>
+  <div class="abouthead custom-abouthead">
+    <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+      <br><br><br><h2 style="color: rgb(254, 247, 247); font-size: 45px; font-weight: bold;">Gallery</h2>
+      <div class="abouttitle">
+        <a href="{% url 'addgalleryview' %}" style="color:rgba(254, 185, 0, 0.8);font-weight: bold;">&nbsp;Home</a><span style="font-weight:bold;color:#f1f1f1;">&nbsp;/&nbsp;Gallery</span>
+      </div>
+    </div>
+  </div><!-- End Breadcrumbs -->
+  <!-- Search Wrapper -->
+
+  
+  <!-- End Search Wrapper -->
+  <!-- ======= Our Projects Section ======= -->
+  <section id="projects" class="projects">
+   
+    <div class="container" data-aos="fade-up">
+      
+       
+        <!-- Include Font Awesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="search-wrapper">
+    <input type="text" id="search-input" class="form-control" placeholder="&#xF002; Search..." aria-label="Search" aria-describedby="search-icon">
+</div>
+
+        <div id="no-results" style="display: none;">
+  No search results found.
+</div>
+<br>
+<br>
+        <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
+          
+          {% for item in gallery_items %}
+          <div class="col-lg-2 col-md-3 col-sm-4 col-6 portfolio-item filter-{{ item.category }}">
+            <div class="portfolio-content h-100">
+              <img src="{{ item.image.url }}" class="img-fluid" alt="{{ item.title }}">
+              <div class="portfolio-info">
+                <h4>{{ item.title }}</h4>
+                <p>{{ item.description }}</p>
+                <a href="{{ item.image.url }}" title="{{ item.title }}"
+                  data-gallery="portfolio-gallery-{{ item.category }}" class="glightbox preview-link"><i
+                    class="bi bi-zoom-in"></i></a>
+                <a href="{{ item.image.url }}" title="More Details" class="details-link"><i
+                    class="bi bi-link-45deg"></i></a>
+              </div>
+            </div>
+          </div>
+          <!-- End Projects Item -->
+          {% endfor %}
+        </div><!-- End Projects Container -->
+      </div>
+    </div>
+
+  </section><!-- End Our Projects Section -->
+      <!-- Pagination -->
+      <div class="pagination">
+        {% if gallery_items.has_previous %}
+        <a href="?page=1">&laquo; First</a>
+        <a href="?page={{ gallery_items.previous_page_number }}">Previous</a>
+        {% endif %}
+        <span class="current">Page {{ gallery_items.number }} of {{ gallery_items.paginator.num_pages }}</span>
+        {% if gallery_items.has_next %}
+        <a href="?page={{ gallery_items.next_page_number }}">Next</a>
+        <a href="?page={{ gallery_items.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+      </div>
+      <!-- End Pagination -->
+</main><!-- End #main -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('search-input');
+    var items = document.querySelectorAll('.portfolio-item');
+    var noResultsMessage = document.getElementById('no-results');
+
+    input.addEventListener('input', function() {
+      var query = input.value.toLowerCase();
+      var found = false;
+
+      items.forEach(function(item) {
+        var title = item.querySelector('h4').textContent.toLowerCase();
+        var description = item.querySelector('p').textContent.toLowerCase();
+        if (title.includes(query) || description.includes(query)) {
+          item.style.display = 'block';
+          found = true;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      // Show or hide the "No results found" message
+      if (found) {
+        noResultsMessage.style.display = 'none';
+      } else {
+        noResultsMessage.style.display = 'block';
+      }
+    });
+
+    // Add event listener for keypress event
+    input.addEventListener('keypress', function(event) {
+      if (event.keyCode === 13) {
+        input.blur(); // Blur the input field to close it
+      }
+    });
+  });
+</script>
+
+  
+{% endblock %}

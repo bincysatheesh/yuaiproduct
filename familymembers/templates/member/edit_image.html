@@ -1,0 +1,375 @@
+{% extends 'member/memberbase.html' %}
+{% block content %}
+<style type="text/css">
+  /* Add this to your main.css or create a new CSS file */
+
+  /* Add more styling as needed */
+  body{
+    /* font-family: poppins,sans-serif; */
+
+background: linear-gradient(to bottom, #dde8f1, #ffffff);
+
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .dashboard {
+    /* border-right: 2px solid #007BFF; */
+    padding-right: 30px;
+    height: 650px; /* Adjust height as needed */
+  }
+
+  .dashboard-heading h4 {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 5px;
+  }
+
+  .dashboard-heading h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40%;
+    height: 5px;
+    background-color:#e0a905;
+  }
+
+  .vertical-steps {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .vertical-steps a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    margin-bottom: 10px;
+  }
+
+  .vertical-steps a:hover {
+    text-decoration: underline;
+  }
+
+  .right-content {
+    padding-left: 20px;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  table tr {
+    display: flex;
+    margin-bottom: 15px;
+  }
+
+  table td {
+    width: 50%;
+    box-sizing: border-box;
+    padding-right: 10px;
+  }
+ 
+
+  form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 5px;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+  }
+  .progress-link {
+    border: 2px solid #3c679f;
+    /* Gives blue border for the anchor tag */
+        color: #000; /* Black text */
+        /* background-color: #e0a905; */
+         /* Yellow background */
+        display: block;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .progress-link-container {
+      width: 280px;
+        transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+    } 
+
+    .progress-link-container:hover {
+        transform: scale(1.1); /* Increase the scale to zoom in */
+    }
+
+    .progress-link:hover {
+        background-color:#3c679f;
+         /* Darker yellow on hover */
+        color: #ffffff;
+    }
+    /* Styling for the progress container */
+
+    .progress-title {
+        text-align: left;
+        font-size: 18px;
+        font-weight: bold;
+        font-family: 'Your Desired Font', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .progress-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px; /* Adjust margin as needed */
+    }
+
+    .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color:#3c679f; /* Adjust the color as needed */
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .line {
+        flex: 1;
+        height: 2px;
+        background-color:#3c679f; /* Adjust the color as needed */
+    }
+
+    .active-circle {
+        background-color: #e0a905; /* Adjust the color as needed */
+    }
+    /* ----------------/ */
+    .custom-blue {
+    background-color: #007BFF; /* Blue background */
+    color: #fff; /* White text */
+    /* Add any other styles you need */
+}
+.custom-green {
+    background-color: #046915; /* Blue background */
+    color: #fff; /* White text */
+    /* Add any other styles you need */
+}
+.full-width {
+    width: 100% !important;
+}
+
+
+  /* --------------button */
+  .button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+button-container {
+  display: flex;
+  justify-content: space-between;
+}
+.button-container button {
+    width: 150px;
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+button {
+    width: 180px; /* Adjust the width as needed */
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+.button-container button:hover {
+    background-color: #3c679f;
+}
+
+  button:hover {
+    background-color: #3c679f;
+  }
+
+/* -------------------endbutton */
+
+.form-container {
+    width: 100%;
+    max-width: 100%;
+    animation: slideInFromBottom 1s ease-out;
+  }
+
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+      /* Styles for form elements */
+input:hover,
+textarea:hover,
+select:hover {
+    /* background-color: #e7c978; */
+    color: rgb(10, 10, 10);
+}
+.childbtn
+{
+    display: flex;
+  justify-content: space-between; 
+}
+.uppercase-text
+{
+  text-transform: uppercase;
+  justify-content: space-between;
+}
+  
+
+</style>
+
+<br><br><br><br><br><br><br>
+
+<div class="container">
+  <div class="row gy-4">
+    <div class="col-lg-3" data-aos="fade-up">
+      <div class="dashboard">
+        <div class="dashboard-heading">
+          <h4 class="underline-below" style="text-transform: uppercase;font-size: 18px;">Registration Process</h4>
+         
+        </div>
+        <div class="vertical-steps"> <br>
+          <!-- Step 1: Owner Details -->
+        
+          {% if not od %}
+         <a href="{% url 'save_owner' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 1: Owner Details</span></a>
+         {% else %}
+          <a href="{% url 'save_owner' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 1: Owner Details</span></a>
+          {% endif %}
+          <br>
+          <!-- Step 2: Spouse Details -->
+          {% if not sd %}
+          <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 2: Spouse Details</span></a>
+          {% else %}
+          <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 2: Spouse Details</span></a>
+          {% endif %}
+          <br>
+          <!-- Step 3: Children's Details -->
+          {% if not cd %}
+          <a href="{% url 'childrenview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 3: Children's Details</span></a>
+          {% else %}
+          <a href="{% url 'childrenview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 3: Children's Details</span></a>
+          {% endif %}
+          <br>
+          <!-- Step 4: Other Details -->
+          {% if not other %}
+          <a href="{% url 'otherview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 4: Other's Details</span></a>
+          {% else %}
+          <a href="{% url 'otherview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 4: Other's Details</span></a>
+          {% endif %}
+          <br>
+          <!-- Step 5: Other Details -->
+          {% if not family_photo %}
+          <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-hand-point-right" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 5: Upload photo</span></a>
+          {% else %}
+          <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;<span style="text-transform: uppercase;font-weight: bold;">Step 5: Upload photo</span></a>
+          {% endif %}
+          <br>
+          <!-- Step 6: Other Details -->
+          <a href="{% url 'submitfamilyview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><span style="text-transform: uppercase;font-weight: bold;">Step 6: Review and Submit</span></a>
+        </div>
+      </div>
+    </div>
+   
+    <div class="col-lg-9 right-content" data-aos="fade-up">
+      <div class="progress-title" id="progress-title" ><span style="text-transform: uppercase;">Step 5: Upload Your Family Photo</span></div>
+
+       <!-- Progress Container -->
+       <div class="progress-container" id="progress-container">
+        <!-- Circles with Connecting Lines -->
+        <div class="circle active-circle">1</div>
+        <div class="line"></div>
+        <div class="circle active-circle">2</div>
+        <div class="line"></div>
+        <div class="circle active-circle">3</div>
+        <div class="line"></div>
+        <div class="circle active-circle">4</div>
+        <div class="line"></div>
+        <div class="circle active-circle">5</div>
+        <div class="line"></div>
+        <div class="circle ">6</div>
+    </div>
+       <div class="form-container">
+      <div class="col-lg-9 right-content form-container" data-aos="fade-up">
+  
+        <form method="post" action="{% url 'edit_image' fp_id=family_photo.fpid %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                <!-- Other Details -->
+                <tr class="form-row">
+                    <th><span>Upload Your Family Photo:</span></th>
+                    <td><input type="file" name="familyphoto" accept="image/*" required></td>
+                </tr>
+                <!-- Add other fields as needed -->
+            </table>
+           
+       
+                <div class="childbtn">
+                    <button type="button" class="btn btn-primary " onclick="goBack()">Back</button>
+                    <button type="submit" class="btn btn-primary " >Update & Continue</button>
+                    <!-- <button type="button" class="btn btn-primary" style="width: auto;" onclick="goNext()">Next</button> -->
+</div>
+        </form>
+    </div>
+    </div>
+    
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<script>
+  function goBack() {
+    // Handle logic to navigate back (e.g., redirect to the previous step)
+    // For example, redirect to familyregister.html
+    window.location.href = "{% url 'otherview' %}";
+  }
+
+  function goToNext() {
+    // Handle logic to navigate to the next step (e.g., redirect to the next step)
+    // For example, redirect to children.html
+    window.location.href = "{% url 'submitfamilyview' %}";
+  }
+</script>
+
+
+{% endblock %}

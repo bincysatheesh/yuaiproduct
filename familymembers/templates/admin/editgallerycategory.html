@@ -1,0 +1,202 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block content %}    
+<style>   table {
+    width: 100%; /* Set the width of the table to 100% */
+  }
+  .customers .card-body .table-responsive {
+    max-width: 100%; /* Set your desired maximum width */
+    overflow-x: auto; /* Add horizontal scroll if needed */
+  }
+  .customers .card-body {
+    max-width: 350px; /* Set the maximum width for the Enquiries section */
+  }
+  
+  /* Add this style for the hover effect */
+  table tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  /* Style for the link container */
+  .link-container {
+    display: inline-block;
+    padding: 1px 2px;
+    background-color: #3d6a95;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .link-container:hover {
+    background-color: #2b3348;
+  }
+  
+  .recent-grid {
+    margin-top: 3.5rem;
+    display: grid;
+    grid-gap: 2rem; /* Adjust the gap between the two grids */
+    grid-template-columns: 75% auto; /* Adjust the width of each grid */
+  }
+
+/* Input Styles */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s, box-shadow 0.3s; /* Add transition for smooth effect */
+}
+
+input[type="text"]:focus {
+    border-color: #3d6a95; /* Change border color on focus */
+    box-shadow: 0 0 5px rgba(61, 106, 149, 0.5); /* Add box shadow on focus */
+}
+
+input[type="text"]:hover {
+    border-color: #3d6a95; /* Change border color on hover */
+    box-shadow: 0 0 5px rgba(61, 106, 149, 0.5); /* Add box shadow on hover */
+}
+
+
+
+  
+  /* New CSS styles */
+    .form-container {
+      max-width: 500px; /* Adjust the maximum width of the form container */
+      margin: 0 auto; /* Center the form horizontally */
+      padding: 20px; /* Add padding for spacing */
+    }
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-color: #ccc;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: transform 0.3s ease; /* Add transition for smooth zoom effect */
+    }
+    .form-input:focus {
+      border-color: #ccc;
+      transform: scale(1.05); /* Apply zoom effect when the input is focused */
+    }
+    .form-input:hover {
+      border-color: #ccc;
+      box-shadow: 0 0 5px rgba(12, 75, 142, 0.995); /* Apply hover effect */
+    }
+  
+    /* Button Styles */
+    .form-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px; /* Adjust the border radius to create rounded ends */
+      background-color: #3d6a95;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.3s ease; /* Add transition for smooth zoom effect */
+    }
+    .form-btn:hover {
+      transform: scale(1.05); /* Apply zoom effect on hover */
+    }
+  </style>
+      
+    
+<input type="checkbox" id="nav-toggle">
+<div class="sidebar"> 
+    <div class="sidebar-brand">
+        <h2><span class="las la-user-circle"></span><span>ZMCA</span></h2>
+    </div>
+    <div class="sidebar-menu">
+        <ul>
+            <li>
+                <a href="" class="active"><span class="las la-search"></span>
+                <span>Search</span></a>
+            </li>
+            <li>
+                <a href="{% url 'adminindex' %}"><span class="fas fa-home"></span>
+                <span>Home</span></a>
+            </li>
+            <li>
+                <a href="{% url 'members_view' %}"><span class="las la-users"></span>
+                <span>Association Members</span></a>
+            </li>
+            <li>
+                <a href="{% url 'fam_view' %}"><span class="las la-home"></span>
+                <span>Families</span></a>
+            </li>
+            <li>
+                <a href="{% url 'enquiry_list' %}"><span class="las la-question-circle"></span>
+                <span>Enquiries</span></a>
+                <ul class="submenu">
+                    <li></li>
+                    <li><a href="{% url 'allenquiry_list' %}"><span class="fas fa-envelope"></span><span>(All)</span></a></li>            
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'gallery'%}"><span class="fa-solid fa-image"></span>
+                <span>Gallery</span></a>
+            </li>
+            <li>
+                <a href=""><span class="las la-blog"></span>
+                <span>Blog</span></a>
+            </li>
+            <li>
+                <a href=""><span class="las la-clipboard-list"></span>
+                <span>Events</span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- --------end link---------- -->
+<div class="main-content">
+    <header>
+        <h2> 
+            <label for="nav-toggle">
+                <span class="las la-bars"></span>
+            </label>       
+            ZMCA Admin
+        </h2>
+        <!-- Add this div to contain the search input -->
+        <div class="search-wrapper">
+            <form method="GET" action="{% url 'adminindex' %}">
+                <span class="las la-search"></span>
+                <input type="search" id="searchInput" name="q" placeholder="Search here" value="{{ request.GET.q|default_if_none:'' }}"/>
+            </form>
+        </div>
+        <div class="user-wrapper">
+            <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+            <div>
+                <h4><a href="{% url 'logout' %}" style="font-size: 16px;"><i class="fa-solid fa-right-from-bracket"></i></a></h4>
+                <small>Super Admin</small>
+            </div>
+        </div>
+    </header>
+    <!-- ----------end header---------- -->
+    <main>
+        <!-- -------------------endcards------------- -->
+        <div class="recent-grid">
+            <div class="projects">
+                <div class="card"  style="width:130%" >
+                    <div class="card-header" style="background-color:#3d6a95;">
+                        <h3 style="color: white;"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span> &nbsp;Register New Gallery Category</h3>
+                    </div>
+                    <!-- --------------begincardbody-------- -->
+                    <div class="form-container">
+                        <form method="post" action="{% url 'edit_category' category.id %}">
+                            {% csrf_token %}
+                            <label for="catname">Category Name:</label><br>
+                            <input type="text" id="catname" name="catname" value="{{ category.catname }}" required><br><br>
+                            <button type="submit" class="form-btn">Save Changes</button>
+                        </form>
+                    </div>
+                 
+                </div>
+            </div>
+        </div>        
+    </main>
+    <!-- ------------------------------endpaginator--------- -->
+</div>
+{% endblock %}

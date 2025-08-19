@@ -1,0 +1,256 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block content %}    
+
+<style>  
+/* Original Styles (unchanged) */
+.link-container {
+  display: inline-block;
+  padding: 1px 2px;
+  background-color: #3d6a95;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+body {
+    font-family: poppins, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+}
+
+/* Form Section (unchanged) */
+.recent-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+.projects {
+    width: 100%;
+    max-width: 600px;
+}
+
+.card {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: #3d6a95;
+    padding: 15px;
+    color: white;
+}
+
+/* Payment Cards Section Only */
+.payment-container {
+    width: 100%;
+    padding: 20px;
+}
+
+.payment-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.payment-item {
+    background: linear-gradient(to bottom, #3d6a95, #ffffff);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.payment-title {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+
+.payment-detail {
+    margin-bottom: 10px;
+}
+
+.detail-label {
+    font-weight: bold;
+    color: #f8f9fa;
+    display: block;
+}
+
+.detail-value {
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Rest of your original styles */
+.form-container {
+    padding: 20px;
+}
+
+/* ... (all other original styles remain unchanged) ... */
+</style>
+
+<input type="checkbox" id="nav-toggle">
+<div class="sidebar"> 
+  <!-- Your original sidebar content -->
+  <div class="sidebar-brand">
+    <h2><span class="las la-user-circle"></span><span>ZMCA</span></h2>
+  </div>
+  <div class="sidebar-menu">
+    <ul>
+      <li>
+        <a href="{% url 'adminindex' %}" class="active"><span class="fas fa-home"></span>
+        <span>Home</span></a>
+      </li>
+      <li>
+        <a href="{% url 'members_view' %}"><span class="las la-home"></span>
+          <span>Families</span></a>
+      <li>
+        <a href="{% url 'committe' %}"><span class="las la-users"></span>
+        <span>Committee Members</span></a>
+      </li>
+      <li>
+        <a href="{% url 'fam_view' %}">
+        <span class="fas fa-id-badge"></span>
+        <span>Membership</span></a>
+      </li>
+      <li>
+        <a href="{% url 'enquiry_list' %}"><span class="fas fa-envelope"></span>
+        <span>Enqueries</span></a>
+      </li>
+      <li>
+        <a href="{% url 'bloodgroupadmin' %}">
+          <span class="fas fa-tint" style="color: red;"></span>
+        <span>Blood Group</span></a>
+      </li>
+      <li>
+        <a href="{% url 'birthdaydetails1' %}">
+          <span class="fas fa-birthday-cake"></span>
+        <span>Birthday</span></a>
+      </li>
+      <li>
+        <a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-image"></span>
+        <span>Gallery</span></a>
+      </li>
+      <li>
+        <a href="{% url 'addhomegallery' %}"><span class="fa-solid fa-image"></span>
+        <span>Home Gallery</span></a>
+      </li>
+      <li>
+        <a href="{% url 'addblogview' %}"><span class="las la-blog"></span>
+        <span>Blog</span></a>
+      </li>
+      <li>
+        <a href="{% url 'eventview' %}"><span class="fa fa-bell"></span>
+        <span>Events</span></a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="main-content">
+  <header>
+    <h2> 
+      <label for="nav-toggle">
+        <span class="las la-bars"></span>
+      </label>       
+      ZMCA Admin
+    </h2>
+    
+    <div class="search-wrapper">
+      <span class="las la-search"></span>
+      <form method="GET" action="{% url 'payments' user_id=user_profile.id %}">
+          <input type="search" id="searchInput" name="q" placeholder="Search here" value="{{ request.GET.q|default_if_none:'' }}"/>
+      </form>
+    </div>
+    
+    <div class="user-wrapper">
+      <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+      <div>
+        <h4><a href="{% url 'logout' %}" style="font-size: 16px;"><i class="fa-solid fa-right-from-bracket"></i></a></h4>
+        <small>Super Admin</small>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="card" style="width: 100%;">
+      <div class="card-header">
+        <h2><span class="fas fa-id-badge"></span> {{fn}} {{ln}} PAYMENT DETAILS</h2>
+        <button class="btn" onclick="window.location.href='{% url 'fam_view' %}'">
+          <span class="fas fa-arrow-left"></span> BACK
+        </button>
+      </div>
+      
+      <div class="payment-container">
+        <div class="payment-cards">
+          {% for item in page_obj %}
+          <div class="payment-item">
+            <div class="payment-title">
+              {{ item.membership_year }}
+            </div>
+            <div class="payment-detail">
+              <span class="detail-label">Member Status:</span>
+              <span class="detail-value">{{ item.usercategory }}</span>
+            </div>
+            <div class="payment-detail">
+              <span class="detail-label">Payment Date:</span>
+              <span class="detail-value">{{ item.payment_date }}</span>
+            </div>
+            <div class="payment-detail">
+              <span class="detail-label">Amount:</span>
+              <span class="detail-value">K {{ item.amount }}</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <span class="step-links">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  </main>
+</div>
+
+<script>
+  // Search functionality
+  const searchInput = document.getElementById('searchInput');
+  const cards = document.querySelectorAll('.payment-item');
+
+  searchInput.addEventListener('input', function() {
+      const searchText = this.value.trim().toLowerCase();
+      cards.forEach(card => {
+          const cardText = card.textContent.toLowerCase();
+          card.style.display = cardText.includes(searchText) ? '' : 'none';
+      });
+  });
+</script>
+
+{% endblock %}

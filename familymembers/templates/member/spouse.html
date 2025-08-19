@@ -1,0 +1,919 @@
+{% extends 'member/memberbase.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+
+<style type="text/css">
+  /* Add this to your main.css or create a new CSS file */
+  body{
+    /* font-family: poppins,sans-serif; */
+
+background: linear-gradient(to bottom, #dde8f1, #ffffff);
+
+  }
+  /* Add more styling as needed */
+  input,
+textarea,
+select,
+button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  /* text-transform: uppercase; */
+}
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+    /* Styles for form elements */
+    input:hover,
+textarea:hover {
+    /* background-color: #b1cfdf; */
+    color: rgb(10, 0, 0);
+    transform: scale(1.05); /* Adjust the scale factor as needed */
+    transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+}
+select:hover {
+    transform: scale(1.05); /* Adjust the scale factor as needed */
+    transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+    background-color: #f2f3f4;
+    color: rgb(16, 15, 15);
+}
+
+  .dashboard {
+    /* border-right: 2px solid #3c679f; */
+    padding-right: 30px;
+    height: 750px; /* Adjust height as needed */
+  }
+
+  .dashboard-heading h4 {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 5px;
+  }
+
+  .dashboard-heading h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40%;
+    height: 5px;
+    background-color: #e0a905;
+  }
+
+  /* .vertical-steps {
+    list-style-type: none;
+    padding: 0;
+  } */
+  
+
+  .vertical-steps a {
+    width: 110%;
+    display: block;
+    text-decoration: none;
+    color: #000;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+
+  .vertical-steps a:hover {
+    text-decoration: underline;
+  }
+
+  .right-content {
+    padding-left: 20px;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  table tr {
+    display: flex;
+    margin-bottom: 15px;
+  }
+
+  table td {
+    width: 50%;
+    box-sizing: border-box;
+    padding-right: 10px;
+  }
+  form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 5px;
+  }
+  /* Additional styles for form-row and full-width */
+.form-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+  input,
+  textarea,
+  select,
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+  }
+  .progress-link {
+    border: 2px solid #3c679f;
+    /* border: #3c679f; */
+        color: #000; /* Black text */
+        /* background-color:#e0a905;  */
+        /* Yellow background */
+        display: block;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        
+        transition: background-color 0.3s;
+    }
+
+    .progress-link-container {
+        transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+        font-size: 15px;
+    }
+    .progress-link-container:hover {
+        transform: scale(1.1); /* Increase the scale to zoom in */
+    }
+
+    .progress-link:hover {
+        background-color: #3c679f;
+         /* Darker yellow on hover */
+        color: #ffffff;
+    }
+   
+    /* Styling for the progress container */
+
+    .progress-title {
+        text-align: left;
+        font-size: 18px;
+        font-weight: bold;
+        font-family: 'Your Desired Font', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .progress-container {
+        display: flex;
+        justify-content: space-between;
+        width:95%;
+        align-items: center;
+        margin-top: 20px; /* Adjust margin as needed */
+    }
+
+    .circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #3c679f; /* Adjust the color as needed */
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .line {
+        flex: 1;
+        height: 2px;
+        
+        background-color:#3c679f; /* Adjust the color as needed */
+    }
+
+    .active-circle {
+        background-color: #e0a905; /* Adjust the color as needed */
+    }
+    /* ----------------/ */
+    .custom-blue {
+    background-color:#3c679f; /* Blue background */
+    color: #fff; /* White text */
+    /* Add any other styles you need */
+}
+.custom-green {
+    /* background-color: #9bcf71;  */
+    /* Blue background */
+    color: #fff; /* White text */
+    /* Add any other styles you need */
+}
+.full-width {
+    width: 100% !important;
+}
+/* -----------------------button---------------- */
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+button-container {
+  display: flex;
+  justify-content: space-between;
+}
+.button-container button {
+    width: 150px;
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+button {
+    width: 180px; /* Adjust the width as needed */
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+.button-container button:hover {
+    background-color: #3c679f;
+}
+
+  button:hover {
+    background-color: #3c679f;
+  }
+
+/* -------------------endbutton */
+
+
+.form-container {
+    width: 100%;
+    max-width: 100%;
+    animation: slideInFromBottom 1s ease-out;
+  }
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+/* Add the following CSS class definition */
+.full-width {
+    width: 100% !important;
+}
+/* -----------------------card begining------------- */
+.spouse-card {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: #3c679f;
+  color: white;
+  padding: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-footer {
+  background-color: #eee;
+  padding: 10px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  text-align: center;
+}
+
+.table-progress-link {
+  color: #3c679f;
+}
+
+/* --------------p-------------- */
+p {
+    font-family: 'Arial', sans-serif;
+    font-size: 22px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: justify;
+  }
+
+  .contact-details {
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  .btn1{
+    background-color: #edbc09;
+  }
+  .uppercase-text {
+            text-transform: uppercase;
+        }
+
+        .wide-cell {
+    width: 100%; /* Adjust the width percentage as needed */
+}
+.childbtn
+{
+    display: flex;
+  justify-content: space-between; 
+}
+.childbtn button {
+  width: calc(33.33% - 10px); /* Initially, each button occupies one-third of the container width with some spacing */
+  margin: 5px; /* Add some spacing between buttons */
+}
+
+@media screen and (max-width: 768px) {
+  .childbtn button {
+    width: calc(50% - 10px); /* Adjust button width for smaller screens (e.g., tablets) */
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .childbtn button {
+    width: 100%; /* Make buttons occupy full width on smaller screens (e.g., mobile devices) */
+  }
+}
+
+
+
+/* ----------------card end------------------------------ */
+
+
+/* Styling for cards */
+.card {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s; /* Added background-color transition */
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  background-color: #f0f0f0; /* Change background color on hover */
+}
+
+.card-header {
+  background-color:#3d6a95;
+  padding: 10px;
+}
+
+.card-title {
+  margin: 0;
+}
+
+.card-body {
+  padding: 15px;
+  background: linear-gradient(to bottom,#3d6a95, #ffffff);
+
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .col-lg-3 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .col-lg-9 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+/* For smaller screens */
+@media screen and (max-width: 768px) {
+  /* Adjust form controls to occupy full width */
+  input[type="text"],
+  select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box; /* Ensure padding doesn't add to the width */
+  }
+}
+</style>
+
+<br><br><br><br><br><br><br>
+
+<div class="container">
+  <div class="row gy-4">    
+    <div class="col-lg-3" data-aos="fade-up">
+      <div class="dashboard">
+        <div class="dashboard-heading">
+          <h4 class="underline-below uppercase-text" style="font-size: 18px;">Registration Process</h4>
+         
+        </div>
+        <div class="vertical-steps"> <br>
+          <!-- Step 1: Owner Details -->
+          {% if not owner_details %}
+          <a href="{% url 'save_owner' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<strong class="uppercase-text">Step 1: Owner Details</strong> </a>
+          {% else %}
+          <!-- Add your content for the 'else' case, e.g., change color to yellow -->
+          <a href="{% url 'save_owner' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<strong class="uppercase-text">Step 1: Owner Details</strong></a>
+          {% endif %}          <br>
+          <!-- Step 2: Spouse Details -->
+         
+          {% if not spouse_details %}
+          <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link" style="text-decoration: dotted;">
+            <i class="fa-solid fa-hand-point-right" style="color: #e0a905; font-size: 24px;"></i>
+            <!-- <i class="fa-solid fa-circle-arrow-right" style="color: #e0a905; font-size: 24px;""></i> -->
+            &nbsp;<strong class="uppercase-text">Step 2: Spouse Details</strong></a>
+            {% else %}
+            <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<strong class="uppercase-text">Step 2: Spouse Details</strong></a>
+            {% endif %} 
+            
+     
+          <br>
+          <!-- Step 3: Children's Details -->
+          {% if not cd %}
+          <a href="{% url 'childrenview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i><strong class="uppercase-text">Step 3: Children's Details</strong></a>
+          {% else %}
+          <a href="{% url 'childrenview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<strong class="uppercase-text">Step 3: Children's Details</strong></a>
+          {% endif %} 
+          <br>
+          <!-- Step 4: Other Details -->
+          {% if not other %}
+          <a href="{% url 'otherview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i><strong class="uppercase-text">Step 4: Other's Details</strong></a>
+          {% else %}
+          <a href="{% url 'otherview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<strong class="uppercase-text">Step 4: Other's Details</strong></a>
+          {% endif %} 
+          <br>
+          <!-- Step 5: Other Details -->
+          {% if not family_photos %}
+          <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<strong class="uppercase-text">Step 5: Upload photo</strong></a>
+          {% else %}
+          <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<strong class="uppercase-text">Step 5: Upload photo</strong></a>
+          {% endif %} 
+          <br>
+          <!-- Step 6: Other Details -->
+          <a href="{% url 'submitfamilyview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><strong class="uppercase-text">Step 6: Review and Submit</strong></a>
+        </div>
+      </div>
+    </div>
+   
+    <div class="col-lg-9 right-content" data-aos="fade-up">
+      <div class="progress-title" id="progress-title"><strong class="uppercase-text" style="font-size: 15px; font-weight:bold;">Step 2: Spouse Details</strong></div>
+
+       <!-- Progress Container -->
+       <div class="progress-container" id="progress-container">
+        <!-- Circles with Connecting Lines -->
+        <div class="circle active-circle">1</div>
+        <div class="line"></div>
+        <div class="circle active-circle">2</div>
+        <div class="line"></div>
+        <div class="circle">3</div>
+        <div class="line"></div>
+        <div class="circle">4</div>
+        <div class="line"></div>
+        <div class="circle">5</div>
+        <div class="line"></div>
+        <div class="circle ">6</div>
+    </div>
+    
+    <div class="form-container">
+      <div class="col-lg-9 right-content form-container" data-aos="fade-up">
+        {% if spouse_details %}
+        <div class="row">
+          <div class="col-md-12">
+          <div class="card">
+            <div style="text-align: justify;padding: 2%;background: linear-gradient(to bottom,#3d6a95, #ffffff);">
+             
+                 <span style="color:#00090f;font-family:poppins, sans-serif;font-weight: bold;" >
+            
+          {% if spouse_details.gender == 'M' %}
+              Hi, my spouse's name is Mr. <span style="color:#0056b3;" class="uppercase-text">{{ spouse_details.spouse_name }}</span>. He was born on <span style="color:#0056b3;" class="uppercase-text">{{ spouse_details.spouse_dob|date:"F d" }}</span>.
+          {% elif spouse_details.gender == 'F' %}
+              Hi, my spouse's name is Mrs.<span style="color:#0056b3;" class="uppercase-text"> {{ spouse_details.spouse_name }}</span>. She was born on <span style="color:#0056b3;" class="uppercase-text">{{ spouse_details.spouse_dob|date:"F d" }}</span>.
+          {% else %}
+              Hi, my spouse's name is <span style="color:#0056b3;" class="uppercase-text">{{ spouse_details.spouse_name }}</span>. He/She born on <span style="color:#0056b3;" class="uppercase-text">{{ spouse_details.spouse_dob|date:"F d" }}</span>.
+          {% endif %}
+      
+          {% if spouse_details.gender == 'F' %}
+              Her blood group is
+          {% elif spouse_details.gender == 'M' %}
+              His blood group is
+          {% else %}
+              My spouse's blood group is
+          {% endif %}
+          <i class="fas fa-tint" style="color: #ce0a1a;"></i> <span style="color:#0056b3;">{{ spouse_details.blood_group }}</span>
+      
+          
+      
+          {% if spouse_details.status == '1' %}
+              Currently, my spouse is <span style="color:#0056b3;" class="uppercase-text">&nbsp;Living in Zambia</span>.
+          {% elif spouse_details.status == '2' %}
+              Currently, my spouse is<span style="color:#0056b3;" class="uppercase-text">&nbsp;Living in another country</span>.
+          {% elif spouse_details.status == '3' %}
+              Unfortunately, my spouse has <span style="color:#0056b3;" class="uppercase-text">&nbsp;Passed away</span>.
+          {% endif %}
+             </span>    </div></div></div></div>
+
+
+             <div class="row">
+              <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title">  <span style="color:#e4e7e9;font-family:poppins, sans-serif;text-transform: uppercase;font-weight: bold;" >COMPANY DETAILS🏢</span>
+                </h5>
+              </div>
+              <div class="card-body">    
+                
+            <span style="text-transform: uppercase;font-weight: bold;"> Company Name 🏢: </span><br><span style="color:  #141001;font-weight: bold;" class="uppercase-text">{{ spouse_details.spouse_work }}</span>
+           <hr> <span style="text-transform: uppercase;font-weight: bold;">   Occupation 💼: </span><br><span style="color:  #141001;font-weight: bold;" class="uppercase-text">{{ spouse_details.spouse_designation }}</span>
+        
+            </div>
+            </div>
+            </div>
+          
+            <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title">  <span style="color:#e4e7e9;font-family:poppins, sans-serif;text-transform: uppercase;font-weight: bold;" >Contact Details:</span>
+                </h5>
+              </div>
+              <div class="card-body"> 
+                
+                <span style="text-transform: uppercase;font-weight: bold;"> Contact Number 📱 :  </span><br><span style="color:  #141001;font-weight: bold;" class="uppercase-text">{{ spouse_details.spouse_phone_no }}</span><hr>
+                <span style="text-transform: uppercase;font-weight: bold;"> WhatsApp Number <i class="fab fa-whatsapp" style="color: #2b4810;font-weight: bold;"></i> :   </span><br><span style="color:  #141001;font-weight: bold;" class="uppercase-text">{{ spouse_details.spouse_whatsapp_no }}</span>
+               <hr> <span style="font-weight: bold;"> Email 📧:  </span><br><span style="color:  #141001;font-weight: bold;">{{ spouse_details.spouse_email }}</span>
+        
+          </div></div>
+          
+            </div>
+          </div>
+            
+        <!-- Add a button to edit or navigate to the next step -->
+        <!-- <div class="form-actions"> -->
+          <div class="childbtn">
+            <button type="button" class="btn btn-primary"  onclick="goBack()">Back</button>
+    
+              <!-- Edit and Delete buttons -->
+              <button class="btn btn-primary">
+                  <a href="{% url 'edit_spouse' spouse_details.spid %}" style="text-decoration: dotted;color: #f2f3f4;">
+                      <strong>EDIT</strong>
+                  </a>
+              </button>
+             
+              <!-- Delete button -->
+              <button type="button" class="btn btn-primary" onclick="return confirm('Are you sure you want to delete your spouse details?')" >  <a href="{% url 'deletespouse' spouse_details.spid %}" style="text-decoration: dotted;color: #ccc;">
+                  <i class="fa-solid fa-trash"></i>
+              </a></button>
+              <!-- <form method="post" action="{% url 'deletespouse' spouse_details.spid %}">
+                {% csrf_token %}
+                <button type="submit"  onclick="return confirm('Are you sure you want to delete this member?')">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </form>
+            -->
+              
+                <button type="button" class="btn btn-primary"  onclick="goToNext()">Next</button>
+            
+          </div>
+        <!-- </div> -->
+        {% else %}
+
+      <!-- Owner Details Form -->
+      <form method="post" action="{% url 'save_spouse' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+          
+          <tr class="form-row">
+            <td>
+                <input type="text" name="spouse_name" placeholder="Spouse Name" required class="full-width uppercase-text">
+            </td>
+        
+              <td>
+                <select name="gender" class="uppercase-text" required>
+                    <option value="" disabled selected class="uppercase-text">Select Gender</option>
+                    <option value="M" class="uppercase-text">Male</option>
+                    <option value="F" class="uppercase-text">Female</option>
+                    <option value="O" class="uppercase-text">Other</option>
+                </select>
+            </td>
+            </tr>
+            <tr class="form-row">
+
+            <td>
+              <label for="DOB">&nbsp;DATE OF BIRTH</label>
+
+              <select name="dob_month" id="dob_month" class="uppercase-text" required>
+                <option value="" disabled selected class="uppercase-text" >Select Born Month</option>                    
+                <option value="01" class="uppercase-text" >January</option>
+                <option value="02" class="uppercase-text" >February</option>
+                <option value="03" class="uppercase-text" >March</option>
+                <option value="04" class="uppercase-text" >April</option>
+                <option value="05" class="uppercase-text" >May</option>
+                <option value="06" class="uppercase-text" >June</option>
+                <option value="07" class="uppercase-text" >July</option>
+                <option value="08" class="uppercase-text" >August</option>
+                <option value="09" class="uppercase-text" >September</option>
+                <option value="10" class="uppercase-text" >October</option>
+                <option value="11" class="uppercase-text" >November</option>                   
+                <option value="12" class="uppercase-text" >December</option>
+              </select>    </td>
+              <td>         
+                <label for="DOB">&nbsp;</label>
+
+                <select name="dob_day" id="dob_day" required  class="uppercase-text">
+                  <option value="" disabled selected class="uppercase-text">Select DAY</option>                   
+                 
+                </select>
+            
+              <!-- <input type="text" name="dob" id="dob" placeholder="Enter your DOB (DD/MM)" maxlength="5" pattern="\d{2}/\d{2}" title="Enter a valid date (DD/MM)" required> -->
+            </td>
+                
+                <!-- <td><input type="text" name="blood_group" placeholder="Blood Group" required></td> -->
+            </tr>
+            <tr class="form-row">
+              <td>
+                <select name="blood_group" class="uppercase-text" required>
+                  <option value="" disabled selected class="uppercase-text" >Select Blood Group</option>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                </select>
+              </td>  
+                <td>
+                  <select name="spouse_living_status" class="uppercase-text"  required>
+                      <option value="" disabled selected class="uppercase-text" >Select Living Status</option>                    
+                      <option value="1" class="uppercase-text" >Living in Zambia</option>
+                      <option value="2" class="uppercase-text" >Living in Other Country</option>
+                      <option value="3" class="uppercase-text" >Deceased</option>
+                  </select>
+              </td>
+            </tr>
+            <tr class="form-row">
+              <input type="hidden" id="spcode" name="spcode">
+              <input type="hidden" id="spcode1" name="spcode1">
+      
+              <td><input type="tel" id="spouse_whatsapp_no"  class="uppercase-text"  name="spouse_phone_no"  placeholder="Phone Number" required></td>
+
+                <td><input type="tel" id="spouse_phone_no"   class="uppercase-text"  name="spouse_whatsapp_no" placeholder="WhatsApp Number" required></td>
+            </tr>
+            <tr class="form-row">
+              <td><input type="text" class="uppercase-text"  name="spouse_work" placeholder="Company Name"></td>
+              <td><input type="text" class="uppercase-text"  name="spouse_designation" placeholder="Enter your Designation"></td>
+
+            </tr>
+<tr class="form-row">
+  
+                <td class="col-md-12"><input type="email" name="spouse_email" placeholder="Email"  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"></td>
+             
+            </tr>
+        </table>
+        <div class="childbtn">
+           
+                <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
+                <button type="submit" class="btn btn-primary" >Save</button>
+                <button type="button" class="btn btn-primary" onclick="goToNext()">Next</button>
+           
+        </div>
+    </form>
+    {% endif %}
+    </div>
+    </div>
+    
+    </div>
+  </div>
+</div>
+<!-- ------------------number----------- -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Function to validate for only numbers
+    function validateOnlyNumbers(inputField) {
+      var numbersRegex = /^[0-9]*$/; // Regular expression for only numbers
+      return numbersRegex.test(inputField.value);
+    }
+
+    // Get the input fields for which you want to enforce the rules
+    var spouseContactNumberInput = document.querySelector('input[name="spouse_phone_no"]');
+    var spouseWhatsappNumberInput = document.querySelector('input[name="spouse_whatsapp_no"]');
+
+    // Add an event listener to the spouse contact number input field
+    spouseContactNumberInput.addEventListener('input', function () {
+      validateAndAlert(spouseContactNumberInput);
+    });
+
+    // Add an event listener to the spouse WhatsApp number input field
+    spouseWhatsappNumberInput.addEventListener('input', function () {
+      validateAndAlert(spouseWhatsappNumberInput);
+    });
+
+    // Function to validate and display alerts
+    function validateAndAlert(inputField) {
+      if (!validateOnlyNumbers(inputField)) {
+        alert('Invalid input. Please enter only numbers without special symbols or text.');
+        inputField.value = inputField.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+      } else {
+        // Check for custom validation messages
+        if (inputField.validity.tooShort) {
+          inputField.setCustomValidity('Please enter at least ' + inputField.minLength + ' digits.');
+        } else if (inputField.validity.tooLong) {
+          inputField.setCustomValidity('Please enter no more than ' + inputField.maxLength + ' digits.');
+        } else {
+          inputField.setCustomValidity(''); // Clear custom validity message
+        }
+      }
+    }
+  });
+</script>
+
+<!-- ---- -->
+
+<!-- -------------text type------ -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      // Function to validate if the input contains only text (no digits)
+      function validateTextOnly(inputField) {
+          var textRegex = /^[a-zA-Z\s]*$/; // Regular expression for only text (no digits)
+          return textRegex.test(inputField.value);
+      }
+  
+      // Get the input fields for spouse name and work status
+      var spouseNameInput = document.querySelector('input[name="spouse_name"]');
+      var workStatusInput = document.querySelector('input[name="spouse_work"]');
+  
+      // Add an event listener to each input field
+      spouseNameInput.addEventListener('input', function () {
+          if (!validateTextOnly(spouseNameInput)) {
+              alert('Invalid input. Please use only text (no digits).');
+              spouseNameInput.value = '';
+          }
+      });
+  
+      workStatusInput.addEventListener('input', function () {
+          if (!validateTextOnly(workStatusInput)) {
+              alert('Invalid input. Please use only text (no digits).');
+              workStatusInput.value = '';
+          }
+      });
+  
+      // ... Add additional fields as needed
+  });
+
+  </script>
+  
+<!-- ------------- -->
+
+
+
+
+<script>
+  function goBack() {
+    // Handle logic to navigate back (e.g., redirect to the previous step)
+    // For example, redirect to familyregister.html
+    window.location.href = "{% url 'save_owner' %}";
+  }
+
+  function goToNext() {
+    // Handle logic to navigate to the next step (e.g., redirect to the next step)
+    // For example, redirect to children.html
+    window.location.href = "{% url 'childrenview' %}";
+  }
+
+
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      var dobMonthInput = document.getElementById('dob_month');
+      var dobDayInput = document.getElementById('dob_day');
+      
+      // Event listener for the month input
+      dobMonthInput.addEventListener('change', function () {
+          // Get the selected month
+          var selectedMonth = dobMonthInput.value;
+          
+          // Clear the day dropdown
+          dobDayInput.innerHTML = '';
+          
+          // Determine the number of days in the selected month
+          var daysInMonth = new Date(new Date().getFullYear(), selectedMonth, 0).getDate();
+          
+          // Populate the day dropdown with options for the selected month
+          for (var i = 1; i <= daysInMonth; i++) {
+              var option = document.createElement('option');
+              option.value = i < 10 ? '0' + i : i.toString(); // Add leading zero if needed
+              option.textContent = option.value;
+              dobDayInput.appendChild(option);
+          }
+      });
+  });
+  </script>
+
+
+
+<script>
+  var inputElement1 = document.querySelector("#spouse_whatsapp_no");
+  var inputElement2 = document.querySelector("#spouse_phone_no");
+
+  // Initialize intlTelInput for WhatsApp number
+  var iti1 = window.intlTelInput(inputElement1, {
+    separateDialCode: true,
+    initialCountry: "auto",
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+  });
+
+  // Initialize intlTelInput for phone number
+  var iti2 = window.intlTelInput(inputElement2, {
+    separateDialCode: true,
+    initialCountry: "auto",
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+  });
+
+  // Event listener for WhatsApp number
+  inputElement1.addEventListener('countrychange', function () {
+    var countryCode1 = iti1.getSelectedCountryData().dialCode;
+    document.getElementById('spcode').value = countryCode1;
+  });
+
+  // Event listener for phone number
+  inputElement2.addEventListener('countrychange', function () {
+    var countryCode2 = iti2.getSelectedCountryData().dialCode;
+    document.getElementById('spcode1').value = countryCode2;
+  });
+</script>
+
+
+  
+<!-- <script>
+  var inputElement1 = document.querySelector("#spouse_whatsapp_no");
+  var iti1 = window.intlTelInput(inputElement1, {
+    separateDialCode: true,
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    initialCountry: "in",
+    dropdownContainer: document.body
+  });
+
+  inputElement1.addEventListener('countrychange', function () {
+    var countryCode1 = iti1.getSelectedCountryData().dialCode;
+    document.getElementById('spcode').value = countryCode1;
+  });
+
+
+  var inputElement2 = document.querySelector("#spouse_phone_no");
+  var iti2 = window.intlTelInput(inputElement2, {
+    separateDialCode: true,
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    initialCountry: "zm",
+    dropdownContainer: document.body
+  });
+
+  inputElement2.addEventListener('countrychange', function () {
+    var countryCode2 = iti2.getSelectedCountryData().dialCode;
+    document.getElementById('spcode1').value = countryCode2;
+  });
+
+  
+</script>
+ -->
+
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      // Check if the URL has a 'success' parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const successParam = urlParams.get('success');
+
+      // If 'success' is present and truthy, update the UI
+      if (successParam) {
+          // Add a green tick or update the style for Step 1 in the dashboard
+          document.querySelector('.progress-container .circle').classList.add('active-circle');
+      }
+  });
+</script>
+
+
+
+
+
+
+
+{% endblock %}

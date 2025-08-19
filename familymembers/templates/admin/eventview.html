@@ -1,0 +1,457 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block content %}    
+
+<style>  
+
+
+  /* Style for the link container */
+  .link-container {
+    display: inline-block;
+    padding: 1px 2px;
+    background-color: #3d6a95;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .link-container:hover {
+    background-color: #2b3348;
+  }
+  /* Body styles */
+  body {
+      font-family: poppins, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f1f1f1;
+      /* overflow: hidden; */
+       /* Hide scrollbar */
+  }
+  /* Container styles */
+  .recent-grid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50vh;
+  }
+  
+  .projects {
+      width: 100%;
+      max-width: 600px;
+  }
+  
+  .card {
+      width: 100%;
+      background-color: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      /* Center content horizontally */
+    
+  }
+  
+
+  .card-header {
+      background-color: #3d6a95;
+      padding: 20px;
+      color: #fff;
+  }
+  
+  .card-header h3 {
+      margin: 0;
+  }
+  
+  .form-container {
+      padding: 20px;
+  }
+  
+  /* Form styles */
+  form {
+      display: grid;
+      gap: 10px;
+      height: auto;
+  }
+  
+  label {
+      font-weight: bold;
+  }
+  
+  input[type="text"],
+  textarea,select,
+  button,
+  input[type="file"] {
+    text-transform: uppercase;
+      width: calc(100% - 20px); /* Adjust width to allow for padding */
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+  }
+  
+  textarea {
+      resize: vertical;
+  }
+  
+  button {
+      background-color: #3d6a95;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+  }
+  
+  button:hover {
+      background-color: #2e5275;
+  }
+  
+  /* Responsive styles */
+  @media screen and (max-width: 600px) {
+      .card {
+          max-width: 90%; /* Adjust max-width for smaller screens */
+      }
+  }
+  
+          /* CSS for table */
+          table {
+              width: 100%;
+              border-collapse: collapse;
+          }
+  
+          th, td {
+              padding: 8px;
+              text-align: left;
+              border-bottom: 1px solid #ddd;
+          }
+  
+          th {
+              background-color: #f2f2f2;
+          }
+  
+          img {
+              max-width: 100px;
+              max-height: 100px;
+          }
+          .gallery-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust minmax value as needed */
+      gap: 10px;
+  }
+  
+  .gallery-item {
+      background-color: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding-left: 10%;
+  }
+  
+  .gallery-item img {
+      max-width: 100%;
+      height: auto;
+      transition: transform 0.3s ease-in-out; /* Add transition for smooth effect */
+  }
+  
+  .gallery-item img:hover {
+      transform: scale(1.1); /* Scale the image by 10% on hover */
+  }
+   /* Styles for the search input wrapper */
+   /* Styles for the search input wrapper */
+   .search-wrapper {
+      margin-bottom: 20px;
+      display: flex; /* Use flexbox */
+      align-items: center; /* Align items vertically */
+      justify-content: center; /* Center items horizontally */
+    }
+  
+    /* Styles for the search icon */
+    .search-icon {
+      margin-right: 10px; /* Add margin for spacing */
+    }
+  
+   /* Styles for the search input */
+   .search-wrapper {
+      margin-bottom: 20px;
+      display: flex; /* Use flexbox */
+      align-items: center; /* Align items vertically */
+      justify-content: center; /* Center items horizontally */
+      max-width: 400px; /* Set the maximum width */
+      width: 90%; /* Set the desired width */
+      margin: 0 auto; /* Center the wrapper horizontally */
+  }
+  .uppercase-text {
+              text-transform: uppercase;
+              font-weight: bold;
+          }
+  
+  
+  /* CSS for the search input */
+  /* CSS */
+.actions {
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+}
+
+.button-container {
+    display: flex;
+}
+
+.button-container > * {
+    margin-right: 5px; /* Add some spacing between the buttons */
+}
+
+  
+  </style>
+      
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar"> 
+      <div class="sidebar-brand">
+        <h2><span class="las la-user-circle"></span><span>ZMCA</span></h2>
+
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li>
+            <a href="{% url 'adminindex' %}" class="active"><span class="fas fa-home"></span>
+            <span>Home</span></a>
+          </li>
+          <!-- <li>
+            <a href="{% url 'adminindex' %}"><span class="fas fa-home"></span>
+            <span></span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'members_view' %}"><span class="las la-home"></span>
+              <span>Families</span></a>
+          <li>
+            <a href="{% url 'committe' %}"><span class="las la-users"></span>
+            <span>Committee Members</span></a>
+          </li>
+          <li>
+            <a href="{% url 'fam_view' %}">
+            <span class="fas fa-id-badge"></span>
+            <span>Membership</span></a>
+          </li>
+          
+          <li>
+            <a href="{% url 'enquiry_list' %}"><span class="fas fa-envelope"></span>
+            <span>Enqueries</span></a>
+            <!-- <ul class="submenu">
+              <li></li>
+              <li><a href="{% url 'allenquiry_list' %}"><span class="fas fa-envelope"></span><span>(All)</span></a></li>            
+           -->
+           </ul>
+          </li>
+          <li>
+            <a href="{% url 'bloodgroupadmin' %}">
+              <span class="fas fa-tint" style="color: red;"></span>
+            <span>Blood Group</span></a>
+          </li>
+          <li>
+            <a href="{% url 'birthdaydetails1' %}">
+              <span class="fas fa-birthday-cake"></span>
+            <span>Birthday</span></a>
+          </li>
+
+          </li>
+          <li>
+            <a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-image"></span>
+            <span>Gallery</span></a>
+            <ul class="submenu">
+              <!-- <li></li>
+              <li><a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Add Gallery</a></li>
+              <li><a href="{% url 'galleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Gallery</a></li> -->
+         
+          
+           </ul>
+           <li>
+            <a href="{% url 'addhomegallery' %}"><span class="fa-solid fa-image"></span>
+            <span>Home Gallery</span></a>
+           
+              </ul>
+          </li>
+          <!-- <li>
+            <a href="{% url 'gallery'%}"><span class="fa-solid fa-image"></span>
+            <span>Gallery</span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'addblogview' %}"><span class="las la-blog"></span>
+            <span>Blog</span></a>
+          </li>
+          <li>
+            <a href="{% url 'eventview' %}"><span class="fa fa-bell"></span>
+            <span>Events</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- --------end link---------- -->
+    <div class="main-content">
+      <header>
+           
+        <h2> 
+          <label for="nav-toggle">
+            <span class="las la-bars"></span>
+          </label>       
+        ZMCA Admin
+        </h2>
+      <!-- Add this div to contain the search input -->
+      <div class="search-wrapper">
+        <span class="las la-search"></span>
+
+        <form method="GET" action="{% url 'addgalleryview' %}">
+            <input type="search" id="searchInput"  name="q" placeholder="Search here" value="{{ request.GET.q|default_if_none:'' }}"/>
+        </form>
+      </div>
+
+        <div class="user-wrapper">
+          <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+        
+          <div>
+            <!-- <h4>ZMCA</h4> -->
+            <h4>        <a href="{% url 'logout' %}" style="font-size: 16px;"> <i class="fa-solid fa-right-from-bracket"></i></a>
+            </h4>
+            <small>Super Admin</small>
+
+          </div>
+
+          
+        </div>
+
+      </header>
+      <!-- ----------end header---------- -->
+ 
+      <main>
+        <br><br><br>
+        <div style="display: flex; justify-content: center;">
+            <button onclick="window.location.href='{% url 'notification' %}'" class="btn btn-primary" style="flex-grow: 0.1; width: auto;"><span class="fas fa-plus"></span> Add New Event</button>
+        
+          </div>
+        <br><br>
+       
+        <div class="card" style="width: 100%;">
+            <div class="card-header">
+                <h2><span class="fas fa-bell"></span> <span>ZMCA EVENTS</span></h2>
+                <button onclick="window.location.href='{% url 'allevents' %}'" class="btn btn-primary" style="flex-grow: 0.1; width: auto;"><span></span>View All Events</button>
+            </div>
+        
+            <div class="gallery-items" >
+                {% for item in page_obj %}
+                {% if item.status == 'Pending' or item.status == 'Active' %}
+                <div class="gallery-item"   style="background: linear-gradient(to bottom, #3d6a95, #ffffff);" >
+                  <br>
+                  <div>
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                    {% else %}
+                        <p>No image available</p>
+                    {% endif %}
+                </div>  
+                
+                <div>
+                <span  style="color: crimson;text-transform: uppercase;">
+                    {{ item.event_name }}</span>
+                </div>
+                <hr>
+                <div >
+                 <span  style="color: crimson;text-transform: uppercase;">{{ item.date }} &nbsp; {{ item.timestamp |time}}</span></div>
+                <div>
+               <hr>
+                <div>
+                  <span style="color:#3d6a95;text-transform: uppercase;">Event Status : </span><span  style="color: crimson;text-transform: uppercase;">{{ item.status }}</span></div>
+                <div >
+                  <hr>
+                <span  style="color: crimson;text-transform: uppercase;">  {{ item.description|truncatewords:15 }}</span>
+              </div>
+              <hr>
+
+                <div class="actions">
+                  <div class="button-container">
+                    <button style="background-color:transparent">
+                      <a href="{% url 'editevent' item.id %}" class="btn btn-primary btn-sm">
+                        <span class="fas fa-edit" style="color: #3d6a95;"></span>
+                      </a>
+                      </button>
+                      <form method="post" action="{% url 'deleventview' item.id %}">
+                        {% csrf_token %}
+                          <button type="submit" style="background-color: #fff;" onclick="return confirm('Are you sure you want to delete this Item?')">
+                            <i class="fa-solid fa-trash" style="color: #cd0c0c;"></i>
+                          </button>
+                      </form>
+                  </div>
+                </div>
+                            
+             </div>
+             {% endif %}
+                    {% endfor %}
+                </div>
+            
+            </div>
+        
+    </main>
+     <!-- Pagination Controls -->
+<!-- Pagination Controls -->
+<!-- Pagination Controls -->
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+<!-- ------------------------------endpaginator--------- -->
+
+
+
+    </div>
+
+    <script>
+      // Get the search input element
+      const searchInput = document.getElementById('searchInput');
+    
+      // Add an event listener for the 'input' event to detect changes in the input field
+      searchInput.addEventListener('input', function() {
+          // Get the value entered by the user
+          const searchText = this.value.trim().toLowerCase();
+    
+          // Get all the gallery items
+          const galleryItems = document.querySelectorAll('.gallery-item');
+    
+          let found = false; // Flag to track if any search results were found
+    
+          // Loop through each gallery item
+          galleryItems.forEach(item => {
+              // Get the text content of each item
+              const itemText = item.textContent.toLowerCase();
+    
+              // If the item contains the search text, display it, otherwise hide it
+              if (itemText.includes(searchText)) {
+                  item.style.display = '';
+                  found = true; // Set found to true if at least one search result is found
+              } else {
+                  item.style.display = 'none';
+              }
+          });
+    
+          // Toggle the visibility of a message indicating no results found based on search results
+          const noResultsMessage = document.getElementById('noResultsMessage');
+          noResultsMessage.style.display = found ? 'none' : 'block';
+      });
+    </script>
+    
+    {% endblock %}    

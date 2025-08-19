@@ -1,0 +1,131 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block content %}
+<style>
+    body {
+      font-family: poppins,sans-serif;
+
+background: linear-gradient(to bottom, #3d6a95, #ffffff);
+
+}
+.custom-abouthead {
+  /* background-color: rgb(242, 204, 81); */
+  /* border: 2px solid rgb(213, 211, 199); */
+  height: 190px;
+  animation: zoomEffect 2s ease-in-out;
+}
+
+@keyframes zoomEffect {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.about-img {
+  width: 42%;
+  /* background-image: url({% static 'img/common/a3.jpg' %}); */
+  background-size: cover;
+  background-position: center;
+}
+
+.abouttitle {
+  white-space: nowrap;
+  color: rgb(252, 202, 19);
+}
+
+.about-content {
+  animation: zoomEffect 2s ease-in-out;
+}
+
+
+.our-story p {
+  text-align: justify;
+  
+  max-width: 100%; /* Set the paragraph width to the container width */
+}
+.table-image-container {
+        text-align: center; /* Center the content horizontally */
+      }
+
+</style>
+
+<br>
+<br>
+<br>
+<!-- ======= Breadcrumbs ======= -->
+<div class="abouthead custom-abouthead">
+  <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
+    <br><br><br><h2 style="color: rgb(232, 227, 227); font-size: 45px; font-weight: bold;">About</h2>
+    <div class="abouttitle">
+      <a href="/" style="color:rgba(254, 185, 0, 0.8);font-weight: bold;">&nbsp;Home</a><span style="color:#f1f3f5;font-weight: bold;">&nbsp;/&nbsp; About</span>
+    </div>
+  </div>
+</div><!-- End Breadcrumbs -->
+
+<!-- ======= About Section ======= -->
+<!-- ======= About Section ======= -->
+<section id="about" class="about">
+  <div class="container about-content" data-aos="fade-up">
+    <div class="row ">
+      <!-- <h2 style="color:rgb(57, 56, 54); font-weight: bold;">ZMCA</h2> -->
+    <div class="our-story"  style="text-align: justify;background: linear-gradient(to top, #3d6a95, #ffffff);">
+      <h3 style="color: #393737;padding-left: 5%;">Our Story
+     
+      <div class="table-image-container">
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        
+        <img src="{% static 'img/logo.jpg' %}" style="height:25%;width: 25%;border-radius: 50%;transition: transform 0.3s ease-in-out;" alt="Family Photo" class="table-image header-logo"  onmouseover="zoomIn(this)" onmouseout="zoomOut(this)">
+      </div>
+      </h3>
+      <br>
+     <div style="text-align: justify;background: linear-gradient(to bottom, #3d6a95, #ffffff);width: 150%;padding-left: 5%;padding-right: 5%;font-weight: bold;font-size: 18px;">
+       <br>
+       <h4 style="color:rgba(254, 185, 0, 0.8);font-size: 30px; font-weight: bold;">Est 1980</h4>
+        
+          <br>
+          <p>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            
+            Inaugurated in 1980 and officially recognized under the Societies Act of Zambia, the Zambia Malayalee Cultural Association (ZMCA) has been an unwavering force in fostering cultural exchange and charitable initiatives. From its inception, ZMCA dedicated itself to a dual mission: preserving the rich heritage of 'God's own Country,' Kerala, and actively engaging in charitable pursuits in Zambia.
+           
+                      
+          </p>
+          <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Embodying the spirit of cultural preservation, the association endeavors to maintain the identity and traditions that define Kerala. This commitment is reflected in various charitable and cultural activities undertaken by ZMCA. Beyond geographical borders, the association seeks to establish and nurture a profound connection with Zambia.
+    
+          </p>
+          <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Moreover, ZMCA goes beyond mere cultural preservation by providing its members with diverse opportunities. The association actively encourages participation in a myriad of activities, aiming to not only bolster cultural ties but also to enhance the skills and talents of its members.
+    
+          </p>
+          <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            In essence, the Zambia Malayalee Cultural Association (ZMCA) serves as a bridge between 'God's own Country' and the heart of Africa, tirelessly working towards cultural enrichment and charitable impact in the Zambian community.
+    
+          </p>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End About Section -->
+
+<script>
+  function zoomIn(element) {
+    element.style.transform = "scale(1.1)";
+  }
+  
+  function zoomOut(element) {
+    element.style.transform = "scale(1)";
+  }
+</script>
+
+{% endblock %}

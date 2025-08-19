@@ -1,0 +1,307 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block content %}    
+
+<style>   table {
+  width: 100%; /* Set the width of the table to 100% */
+}
+.customers .card-body .table-responsive {
+  max-width: 100%; /* Set your desired maximum width */
+  overflow-x: auto; /* Add horizontal scroll if needed */
+}
+.customers .card-body {
+  max-width: 350px; /* Set the maximum width for the Enquiries section */
+}
+
+/* Add this style for the hover effect */
+table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Style for the link container */
+.link-container {
+  display: inline-block;
+  padding: 1px 2px;
+  background-color: #3d6a95;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.link-container:hover {
+  background-color: #2b3348;
+}
+
+.recent-grid {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-gap: 2rem; /* Adjust the gap between the two grids */
+  grid-template-columns: 75% auto; /* Adjust the width of each grid */
+}
+
+/* Add styles for year and status dropdowns */
+select#year,
+  select#status {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: white;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23000000'%3E%3Cpath d='M5.293 7.293a1 1 0 0 1 1.414 0L10 10.586l3.293-3.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 0-1.414z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+    color: #333;
+  }
+
+  /* Add styles for input fields */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: white;
+    color: #333;
+  }
+   /* Change hover color for the select dropdown */
+   select#year:hover,
+  select#status:hover {
+    border-color: #3a82c6;  /* Change border color on hover */
+    background-color: #f0f0f0; /* Change background color on hover */
+  }
+
+  /* Placeholder text */
+  input[type="text"]::placeholder,
+  input[type="email"]::placeholder,
+  input[type="password"]::placeholder,
+  select::placeholder {
+    color: #aaa;
+  }
+
+  /* Hover effect on input fields */
+  input[type="text"]:hover,
+  input[type="email"]:hover,
+  input[type="password"]:hover,
+  select:hover {
+    border-color: #3a82c6;
+  }
+
+  /* Zoom effect on input fields */
+  input[type="text"]:hover,
+  input[type="email"]:hover,
+  input[type="password"]:hover,
+  select:hover {
+    transform: scale(1.02);
+  }
+
+  /* Focus effect on input fields */
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  select:focus {
+    border-color: #3a82c6;
+    outline: none;
+    box-shadow: 0 0 5px #3a82c6;
+  }
+
+  /* Button styling */
+  button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px; /* Make buttons rounded */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+
+  /* Hover effect on buttons */
+  button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+
+  /* ////image */
+  .form-group.image-group {
+    margin-bottom: 20px; /* Add some space below the image */
+  }
+
+  /* Style for the current image */
+  .form-group.image-group img {
+    max-width: 100px; /* Limit the maximum width of the image */
+    height: auto; /* Maintain aspect ratio */
+    border: 1px solid #ccc; /* Add a border around the image */
+    border-radius: 4px; /* Add a slight border radius */
+  }
+   /* Style for the form group containing the file input */
+   .form-group.file-input-group {
+    margin-bottom: 20px; /* Add some space below the file input */
+  }
+
+  /* Style for the file input */
+  .form-group.file-input-group input[type="file"] {
+    border: 1px solid #ccc; /* Add a border around the file input */
+    border-radius: 4px; /* Add a slight border radius */
+    padding: 10px; /* Add padding to make it visually appealing */
+    background-color: #f9f9f9; /* Add a light background color */
+  }
+
+  /* Style for the file input label */
+  .form-group.file-input-group label {
+    display: block; /* Make the label a block element */
+    margin-bottom: 5px; /* Add some space below the label */
+    font-weight: bold; /* Make the label text bold */
+  }
+  .uppercase-text {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+</style>
+    
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar"> 
+      <div class="sidebar-brand">
+        <h2><span class="las la-user-circle"></span><span>ZMCA</span></h2>
+
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li>
+            <a href="{% url 'adminindex' %}" class="active"><span class="fas fa-home"></span>
+            <span>Home</span></a>
+          </li>
+          <!-- <li>
+            <a href="{% url 'adminindex' %}"><span class="fas fa-home"></span>
+            <span></span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'members_view' %}"><span class="las la-home"></span>
+              <span>Families</span></a>
+          <li>
+            <a href="{% url 'committe' %}"><span class="las la-users"></span>
+            <span>Committee Members</span></a>
+          </li>
+          <li>
+            <a href="{% url 'fam_view' %}">
+            <span class="fas fa-id-badge"></span>
+            <span>Membership</span></a>
+          </li>
+          
+          <li>
+            <a href="{% url 'enquiry_list' %}"><span class="fas fa-envelope"></span>
+            <span>Enqueries</span></a>
+            <!-- <ul class="submenu">
+              <li></li>
+              <li><a href="{% url 'allenquiry_list' %}"><span class="fas fa-envelope"></span><span>(All)</span></a></li>            
+           -->
+           </ul>
+          </li>
+          <li>
+            <a href="{% url 'bloodgroupadmin' %}">
+              <span class="fas fa-tint" style="color: red;"></span>
+            <span>Blood Group</span></a>
+          </li>
+          <li>
+            <a href="{% url 'birthdaydetails1' %}">
+              <span class="fas fa-birthday-cake"></span>
+            <span>Birthday</span></a>
+          </li>
+
+          </li>
+          <li>
+            <a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-image"></span>
+            <span>Gallery</span></a>
+            <ul class="submenu">
+              <!-- <li></li>
+              <li><a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Add Gallery</a></li>
+              <li><a href="{% url 'galleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Gallery</a></li> -->
+         
+          
+           </ul>
+           <li>
+            <a href="{% url 'addhomegallery' %}"><span class="fa-solid fa-image"></span>
+            <span>Home Gallery</span></a>
+           
+              </ul>
+          </li>
+          <!-- <li>
+            <a href="{% url 'gallery'%}"><span class="fa-solid fa-image"></span>
+            <span>Gallery</span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'addblogview' %}"><span class="las la-blog"></span>
+            <span>Blog</span></a>
+          </li>
+          <li>
+            <a href="{% url 'eventview' %}"><span class="fa fa-bell"></span>
+            <span>Events</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- --------end link---------- -->
+    <div class="main-content">
+        <header>
+          <h2 class="uppercase-text">ZMCA Admin - Edit Committee Member</h2>
+        </header>
+        <main>
+          <!-- Inside the card-body div -->
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="member_id" value="{{ member.id }}">
+          
+            <div class="form-group">
+              <input type="text" class="uppercase-text" id="member_name" name="member_name" class="form-control" value="{{ member.member_name }}">
+            </div>
+            <div class="form-group">
+              <!-- <label for="post">Post:</label> -->
+              <input type="text" class="uppercase-text" id="post" name="post" class="form-control" value="{{ member.post }}">
+            </div>
+            <div class="form-group select-group">
+                <select id="year" name="year" class="form-control">
+                    <option value="" class="uppercase-text">Select Year</option>
+                    {% for year in years %}
+                      <option value="{{ year }}" class="uppercase-text" {% if year == member.year %} selected {% endif %}>{{ year }}</option>
+                    {% endfor %}
+                  </select>
+                  
+              </div>
+              
+              <div class="form-group select-group">
+                <!-- <label for="status">Status:</label> -->
+                <select id="status" name="status" class="form-control" class="uppercase-text">
+                  <option class="uppercase-text" value="Active" {% if member.status == 'Active' %} selected {% endif %}>Active</option>
+                  <option class="uppercase-text" value="Inactive" {% if member.status == 'Inactive' %} selected {% endif %}>Inactive</option>
+                </select>
+              </div>
+            <div class="form-group image-group">
+                <label for="current_image" class="uppercase-text">Current Image:</label><br>
+                <img src="{{ member.image.url }}" alt="{{ member.member_name }}">
+              </div>
+              <div class="form-group file-input-group">
+                <label for="image" class="uppercase-text">Choose New Image</label>
+                <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
+              </div>
+            <br>
+            <button type="submit" class="btn btn-primary" style="color: white;">UPDATE</button>
+            <button type="submit" class="btn btn-primary" style="color: white;" onclick="window.history.back()">Cancel</button>
+
+          </form>
+        </main>
+      </div>
+ 
+
+    {% endblock %}    

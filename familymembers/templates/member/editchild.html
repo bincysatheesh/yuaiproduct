@@ -1,0 +1,645 @@
+{% extends 'member/memberbase.html' %}
+{% block content %}
+<style type="text/css">
+    /* Add this to your main.css or create a new CSS file */
+    body{
+    /* font-family: poppins,sans-serif; */
+
+background: linear-gradient(to bottom, #dde8f1, #ffffff);
+
+  }
+    /* Add more styling as needed */
+    input,
+  textarea,
+  select,
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+  }
+  
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+      /* Styles for form elements */
+      input:hover,
+  textarea:hover {
+      /* background-color: #b1cfdf; */
+      color: rgb(19, 0, 0);
+      transform: scale(1.05); /* Adjust the scale factor as needed */
+      transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+  }
+  select:hover {
+      transform: scale(1.05); /* Adjust the scale factor as needed */
+      transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+      background-color: #f2f3f4;
+      color: rgb(16, 15, 15);
+  }
+  
+    .dashboard {
+      /* border-right: 2px solid #3c679f; */
+      padding-right: 30px;
+      height: 750px; /* Adjust height as needed */
+    }
+  
+    .dashboard-heading h4 {
+      display: inline-block;
+      position: relative;
+      padding-bottom: 5px;
+    }
+  
+    .dashboard-heading h4::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40%;
+      height: 5px;
+      background-color: #e0a905;
+    }
+  
+    table {
+      width: 100%;
+    }
+  
+    table tr {
+      display: flex;
+      margin-bottom: 15px;
+    }
+  
+    table td {
+      width: 50%;
+      box-sizing: border-box;
+      padding-right: 10px;
+    }
+  
+    form {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      border-radius: 5px;
+    }
+    /* Additional styles for form-row and full-width */
+  .form-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+    input,
+    textarea,
+    select,
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+    
+  .vertical-steps {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .vertical-steps a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    margin-bottom: 10px;
+  }
+
+  .vertical-steps a:hover {
+    text-decoration: underline;
+  }
+
+  .right-content {
+    padding-left: 20px;
+  }
+
+  .progress-link {
+    border: 2px solid #3c679f;
+    /* Gives blue border for the anchor tag */
+        color: #000; /* Black text */
+        /* background-color: #e0a905; */
+         /* Yellow background */
+        display: block;
+        padding: 10px;
+        margin-bottom: 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .progress-link-container {
+      width: 280px;
+        transition: transform 0.3s; /* Add a smooth transition for the zoom effect */
+    } 
+
+    .progress-link-container:hover {
+        transform: scale(1.1); /* Increase the scale to zoom in */
+    }
+
+    .progress-link:hover {
+        background-color:#3c679f;
+         /* Darker yellow on hover */
+        color: #ffffff;
+    }
+   
+      /* Styling for the progress container */
+  
+      .progress-title {
+          text-align: left;
+          font-size: 18px;
+          font-weight: bold;
+          font-family: 'Your Desired Font', sans-serif;
+          margin-bottom: 20px;
+      }
+  
+      .progress-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 20px; /* Adjust margin as needed */
+      }
+  
+      .circle {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background-color: #3c679f; /* Adjust the color as needed */
+          color: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+      }
+  
+      .line {
+          flex: 1;
+          height: 1px;
+          background-color:#3c679f; /* Adjust the color as needed */
+      }
+  
+      .active-circle {
+          background-color: #e0a905; /* Adjust the color as needed */
+      }
+      
+/* Adjust circle size for smaller screens */
+
+
+@media screen and (min-width: 768px) {
+    /* For screens larger than 768px, increase circle size and line height */
+    .circle {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .line {
+        height: 2px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    /* For screens larger than 992px, further adjust circle size and line height */
+    .circle {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .line {
+        height: 3px;
+    }
+}
+      /* ----------------/ */
+      .custom-blue {
+      background-color:#3c679f; /* Blue background */
+      color: #fff; /* White text */
+      /* Add any other styles you need */
+  }
+  .custom-green {
+      /* background-color: #9bcf71;  */
+      /* Blue background */
+      color: #fff; /* White text */
+      /* Add any other styles you need */
+  }
+  .full-width {
+      width: 100% !important;
+  }
+  .uppercase-text {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+  /* -----------------------button---------------- */
+  .button-container {
+  display: flex;
+  justify-content: space-between;
+}
+/* Convert form fields to uppercase */
+input[type="text"],
+
+select {
+    text-transform: uppercase;
+}
+
+
+
+button-container {
+  display: flex;
+  justify-content: space-between;
+}
+.button-container button {
+    width: 150px;
+    /* padding: 15px 20px; */
+    /* border-radius: 15px; */
+     /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+button {
+    width: 180px; /* Adjust the width as needed */
+    padding: 15px 20px;
+    border-radius: 15px; /* Adjust the roundness as needed */
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+.button-container button:hover {
+    background-color: #3c679f;
+}
+
+  button:hover {
+    background-color: #3c679f;
+  }
+
+    
+  /* -------------------endbutton */
+  
+  
+  .form-container {
+      width: 100%;
+      max-width: 100%;
+      animation: slideInFromBottom 1s ease-out;
+    }
+    @keyframes slideInFromBottom {
+      0% {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  /* Add the following CSS class definition */
+  .full-width {
+      width: 100% !important;
+  }
+  /* -----------------------card begining------------- */
+  .spouse-card {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    background-color: #3c679f;
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-footer {
+    background-color: #eee;
+    padding: 10px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    text-align: center;
+  }
+  
+  .table-progress-link {
+    color: #3c679f;
+  }
+  
+  /* --------------p-------------- */
+  p {
+      font-family: 'Arial', sans-serif;
+      font-size: 22px;
+      line-height: 1.6;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+  
+    .contact-details {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+  /* ----------------card end------------------------------ */
+
+/* Adjust input width for smaller screens */
+
+
+/* Make buttons occupy full width on smaller screens */
+.childbtn button {
+    width: 100%;
+  
+}.childbtn{
+  display: flex;
+  justify-content: space-between;
+}
+  </style>
+  
+<br><br><br><br><br><br><br>
+
+<div class="container">
+  <div class="row gy-4">
+    <div class="col-lg-3" data-aos="fade-up">
+      <div class="dashboard">
+        <div class="dashboard-heading">
+          <h4 class="underline-below" style="font-size: 18px;"><span class="uppercase-text">Registration Process</span></h4>
+        </div>
+        <div class="vertical-steps"> <br>
+          <!-- Step 1: Owner Details -->
+          {% if not od %}
+          <a href="{% url 'save_owner' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span class="uppercase-text"><span class="uppercase-text">Step 1: Owner Details</span></span></a>
+          {% else %}
+          <!-- Add your content for the 'else' case, e.g., change color to yellow -->
+          <a href="{% url 'save_owner' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"> <i class="fa-solid fa-circle-check" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span class="uppercase-text">Step 1: Owner Details</span></a>
+          {% endif %}          <br>
+           <!-- Step 2: Spouse Details -->
+           {% if not sd %}
+           <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span class="uppercase-text">Step 2: Spouse Details</span></a>
+           {% else %}
+           <a href="{% url 'save_spouse' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;<span class="uppercase-text">Step 2: Spouse Details</span></a>
+           {% endif %} <br>
+           <!-- Step 3: Children's Details -->
+           {% if not child %}
+           <a href="{% url 'childrenview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-hand-point-right" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span class="uppercase-text">Step 3: Children's Details</span></a>
+           {% else %}
+           <a href="{% url 'childrenview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;<span class="uppercase-text">Step 3: Children's Details</span></a>
+           
+           {% endif %}<br>
+           <!-- Step 4: Other Details -->
+           {% if not other %}
+           <a href="{% url 'otherview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i><span class="uppercase-text">Step 4: Other's Details</span></a>
+           {% else %}
+           <a href="{% url 'otherview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;<span class="uppercase-text">Step 4: Other's Details</span></a>
+           
+           {% endif %}
+           
+           <!-- Step 3: family photo's Details --><br>
+             {% if not fp %}
+             <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-xmark" style="color: #e0a905; font-size: 24px;"></i>&nbsp;<span class="uppercase-text">Step 5: Upload Photo</span></a>
+             {% else %}
+             <a href="{% url 'save_fp' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><i class="fa-solid fa-circle-check" style="color: #e0a905;  font-size: 24px;"></i>&nbsp;<span class="uppercase-text">Step 5: Upload Photo</span></a>
+             
+             {% endif %}<br>
+       
+                    <!-- Step 6: R and S Details -->
+           <a href="{% url 'submitfamilyview' %}" class="progress-link-container progress-link" style="text-decoration: dotted;"><span class="uppercase-text">6: Review and Submit</span></a>
+                  </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9 right-content" data-aos="fade-up">
+      <div class="progress-title" id="progress-title">Step 3: <span class="fas fa-child"></span>&nbsp;&nbsp;CHILDREN'S DETAILS</div>
+
+      <!-- Progress Container -->
+      <div class="progress-container" id="progress-container">
+        <!-- Circles with Connecting Lines -->
+        <div class="circle active-circle">1</div>
+        <div class="line"></div>
+        <div class="circle active-circle">2</div>
+        <div class="line"></div>
+        <div class="circle active-circle">3</div>
+        <div class="line"></div>
+        <div class="circle">4</div>
+        <div class="line"></div>
+        <div class="circle">5</div>
+        <div class="line"></div>
+        <div class="circle">6</div>
+      </div>
+
+      <div class="form-container">
+        <div class="col-lg-9 right-content form-container" data-aos="fade-up">
+
+          <!-- Child Details Form -->
+          <form method="post" action="{% url 'edit_child' child_id=child.cid %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+
+              <tr class="form-row">
+                <td class="full-width">
+                  <input type="text" name="child_name" placeholder="Child Name" value="{{child.child_name}}" required class="full-width">
+                </td>
+              </tr>
+
+              <tr class="form-row">
+                <td>
+                  <select name="gender" required>
+                    <option value="M" {% if child.gender == 'M' %}selected{% endif %}>Male</option>
+                    <option value="F" {% if child.gender == 'F' %}selected{% endif %}>Female</option>
+                    <option value="O" {% if child.gender == 'O' %}selected{% endif %}>Other</option>
+                  </select>
+                </td>
+                <td>
+                  <select id="birth_order" name="birth_order" required>
+                    <option value="Firstborn" {% if child.birth_order == 'Firstborn' %}selected{% endif %}>Firstborn</option>
+                    <option value="Secondborn" {% if child.birth_order == 'Secondborn' %}selected{% endif %}>Secondborn</option>
+                    <option value="Thirdborn" {% if child.birth_order == 'Thirdborn' %}selected{% endif %}>Thirdborn</option>
+                    <option value="Fourtborn" {% if child.birth_order == 'Fourtborn' %}selected{% endif %}>Fourtborn</option>
+                    <option value="Fifthborn" {% if child.birth_order == 'Fifthborn' %}selected{% endif %}>Fifthborn</option>
+                    <option value="Sixthborn" {% if child.birth_order == 'Sixthborn' %}selected{% endif %}>Sixthborn</option>
+                    <option value="Seventhborn" {% if child.birth_order == 'Seventhborn' %}selected{% endif %}>Seventhborn</option>
+                    <option value="Eighthborn" {% if child.birth_order == 'Eighthborn' %}selected{% endif %}>Eighthborn</option>
+                    <option value="Ninenthborn" {% if child.birth_order == 'Ninenthborn' %}selected{% endif %}>Ninenthborn</option>
+                    <option value="Tenthborn" {% if child.birth_order == 'Tenthborn' %}selected{% endif %}>Tenthborn</option>
+                </select>
+
+                </td>
+                </tr>
+                <tr class="form-row" >
+                <td>
+                  <!-- Month Dropdown -->
+                  <select name="dob_month">
+                    {% for month in dob_month_names %}
+                    <option value="{{ forloop.counter }}" {% if forloop.counter == child.dob.month %}selected{% endif %}>{{ month }}</option>
+                    {% endfor %}
+                  </select>
+                </td>
+                <td>
+                  <!-- Day Dropdown -->
+                  <select name="dob_day">
+                    {% for day in dob_days %}    
+    
+                    <option value="{{ forloop.counter }}" {% if forloop.counter == child.dob.day %}selected{% endif %}>{{ day }}</option>
+                        {% endfor %}
+                      </select>
+                    </td>
+                  </tr>
+                  <tr class="form-row">
+                    <td>
+                      <!-- Add the necessary HTML and Django template tags for the 'blood_group' field -->
+                      <select name="blood_group" required>
+                        <option value="" disabled>Select Blood Group</option>
+                        <option value="A+" {% if child.blood_group == 'A+' %}selected{% endif %}>A+</option>
+                        <option value="A-" {% if child.blood_group == 'A-' %}selected{% endif %}>A-</option>
+                        <option value="B+" {% if child.blood_group == 'B+' %}selected{% endif %}>B+</option>
+                        <option value="B-" {% if child.blood_group == 'B-' %}selected{% endif %}>B-</option>
+                        <option value="AB+" {% if child.blood_group == 'AB+' %}selected{% endif %}>AB+</option>
+                        <option value="AB-" {% if child.blood_group == 'AB-' %}selected{% endif %}>AB-</option>
+                        <option value="O+" {% if child.blood_group == 'O+' %}selected{% endif %}>O+</option>
+                        <option value="O-" {% if child.blood_group == 'O-' %}selected{% endif %}>O-</option>
+                      </select>
+                    </td>
+                    <td>
+                      <select name="status" required>
+                        <option value="1" {% if child.status == '1' %}selected{% endif %}>Living in Zambia</option>
+                        <option value="2" {% if child.status == '2' %}selected{% endif %}>Living in Other Country</option>
+                        <option value="3" {% if child.status == '3' %}selected{% endif %}>Deceased</option>
+                      </select>
+                      <!-- Add the necessary HTML and Django template tags for the 'status' field -->
+                      
+                    </td>
+                  </tr>
+               
+                  
+                    
+                    
+                    
+                 
+                 
+                  <!-- Add other fields for the child details as needed -->
+                </table>
+                <div class="childbtn">
+                 
+                    <button type="button" class="btn btn-primary"  onclick="goBack()">Back</button>
+                    <button type="submit" class="btn btn-primary" >Update</button>
+                    <button type="button" class="btn btn-primary"  onclick="goToNext()">Next</button>
+               
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ... Your existing scripts ... -->
+    
+
+
+
+
+
+
+
+
+                        <!-- Your existing scripts -->
+
+<script>
+    // Your existing script for number validation
+    document.addEventListener('DOMContentLoaded', function () {
+      // ... (your existing script)
+    });
+  </script>
+  
+  <!-- Additional script for text type validation -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Function to validate if the input contains only text (no digits)
+      function validateTextOnly(inputField) {
+        var textRegex = /^[a-zA-Z\s]*$/; // Regular expression for only text (no digits)
+        return textRegex.test(inputField.value);
+      }
+  
+      // Get the input fields for child name
+      var childNameInput = document.querySelector('input[name="child_name"]');
+  
+      // Add an event listener to each input field
+      childNameInput.addEventListener('input', function () {
+        if (!validateTextOnly(childNameInput)) {
+          alert('Invalid input. Please use only text (no digits).');
+          childNameInput.value = '';
+        }
+      });
+    });
+  </script>
+  
+  <script>
+    // Your existing script for navigation
+    function goBack() {
+      // Handle logic to navigate back
+      window.location.href = "{% url 'save_spouse' %}";
+    }
+  
+    function goToNext() {
+      // Handle logic to navigate to the next step
+      window.location.href = "{% url 'otherview' %}";
+    }
+  </script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Your existing script for date format
+      var dobInput = document.getElementById('dob');
+  
+      dobInput.addEventListener('input', function (event) {
+        var input = event.target.value;
+        // Remove any non-digit characters
+        var sanitizedInput = input.replace(/\D/g, '');
+  
+        if (sanitizedInput.length > 2) {
+          sanitizedInput = sanitizedInput.slice(0, 2) + '/' + sanitizedInput.slice(2);
+        }
+  
+        dobInput.value = sanitizedInput;
+      });
+    });
+  </script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Your existing script for success parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const successParam = urlParams.get('success');
+  
+      if (successParam) {
+        document.querySelector('.progress-container .circle').classList.add('active-circle');
+      }
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Select all input and select elements in the form
+    var formElements = document.querySelectorAll('input, select');
+
+    // Loop through each form element
+    formElements.forEach(function(element) {
+        // Add event listener for input events
+        element.addEventListener('input', function() {
+            // Convert the value to uppercase
+            this.value = this.value.toUpperCase();
+        });
+    });
+});
+
+  </script>
+  
+  {% endblock %}
+  

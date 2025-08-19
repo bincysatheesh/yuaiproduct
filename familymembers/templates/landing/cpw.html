@@ -1,0 +1,118 @@
+{% extends 'fcbase.html' %}
+{% block content %}
+<style>
+    .cpcontainer {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #145073;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        /* Centering using flexbox */
+        display: flex;
+        color: #fff;
+        flex-direction: column;
+        align-items: left;
+        justify-content: center;
+        height: 70vh; /* Set the height to 100% of the viewport height */
+    }
+
+    /* Center the form labels and inputs */
+    .cpcontainer label,
+    .cpcontainer input {
+        display: block;
+        width: 100%; /* Set width to 100% for full width */
+        box-sizing: border-box;
+    }
+
+    /* Style for form labels */
+    .cpcontainer label {
+        margin-bottom: 8px;
+        color: #f9f9f9; /* Set label color */
+    }
+
+    /* Style for form inputs */
+    .cpcontainer input {
+        padding: 10px;
+        margin-bottom: 16px;
+        border: 1px solid #ccc;
+        border-radius: 15px; /* Adjust the border-radius for a round rectangle effect */
+        transition: all 0.3s ease; /* Add transition for smooth effect */
+        background-color: #d5ccb2;
+    }
+
+    /* Zoom effect on hover for textboxes */
+    .cpcontainer input:hover {
+        transform: scale(1.05); /* Zoom in effect on hover */
+    }
+
+    /* Style for rounded rectangle button */
+    .cpcontainer button {
+        background-color: #f4cb27; /* Yellow color */
+        color: #fff;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 35px; /* Adjust the border-radius for a rounded rectangle effect */
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for smooth effect */
+        width: 100%; /* Set a specific width */
+        box-sizing: border-box; /* Include padding and border in the width calculation */
+    }
+
+    /* Hover effect on button */
+    .cpcontainer button:hover {
+        background-color: #e0a800; /* Darker yellow on hover */
+        transform: scale(1.05); /* Zoom in effect on hover */
+    }
+
+    .messages {
+    margin-bottom: 20px; /* Add margin-bottom to create space between the message div and the button */
+}
+
+.ok-button {
+    width: auto;
+    margin-top: 0; /* Set margin-top to 0 */
+}
+
+</style>
+
+<br><br><br><br><br><br>
+<div class="cpcontainer">
+    <h2>Confirm Password</h2>
+    <br>
+    <p>Enter your new password to confirm the reset.</p>
+    <br>
+
+    <form method="post">
+        {% csrf_token %}
+       
+        <!-- <label for="password"><b>New Password:</b></label><br> -->
+        <input type="password" placeholder="Enter your new password" style="width: 100%;" name="npassword" required>
+
+        <!-- <label for="confirm_password"><b>Confirm Password:</b></label><br> -->
+        <input type="password" placeholder="Confirm your new password" style="width: 100%;" name="cpassword" required>
+        <input type="hidden" name="user_id" value="{{user_id}}">
+
+        <button type="submit">Confirm Password</button>
+        <br>  
+ 
+    </form>
+      <br> 
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    <button class="ok-button" onclick="redirectToHomePage()">OK</button> <!-- OK Button for messages -->
+    {% endif %}
+</div>
+<script>
+    function redirectToHomePage() {
+        window.location.href = '/'; // Redirect to home page
+    }
+</script>
+<br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

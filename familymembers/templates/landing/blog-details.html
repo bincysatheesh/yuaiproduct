@@ -1,0 +1,512 @@
+{% extends 'landing/fcbase.html' %}
+{% load static %}
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap');
+  
+  :root {
+    --primary: #3d6a95;
+    --accent: #feb900;
+    --light: #f8f9fa;
+    --dark: #032b51;
+    --text: #4a4a4a;
+  }
+
+  /* Base Styles */
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f8f9fa;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* Hero Section */
+  .blog-hero {
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary) 0%, #153a6e 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    margin-bottom: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('{% static "img/abstract-bg.jpg" %}') center/cover;
+    opacity: 0.15;
+    z-index: 1;
+  }
+
+  .hero-content {
+    z-index: 2;
+    text-align: center;
+  }
+
+  .blog-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+
+  .hero-subtitle {
+    color: var(--accent);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-subtitle a {
+    color: rgba(254, 185, 0, 0.9);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .hero-subtitle a:hover {
+    color: white;
+  }
+
+  /* Blog Content Container */
+  .blog-container {
+    max-width: 1200px;
+    margin: 0 auto 6rem;
+    padding: 0 2rem;
+  }
+
+  /* Main Blog Content Grid */
+  .blog-content {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 3rem;
+  }
+
+  /* Article Styles */
+  .blog-article {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .blog-article:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  /* Featured Image */
+  .post-img {
+    height: 450px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .post-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .post-img:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Article Body */
+  .article-body {
+    padding: 2.5rem;
+  }
+
+  /* Meta Information */
+  .meta-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .meta-top li {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
+
+  .meta-top i {
+    margin-right: 6px;
+    color: var(--accent);
+  }
+
+  /* Article Title */
+  .article-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+    position: relative;
+    padding-bottom: 15px;
+  }
+
+  .article-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background: var(--accent);
+  }
+
+  /* Article Text */
+  .article-text {
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 2rem;
+  }
+
+  .article-text p {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Sidebar Styles */
+  .blog-sidebar {
+    position: sticky;
+    top: 2rem;
+    align-self: start;
+  }
+
+  .sidebar-section {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .sidebar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 10px;
+  }
+
+  .sidebar-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--accent);
+  }
+
+  /* Back Button */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 25px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(61, 106, 149, 0.3);
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .back-btn:hover {
+    background-color: var(--dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(61, 106, 149, 0.4);
+    color: white;
+  }
+
+  .back-btn i {
+    margin-right: 8px;
+  }
+
+  /* Share Buttons */
+  .share-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 2rem;
+  }
+
+  .share-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    transition: transform 0.3s ease;
+  }
+
+  .share-btn:hover {
+    transform: translateY(-3px);
+  }
+
+  .facebook { background-color: #3b5998; }
+  .twitter { background-color: #1da1f2; }
+  .linkedin { background-color: #0077b5; }
+  .whatsapp { background-color: #25d366; }
+
+  /* Related Posts */
+  .related-post {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .related-post:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .related-post-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .related-post-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .related-post:hover .related-post-img img {
+    transform: scale(1.1);
+  }
+
+  .related-post-content h4 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+  }
+
+  .related-post-content time {
+    font-size: 0.8rem;
+    color: #6c757d;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .blog-content {
+      grid-template-columns: 1fr;
+    }
+    
+    .blog-sidebar {
+      position: static;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .blog-hero h1 {
+      font-size: 2.5rem;
+    }
+    
+    .post-img {
+      height: 300px;
+    }
+    
+    .article-body {
+      padding: 1.5rem;
+    }
+    
+    .article-title {
+      font-size: 2rem;
+    }
+
+    .blog-container {
+      padding: 0 1rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .blog-hero h1 {
+      font-size: 2rem;
+    }
+
+    .hero-subtitle {
+      font-size: 0.9rem;
+    }
+
+    .post-img {
+      height: 250px;
+    }
+
+    .article-title {
+      font-size: 1.8rem;
+    }
+
+    .meta-top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+</style>
+
+<!-- Hero Section -->
+<div class="blog-hero">
+  <div class="hero-content">
+    <h1>{{ blog.title }}</h1>
+    <div class="hero-subtitle">
+      <a href="/">Home</a>
+      <span style="color: rgba(255,255,255,0.7); margin: 0 8px;">/</span>
+      <a href="{% url 'blogs' %}">Blog</a>
+      <span style="color: rgba(255,255,255,0.7); margin: 0 8px;">/</span>
+      <span style="color: white;">Post Details</span>
+    </div>
+  </div>
+</div>
+
+<!-- Blog Content -->
+<div class="blog-container">
+  <div class="blog-content">
+    <!-- Main Article -->
+    <article class="blog-article">
+      <div class="post-img">
+        {% if blog.image %}
+          <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+        {% else %}
+          <div style="background: #f1f3f5; height: 100%; display: flex; align-items: center; justify-content: center;">
+            <p style="color: #6c757d;">No image available</p>
+          </div>
+        {% endif %}
+      </div>
+      
+      <div class="article-body">
+        <h1 class="article-title">{{ blog.title }}</h1>
+        
+        <ul class="meta-top">
+          <li class="d-flex align-items-center">
+            <i class="bi bi-person"></i> 
+            <span>{{ blog.author_name }}</span>
+          </li>
+          <li class="d-flex align-items-center">
+            <i class="bi bi-clock"></i> 
+            <time datetime="{{ blog.date }}">{{ blog.date }} {{ blog.timestamp|time }}</time>
+          </li>
+        </ul>
+        
+        <div class="article-text">
+          {{ blog.description|linebreaks }}
+        </div>
+
+        <!-- Share Buttons -->
+        <div class="share-buttons">
+          <a href="#" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="share-btn twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="share-btn linkedin"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Sidebar -->
+    <aside class="blog-sidebar">
+      <a href="{% url 'blogs' %}" class="back-btn">
+        <i class="fas fa-arrow-left"></i> BACK TO BLOG
+      </a>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">About This Post</h3>
+        <p style="font-family: 'Montserrat', sans-serif; text-align: justify;">
+          {{ blog.subtitle }}
+        </p>
+        <div style="color: #6c757d; font-size: 0.9rem; margin-top: 1rem;">
+          <i class="bi bi-clock"></i> Posted on {{ blog.date }}
+        </div>
+      </div>
+
+   
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Related Posts</h3>
+        <!-- Example Related Post - you would loop through actual related posts in a real implementation -->
+        <div class="related-post">
+          <div class="related-post-img">
+            <img src="{% static 'img/blog-sample1.jpg' %}" alt="Related Post">
+          </div>
+          <div class="related-post-content">
+            <h4>Community Gathering Event</h4>
+            <time>June 15, 2023</time>
+          </div>
+        </div>
+        <div class="related-post">
+          <div class="related-post-img">
+            <img src="{% static 'img/blog-sample2.jpg' %}" alt="Related Post">
+          </div>
+          <div class="related-post-content">
+            <h4>Cultural Festival Highlights</h4>
+            <time>May 22, 2023</time>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<br><br><br><br>
+
+<!-- Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<script>
+  // Social share functions
+  document.addEventListener('DOMContentLoaded', function() {
+    // Facebook share
+    document.querySelector('.facebook').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), 'facebook-share-dialog', 'width=626,height=436');
+    });
+    
+    // Twitter share
+    document.querySelector('.twitter').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + '&url=' + encodeURIComponent(window.location.href), 'twitter-share-dialog', 'width=626,height=436');
+    });
+    
+    // LinkedIn share
+    document.querySelector('.linkedin').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(window.location.href) + '&title=' + encodeURIComponent(document.title), 'linkedin-share-dialog', 'width=626,height=436');
+    });
+    
+    // WhatsApp share
+    document.querySelector('.whatsapp').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.open('https://wa.me/?text=' + encodeURIComponent(document.title + ' - ' + window.location.href), 'whatsapp-share-dialog', 'width=626,height=436');
+    });
+  });
+</script>
+{% endblock %}

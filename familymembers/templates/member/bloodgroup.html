@@ -1,0 +1,463 @@
+{% extends 'member/customerbase.html' %}
+{% load static %}
+{% block content %}    
+
+<style>   table {
+  width: 100%; /* Set the width of the table to 100% */
+}
+.customers .card-body .table-responsive {
+  max-width: 100%; /* Set your desired maximum width */
+  overflow-x: auto; /* Add horizontal scroll if needed */
+}
+.customers .card-body {
+  max-width: 350px; /* Set the maximum width for the Enquiries section */
+}
+
+/* Add this style for the hover effect */
+table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Style for the link container */
+.link-container {
+  display: inline-block;
+  padding: 1px 2px;
+  background-color: #3d6a95;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.link-container:hover {
+  background-color: #2b3348;
+}
+
+.recent-grid {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-gap: 2rem; /* Adjust the gap between the two grids */
+  grid-template-columns: 75% auto; /* Adjust the width of each grid */
+}
+
+
+/* ----------------------button style */
+
+.paragraph-wrapper {
+  margin-top: 20px; /* Add some margin at the top */
+  line-height: 2.5; /* Adjust line height as needed */
+}
+
+.paragraph-wrapper p {
+text-align: justify; /* Justify the text */
+  padding: 10px; /* Add padding to the paragraph */
+  background-color: #f5f5f5; /* Set background color */
+  border-radius: 5px; /* Add border radius */
+  overflow-y: auto; /* Add vertical scrolling if needed */
+  max-height: 300px; /* Set maximum height for scrolling */
+  transition: transform 0.1s; /* Add transition effect for zoom */
+}
+/* ---------------------------------------- */
+table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    table thead tr {
+        background-color: #3d6a95;
+        color: #fff;
+    }
+
+    table tbody tr {
+        transition: transform 0.2s ease-in-out;
+    }
+
+    table tbody tr:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Zoom effect on hover */
+    table tbody tr:hover {
+        transform: scale(1.01);
+    }
+    
+    table th,
+    table td {
+        padding: 10px; /* Adjust the padding as needed */
+        text-align:left ; /* Align text to the left */
+    }
+    
+/* Style for the link container */
+.link-container {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #3d6a95;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.link-container:hover {
+    background-color: #2b3348;
+}
+
+/* Style for the progress bars */
+.progress-bar {
+    display: flex; /* Make progress bars display horizontally */
+    justify-content: space-between; /* Distribute space between progress bars */
+    height: 20px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 10px; /* Make the progress bar rounded */
+    overflow: hidden; /* Ensure overflow is hidden to maintain rounded corners */
+    background-color: #f3f3f3; /* Background color of the progress bar */
+}
+
+/* Style for individual progress bars */
+
+.progress {
+    flex: 1; /* Expand to fill the available space */
+    height: 100%; /* Ensure the progress bar fills the entire height of the cell */
+    background-color: #28a745; /* Default color for progress bar */
+}
+
+/* Style for the success (green) progress bar */
+.bg-success {
+    background-color: #28a745 !important; /* Set background color to green */
+}
+
+/* Style for the danger (red) progress bar */
+.bg-danger {
+    background-color: #dc3545 !important; /* Set background color to red */
+}
+
+
+.total {
+    color: #dd3a8e !important;
+}
+
+/* Style the search wrapper */
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Style the search input */
+#searchInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  flex: 1;
+  max-width: 300px;
+}
+
+/* Style the month select */
+#monthSelect {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 150px;
+}
+
+/* Style the search button */
+.search-wrapper button {
+  padding: 10px 15px;
+  background-color: #3d6a95;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Adjust hover state for the search button */
+.search-wrapper button:hover {
+  background-color: #2b3348;
+}
+
+/* Style the search icon inside the button */
+.search-wrapper button .las {
+  font-size: 20px;
+  color: #fff;
+}
+
+.birthday-highlight {
+  background-color: #e1a307; /* Light blue color */
+}
+
+
+/* ----li item zoom hover--- */
+/* CSS for sidebar list items */
+.sidebar-menu ul li {
+    list-style: none; /* Remove default list styles */
+    transition: transform 0.3s ease; /* Add transition effect for zoom */
+}
+
+/* Zoom effect on hover */
+.sidebar-menu ul li:hover {
+    transform: scale(1.05); /* Increase size on hover */
+}
+
+
+/* Hover effect */
+.sidebar-menu ul li a:hover {
+  background-color:#ffffff;
+  color:#2b3348;
+
+}
+
+/* Style for the tooltip */
+.sidebar-menu ul li a[title]:hover:after {
+  content: attr(title); /* Display the title attribute as a tooltip */
+  display: block;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7); /* Background color for the tooltip */
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%); /* Center the tooltip horizontally */
+}
+
+
+
+
+</style>
+    
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar"> 
+      <div class="sidebar-brand">
+        <h2><span class="las la-user-circle"></span><span style="text-transform: uppercase;">{{up.firstname}}&nbsp;{{up.lastname}}</span></h2>
+
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li>
+            <a href="{% url 'customerindex' %}" class="active"><span class="fas fa-home"></span>
+            <span>Home</span></a>
+          </li>
+          <!-- <li>
+            <a href="{% url 'customerindex' %}"><span class="fas fa-home"></span>
+            <span>Home</span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'memberaboutus' %}"><span class="fas fa-info-circle"></span>
+
+            <span>About Us</span></a>
+          </li>
+          <li>
+            <a href="{% url 'committemembers' %}"><span class="las la-users"></span>
+            <span>Committe Members&nbsp;({{ccount}})</span></a>
+          </li>
+          <li>
+            <a href="{% url 'members_view1' %}"><span class="las la-home"></span>
+            <span>Families&nbsp;({{uacount}})</span></a>
+          </li>
+          <li>
+            <a href="{% url 'birthdaydetails' %}"><span class="fas fa-birthday-cake"></span>
+            <span>Birthday</span></a>
+          </li>
+          <li>
+            <a href="{% url 'bloodgroup' %}"><span class="fas fa-tint" style="color: red;"></span>
+            <span>Blood Group</span></a>
+          </li>
+
+          <li>
+            <a href="{% url 'payments1' %}">
+            <span class="fas fa-id-badge"></span>
+            <span>Membership</span></a>
+          </li>
+
+          <li>
+            <!-- <a href=""><span class="las la-question-circle"></span>
+            <span>Enqueries</span></a> -->
+            <!-- <ul class="submenu">
+              <li></li>
+              <li><a href="{% url 'allenquiry_list' %}"><span class="fas fa-envelope"></span><span>(All)</span></a></li>            
+          
+           </ul> -->
+          </li>
+          <!-- <li>
+            <a href=""><span class="las la-user-plus"></span>
+            <span>Registration</span></a>
+            <ul class="submenu">
+              <li></li>
+              <li><a href="#"><span class="fa fa-gallery" style="color: #fff;"></span>
+
+                Gallery</a></li>
+              <li><a href="#">Submenu Item 2</a></li>
+          
+           </ul>
+          </li> -->
+          <!-- <li>
+            <a href=""><span class="las la-blog"></span>
+            <span>Blog</span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'cevents' %}"><span class="fa fa-bell"></span>
+            <span>Events&nbsp;({{teventscount}})</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- --------end link---------- -->
+    <div class="main-content">
+      <header>
+           
+        <h2> 
+          <label for="nav-toggle">
+            <span class="las la-bars"></span>
+          </label>Welcome To<span style="color: #3d6a95;text-transform: uppercase;">  {{up.familyname}}     
+      &nbsp;<span class="fas fa-users"></span></span>
+        </h2>
+        <div class="search-wrapper">
+          <form id="search-form" method="GET" action="{% url 'bloodgroup' %}">
+              <span class="las la-search"></span>
+              <input id="search-input" type="search" name="q" placeholder="Search here" value="{{ request.GET.q }}"/>
+          </form>
+          
+      </div>
+        
+        
+
+        <div class="user-wrapper">
+          <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+        
+          <div>
+            <!-- <h4>ZMCA</h4> -->
+            <h4>        <a href="{% url 'logout' %}" style="font-size: 16px;"> <i class="fa-solid fa-right-from-bracket"></i></a>
+            </h4>
+            <small>{{up.email}}</small>
+
+          </div>
+
+          
+        </div>
+
+      </header>
+      <!-- ----------end header---------- -->
+      <main>
+        
+        
+
+        <!-- -------------------endcards------------- -->
+<div class="recent-grid">
+  <div class="projects" >
+    <div class="card" style="width: 130%;">
+      <div class="card-header">
+        <h2><span class="fas fa-tint" style="color: red;"></span>
+            <span style="text-transform: uppercase;font-weight: bold;">Blood Group</span></h2>
+        <!-- <button>See all<span class="las la-arrow-right"></span></button> -->
+
+      </div>
+      <div class="card-body">
+
+        <!-- --------------begincardbody-------- -->
+
+        <div class="table-responsive">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th style="text-transform: uppercase;font-weight: bold;">Name</th>
+                        <th style="text-transform: uppercase;font-weight: bold;">Blood Group</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for name, blood_group in owner_data %}
+                    <tr>
+                        <td style="text-transform: uppercase;font-weight: bold;">{{ name }}</td>
+                        <td style="text-transform: uppercase;font-weight: bold;">{{ blood_group }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% for name, blood_group in spouse_data %}
+                    <tr>
+                        <td style="text-transform: uppercase;font-weight: bold;">{{ name }}</td>
+                        <td style="text-transform: uppercase;font-weight: bold;">{{ blood_group }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% for name, blood_group in children_data %}
+                    <tr>
+                        <td style="text-transform: uppercase;font-weight: bold;">{{ name }}</td>
+                        <td style="text-transform: uppercase;font-weight: bold;">{{ blood_group }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% for name, blood_group in other_data %}
+                    <tr>
+                        <td style="text-transform: uppercase;font-weight: bold;">{{ name }}</td>
+                        <td style="text-transform: uppercase;font-weight: bold;">{{ blood_group }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+       <!-- -----------endcardbody------------------ -->
+       <!-- -----------Paginator------------------ -->
+       <!-- Display pagination links -->
+
+       <!-- ----------------endpaginator--------------- -->
+      </div>
+
+
+    </div>
+
+  </div>
+<!-- -------------endof table---------------------- -->
+</div>        
+      </main>
+    </div>
+
+    <!-- ------------progressbar------------ -->
+    <!-- Include Bootstrap JS (optional) -->
+<!-- ----------------search script---------------- -->
+<script>
+  // Get the search input element
+  var searchInput = document.getElementById("search-input");
+
+  // Variable to store the timeout
+  var timeout = null;
+
+  // Add an event listener to detect keypress events
+  searchInput.addEventListener("keypress", function(event) {
+      // Check if the Enter key was pressed
+      if (event.key === 'Enter') {
+          // Prevent the default form submission behavior
+          event.preventDefault();
+      }
+  });
+
+  // Add an event listener to detect changes in the input field
+  searchInput.addEventListener("input", function() {
+      // Clear the previous timeout to avoid rapid submission
+      clearTimeout(timeout);
+
+      // Set a timeout to delay form submission
+      timeout = setTimeout(function() {
+          // Get the search form element
+          var searchForm = document.getElementById("search-form");
+
+          // Submit the form
+          searchForm.submit();
+      }, 1000); // Adjust the delay time (in milliseconds) as needed
+  });
+
+  // Add an event listener to detect when the search input is cleared
+  document.getElementById("clear-search").addEventListener("click", function() {
+      // Clear the search input value
+      searchInput.value = "";
+
+      // Get the search form element
+      var searchForm = document.getElementById("search-form");
+
+      // Submit the form to reload the page with all data
+      searchForm.submit();
+  });
+</script>
+
+<!-- -------------------search----------------- -->
+
+    {% endblock %}    

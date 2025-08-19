@@ -1,0 +1,380 @@
+{% extends 'customerbase.html' %}
+{% load static %}
+{% block content %}    
+
+<style>   table {
+  width: 100%; /* Set the width of the table to 100% */
+}
+.customers .card-body .table-responsive {
+  max-width: 100%; /* Set your desired maximum width */
+  overflow-x: auto; /* Add horizontal scroll if needed */
+}
+.customers .card-body {
+  max-width: 350px; /* Set the maximum width for the Enquiries section */
+}
+
+/* Add this style for the hover effect */
+table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Style for the link container */
+.link-container {
+  display: inline-block;
+  padding: 1px 2px;
+  background-color: #3d6a95;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.link-container:hover {
+  background-color: #2b3348;
+}
+
+.recent-grid {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-gap: 2rem; /* Adjust the gap between the two grids */
+  grid-template-columns: 75% auto; /* Adjust the width of each grid */
+}
+
+
+/* ----------------------button style */
+
+.paragraph-wrapper {
+  margin-top: 20px; /* Add some margin at the top */
+  line-height: 2.5; /* Adjust line height as needed */
+}
+
+.paragraph-wrapper p {
+text-align: justify; /* Justify the text */
+  padding: 10px; /* Add padding to the paragraph */
+  background-color: #f5f5f5; /* Set background color */
+  border-radius: 5px; /* Add border radius */
+  overflow-y: auto; /* Add vertical scrolling if needed */
+  max-height: 300px; /* Set maximum height for scrolling */
+  transition: transform 0.1s; /* Add transition effect for zoom */
+}
+/* ---------------------------------------- */
+table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    table thead tr {
+        background-color: #3d6a95;
+        color: #fff;
+    }
+
+    table tbody tr {
+        transition: transform 0.2s ease-in-out;
+    }
+
+    table tbody tr:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Zoom effect on hover */
+    table tbody tr:hover {
+        transform: scale(1.01);
+    }
+    
+    table th,
+    table td {
+        padding: 10px; /* Adjust the padding as needed */
+        text-align:left ; /* Align text to the left */
+    }
+    
+/* Style for the link container */
+.link-container {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #3d6a95;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.link-container:hover {
+    background-color: #2b3348;
+}
+
+/* Style for the progress bars */
+.progress-bar {
+    display: flex; /* Make progress bars display horizontally */
+    justify-content: space-between; /* Distribute space between progress bars */
+    height: 20px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 10px; /* Make the progress bar rounded */
+    overflow: hidden; /* Ensure overflow is hidden to maintain rounded corners */
+    background-color: #f3f3f3; /* Background color of the progress bar */
+}
+
+/* Style for individual progress bars */
+
+.progress {
+    flex: 1; /* Expand to fill the available space */
+    height: 100%; /* Ensure the progress bar fills the entire height of the cell */
+    background-color: #28a745; /* Default color for progress bar */
+}
+
+/* Style for the success (green) progress bar */
+.bg-success {
+    background-color: #28a745 !important; /* Set background color to green */
+}
+
+/* Style for the danger (red) progress bar */
+.bg-danger {
+    background-color: #dc3545 !important; /* Set background color to red */
+}
+
+
+.total {
+    color: #dd3a8e !important;
+}
+
+/* Style the search wrapper */
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Style the search input */
+#searchInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  flex: 1;
+  max-width: 300px;
+}
+
+/* Style the month select */
+#monthSelect {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 150px;
+}
+
+/* Style the search button */
+.search-wrapper button {
+  padding: 10px 15px;
+  background-color: #3d6a95;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Adjust hover state for the search button */
+.search-wrapper button:hover {
+  background-color: #2b3348;
+}
+
+/* Style the search icon inside the button */
+.search-wrapper button .las {
+  font-size: 20px;
+  color: #fff;
+}
+
+.birthday-highlight {
+  background-color: #e1a307; /* Light blue color */
+}
+
+
+
+
+</style>
+    
+<input type="checkbox" id="nav-toggle">
+<div class="sidebar"> 
+  <div class="sidebar-brand">
+    <h2><span class="las la-user-circle"></span><span>ZMCA</span></h2>
+
+  </div>
+  <div class="sidebar-menu">
+    <ul>
+      <li>
+        <a href="" class="active"><span class="las la-search"></span>
+        <span>Search</span></a>
+      </li>
+      <li>
+        <a href="{% url 'adminindex' %}"><span class="fas fa-home"></span>
+        <span>Home</span></a>
+      </li>
+      <li>
+        <a href="{% url 'members_view' %}"><span class="las la-home"></span>
+          <span>Families</span></a>
+      <li>
+        <a href="{% url 'committe' %}"><span class="las la-users"></span>
+        <span>Committee Members</span></a>
+      </li>
+      <li>
+        <a href="{% url 'fam_view' %}">
+        <span class="las la-users"></span>
+        <span>Association Members</span></a>
+      </li>
+      
+      <li>
+        <a href="{% url 'enquiry_list' %}"><span class="las la-question-circle"></span>
+        <span>Enqueries</span></a>
+        <ul class="submenu">
+          <li></li>
+          <li><a href="{% url 'allenquiry_list' %}"><span class="fas fa-envelope"></span><span>(All)</span></a></li>            
+      
+       </ul>
+      </li>
+      <li>
+        <a href="{% url 'bloodgroupadmin' %}">
+          <span class="fas fa-tint" style="color: red;"></span>
+        <span>Blood Group</span></a>
+      </li>
+      <li>
+        <a href="{% url 'birthdaydetails1' %}">
+          <span class="fas fa-birthday-cake"></span>
+        <span>Birthday</span></a>
+      </li>
+
+      </li>
+      <li>
+        <a href=""><span class="fa-solid fa-image"></span>
+        <span>Registration</span></a>
+        <ul class="submenu">
+          <li></li>
+          <li><a href="{% url 'gallerycategory' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+            Gallery Category</a></li>
+     
+      
+       </ul>
+      </li>
+      <!-- <li>
+        <a href="{% url 'gallery'%}"><span class="fa-solid fa-image"></span>
+        <span>Gallery</span></a>
+      </li> -->
+      <li>
+        <a href=""><span class="las la-blog"></span>
+        <span>Blog</span></a>
+      </li>
+      <li>
+        <a href=""><span class="las la-clipboard-list"></span>
+        <span>Events</span></a>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- --------end link---------- -->
+<div class="main-content">
+  <header>
+       
+    <h2> 
+      <label for="nav-toggle">
+        <span class="las la-bars"></span>
+      </label>       
+    ZMCA Admin
+    </h2>
+  <!-- Add this div to contain the search input -->
+
+  <div class="search-wrapper">
+    <form method="GET" action="{% url 'birthdaydetails1' %}">
+     
+      <input type="search" id="searchInput" name="q" placeholder="Search here" value="{{ request.GET.q|default_if_none:'' }}" />
+      <select id="monthSelect" name="month">
+        <option value="">All</option>
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+        
+      
+      </select>
+      <button type="submit"> <span class="las la-search"></span></button>
+    </form>
+  </div>
+
+
+        
+
+        <div class="user-wrapper">
+          <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+        
+          <div>
+            <!-- <h4>ZMCA</h4> -->
+            <h4>        <a href="{% url 'logout' %}" style="font-size: 16px;"> <i class="fa-solid fa-right-from-bracket"></i></a>
+            </h4>
+            <small>Super Admin</small>
+
+          </div>
+
+          
+        </div>
+
+      </header>
+      <!-- ----------end header---------- -->
+      <main>
+        
+        
+
+        <!-- -------------------endcards------------- -->
+<div class="recent-grid">
+  <div class="projects" >
+    <div class="card" style="width: 130%;">
+      <div class="card-header">
+        <h2><span class="fas fa-birthday-cake" style="color: #3d6a95;"></span>
+            <span>Birthdays</span></h2>
+        <button>See all<span class="las la-arrow-right"></span></button>
+
+      </div>
+      <div class="card-body">
+
+        <!-- --------------begincardbody-------- -->
+
+        <div class="table-responsive">
+            <h2>Make a Wish for {{ name }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="wish_message">Your Wish:</label>
+            <textarea class="form-control" id="wish_message" name="wish_message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Wish</button>
+    </form>
+        </div>
+       <!-- -----------endcardbody------------------ -->
+       <!-- -----------Paginator------------------ -->
+       <!-- Display pagination links -->
+
+       <!-- ----------------endpaginator--------------- -->
+      </div>
+
+
+    </div>
+
+  </div>
+<!-- -------------endof table---------------------- -->
+</div>        
+      </main>
+    </div>
+
+    <!-- ------------progressbar------------ -->
+    <!-- Include Bootstrap JS (optional) -->
+<!-- ----------------search script---------------- -->
+
+<!-- -------------------search----------------- -->
+
+    {% endblock %}    

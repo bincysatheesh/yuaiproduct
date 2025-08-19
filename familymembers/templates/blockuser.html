@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZMCA Account Blocked</title>
+  <style>
+    /* CSS styles for the email template */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Light gray background */
+}
+
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff; /* White background */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+}
+
+h1 {
+    color: #3d6a95;
+}
+
+p {
+    text-align: justify;
+    /* background-color: #3d6a95; */
+    margin-bottom: 15px;
+    border: 1px solid #ccc; /* Add border around paragraphs */
+    padding: 10px; /* Add some padding inside the border */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+strong {
+    font-weight: bold;
+}
+
+  </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ZMCA Account Blocked !!!! <span class="fas fa-ban"></span> </h1>
+        <p>Your ZMCA account has been blocked. You can no longer access your account.<br>
+        To reactivate your account and regain access, please renew your membership.</p>
+        <p style="color: #ccc;font-weight: bolder;">Membership Details:</p>
+        <ul>
+            <!-- <li><strong>Membership Category:</strong> {{ membership.member_category }}</li> -->
+            <li><strong>Membership Amount For With Family:</strong> K {{ with_family_amount }}</li>
+            <li><strong>Membership Amount For Alone:</strong> K {{ alone_amount }}</li>
+
+        </ul>
+    </div>
+</body>
+</html>

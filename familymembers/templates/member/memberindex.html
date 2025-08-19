@@ -1,0 +1,272 @@
+{% extends 'member/memberbase.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+
+    <style>
+     body {
+  margin: 0;
+  padding: 0;
+  background-color: #f5f6f7;
+}
+
+      .progress-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 20px;
+    width: 86%; /* Set the desired width here */
+    margin: 0 auto; /* Center the progress bar container */
+    background-color: #f5f6f7;
+    min-height: 100%;
+    min-height: 80vh;
+}
+   
+  
+.circles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.circle-row {
+  display: flex;
+  align-items: center;
+  min-height: 100%;
+}
+.circle {
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.label {
+  display: flex;
+  justify-content: center;
+  width: 20%; /* Adjust the width based on your preference */
+  margin-bottom: 4px;
+  padding: 0 2px;
+}
+.line {
+  flex: 1;
+  height: 2px;
+  background-color: #edb232;
+}
+
+.label-container,
+.circle-container {
+  text-align:left;
+  width: 20%; /* Adjust the width based on your preference */
+  margin-top: 10px; /* Add some top margin for spacing */
+}
+
+
+
+
+  .active-circle {
+    background-color: green;
+    color: white;
+  }
+/* --------------- */
+
+        #signup-container {
+            display: none;
+            /* Add styling properties as needed */
+            height: 550px;
+            width: 500px;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        #signup-container.active {
+            display: block;
+        }
+
+        #login-form.active {
+            display: none;
+        }
+        
+  .progress-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 20px;
+    width: 86%;
+    margin: 0 auto;
+    background-color: #f5f6f7;
+  }
+
+  .circle {
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .line {
+    flex: 1;
+    height: 2px;
+    background-color: #edb232;
+  }
+
+  .label-container,
+  .circle-container {
+    text-align: left;
+    width: 20%;
+    margin-top: 10px;
+  }
+
+  .active-circle {
+    background-color: green;
+    color: white;
+  }
+
+  .container {
+  overflow: hidden; /* or overflow: auto; */
+}
+
+    </style>
+ 
+  <main id="main">
+
+    <!-- ======= Get Started Section ======= -->
+    <section id="get-started" class="get-started section-bg">
+      <div class="container">
+
+        <div class="row justify-content-between gy-4">
+
+          <div class="col-lg-12 d-flex align-items-center" data-aos="fade-up">
+            <div class="content">
+              <br><br>
+              <h2 style="text-align: center; color: #6f6f6f;"><strong> Welcome to <span style="color:#edb232;">{{fn}} Family,</span></strong> </h2><br>
+              <br><br><br><h3>Hello <span style="color:rgb(99, 100, 99);">{{ufn}} &nbsp;{{uln}} </span>, </h3>
+                <br>
+                <p style="font-family: 'Arial', sans-serif; font-size: 18px;text-align: justify; color: #333;">
+                  You are now a member of Zambia Malyalee Cultural Association (ZMCA) family, Lusaka, Zambia. 
+                  Now onwards, you will receive notification details about the programs organized by ZMCA here in Zambia. Additionally, you'll have access to contact details of other members in our ZMCA family. 
+                  Feel free to directly send your feedback to the ZMCA Committee.          
+              </p>
+              <br>
+              <h6 style="font-family: 'Arial', sans-serif; font-size: 17px;text-align: justify; color: #333;">Please complete the registration process successfully.Click Here>>
+                 <a href="{% url 'fr'%}" style="color: #e65c32; text-decoration: underline;">Register Now</a>
+
+              </h6>
+            </div>
+          </div>
+</div></section>
+
+  
+  </main><!-- End #main -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var loginForm = document.getElementById("login-form");
+      var signupContainer = document.getElementById("signup-container");
+  
+      if (loginForm && signupContainer) {
+        // Show login form, hide signup container
+        loginForm.style.display = "block";
+        signupContainer.style.display = "none";
+  
+        // Add event listener to show signup form
+        document.getElementById("show-signup").addEventListener("click", function(event) {
+          event.preventDefault();
+          loginForm.style.display = "none";
+          signupContainer.style.display = "block";
+        });
+  
+        // Add event listener to show login form
+        document.getElementById("show-login").addEventListener("click", function(event) {
+          event.preventDefault();
+          signupContainer.style.display = "none";
+          loginForm.style.display = "block";
+        });
+      }
+    });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // For the login form
+        var loginForm = document.getElementById("login-form");
+        if (loginForm) {
+          loginForm.username.setAttribute("autocomplete", "off");
+          loginForm.password.setAttribute("autocomplete", "off");
+        }
+    
+        // For the signup form
+        var signupForm = document.getElementById("signup-form");
+        if (signupForm) {
+          signupForm.firstname.setAttribute("autocomplete", "off");
+          signupForm.lastname.setAttribute("autocomplete", "off");
+          signupForm.familyname.setAttribute("autocomplete", "off");
+          signupForm.phonenumber.setAttribute("autocomplete", "off");
+          signupForm.email.setAttribute("autocomplete", "off");
+          signupForm.password.setAttribute("autocomplete", "off");
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        var loginForm = document.getElementById("login-form");
+        var signupForm = document.getElementById("signup-form");
+    
+        if (loginForm) {
+          loginForm.reset();
+        }
+    
+        if (signupForm) {
+          signupForm.reset();
+        }
+      });
+    </script>
+    
+    <script>
+      // JavaScript logic
+      // var parentDetailsExist = parent_details_exist;
+      // var childrenDetailsExist = children_details_exist;
+      // var otherDetailsExist =other_details_exist;
+
+      function showParentsPage() {
+        window.location.href = "{% url 'save_owner' %}";
+      }
+    
+      function showChildrenPage() 
+      {
+        // if (parentDetailsExist) {
+          window.location.href = "{% url 'save_children' %}";
+      //   } else {
+      //     alert("Please complete the parent details first.");
+      //   }
+       }
+    
+      function showOtherPage() {
+        if (parentDetailsExist && childrenDetailsExist) {
+          window.location.href = "{% url 'save_other' %}";
+        } else {
+          alert("Please complete the parent and children details first.");
+        }
+      }
+    
+      function showFinishPage() {
+        if (parentDetailsExist && childrenDetailsExist && otherDetailsExist) {
+          window.location.href = "{% url 'finish' %}";
+        } else {
+          alert("Please complete all details first.");
+        }
+      }
+    </script>
+
+ 
+  {% endblock %}
+ 
+ 

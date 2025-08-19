@@ -1,0 +1,389 @@
+{% extends 'landing/fcbase.html' %}
+{% load static %}
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap');
+  
+  :root {
+    --primary: #1a365d;
+    --accent: #f7b733;
+    --light: #f8f9fa;
+    --dark: #032b51;
+  }
+
+  /* Hero Section */
+  .gallery-hero {
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary) 0%, #153a6e 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    margin-bottom: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gallery-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('{% static "img/abstract-bg.jpg" %}') center/cover;
+    opacity: 0.15;
+    z-index: 1;
+  }
+
+  .gallery-hero-content {
+    z-index: 2;
+    text-align: center;
+  }
+
+  .gallery-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: var(--light);
+    margin: 0;
+    letter-spacing: -1.5px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    animation: fadeIn 1s ease-out;
+    padding-top: 20px;
+  }
+
+  .gallery-hero-subtitle {
+    color: var(--accent);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .gallery-hero-subtitle a {
+    color: rgba(247, 183, 51, 0.9);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .gallery-hero-subtitle a:hover {
+    color: #fff;
+    transform: translateX(3px);
+  }
+
+  /* Floating Logo */
+  .floating-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: -60px auto 2rem;
+    display: block;
+    border: 4px solid white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: white;
+  }
+
+  .floating-logo:hover {
+    transform: translateY(-10px) rotate(5deg);
+    box-shadow: 0 15px 40px rgba(247, 183, 51, 0.25);
+  }
+
+  /* Content Section */
+  .gallery-content {
+    max-width: 1200px;
+    margin: 0 auto 6rem;
+    padding: 0 2rem;
+  }
+
+  .search-wrapper {
+    width: 100%;
+    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .search-wrapper input[type="text"] {
+    width: 350px;
+    padding: 12px 20px;
+    border: 1.5px solid var(--accent);
+    border-radius: 24px;
+    background: var(--light);
+    font-size: 1.1rem;
+    font-family: 'Montserrat', sans-serif;
+    transition: border 0.2s, background 0.2s;
+    outline: none;
+    box-shadow: 0 2px 8px rgba(26,54,93,0.04);
+  }
+
+  .search-wrapper input[type="text"]:focus {
+    border: 2px solid var(--primary);
+    background: #fff;
+  }
+
+  #no-results {
+    text-align: center;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 2rem;
+    display: none;
+  }
+
+  .portfolio-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem 1.5rem;
+    justify-content: center;
+  }
+
+  .portfolio-item {
+    background: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 12px rgba(26,54,93,0.07);
+    overflow: hidden;
+    width: calc(20% - 1.2rem);
+    min-width: 350px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s, transform 0.2s;
+    position: relative;
+  }
+
+  .portfolio-item:hover {
+    box-shadow: 0 8px 32px rgba(26,54,93,0.13);
+    transform: translateY(-6px);
+  }
+
+  .portfolio-content {
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e9f1f7;
+    overflow: hidden;
+  }
+
+  .portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+
+  .portfolio-item:hover img {
+    transform: scale(1.08);
+  }
+
+  .portfolio-info {
+    background: rgba(255,255,255,0.92);
+    padding: 1rem 1rem 0.7rem 1rem;
+    text-align: center;
+    border-top: 1px solid #eee;
+  }
+
+  .portfolio-info h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.3rem;
+    margin-top: 0;
+  }
+
+  .portfolio-info p {
+    font-size: 0.98rem;
+    color: #555;
+    margin-bottom: 0.7rem;
+    margin-top: 0;
+  }
+
+  .portfolio-info a {
+    color: var(--accent);
+    margin: 0 0.5rem;
+    font-size: 1.2rem;
+    transition: color 0.2s;
+  }
+
+  .portfolio-info a:hover {
+    color: var(--primary);
+  }
+
+  .pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    color: var(--accent);
+    gap: 0.5rem;
+  }
+
+  .pagination a, .pagination span.current {
+    padding: 10px 16px;
+    background: #fff;
+    border: 1.5px solid var(--accent);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 600;
+    margin: 0 2px;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .pagination a:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .pagination span.current {
+    background: var(--accent);
+    color: #fff;
+    border: 1.5px solid var(--accent);
+  }
+
+  @media (max-width: 1200px) {
+    .portfolio-item {
+      width: calc(25% - 1.2rem);
+    }
+  }
+
+  @media (max-width: 992px) {
+    .portfolio-item {
+      width: calc(33.33% - 1.2rem);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .gallery-hero h1 {
+      font-size: 2.8rem;
+    }
+
+    .floating-logo {
+      width: 100px;
+      height: 100px;
+      margin-top: -50px;
+    }
+
+    .portfolio-item {
+      width: calc(50% - 1.2rem);
+    }
+
+    .gallery-content {
+      padding: 0 0.5rem;
+    }
+
+    .search-wrapper input[type="text"] {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .portfolio-item {
+      width: 100%;
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<!-- Hero Section -->
+<div class="gallery-hero">
+  <div class="gallery-hero-content">
+    <h1>Gallery</h1>
+    <div class="gallery-hero-subtitle">
+      <a href="/">Home</a>
+      <span style="color: rgba(255,255,255,0.7); margin: 0 8px;">/</span>
+      <span style="color: var(--light);">Gallery</span>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Logo -->
+<img src="{% static 'img/logo.jpg' %}" alt="ZMCA Logo" class="floating-logo">
+
+<!-- Content Section -->
+<div class="gallery-content">
+  <div class="search-wrapper">
+    <input type="text" id="search-input" name="q" class="form-control" placeholder="Search..." aria-label="Search" aria-describedby="search-icon">
+  </div>
+  <div id="no-results">No search results found.</div>
+  <div class="portfolio-container">
+    {% for item in gallery_items %}
+    <div class="portfolio-item filter-{{ item.category }}">
+      <div class="portfolio-content">
+        <img src="{{ item.image.url }}" class="img-fluid" alt="{{ item.title }}">
+      </div>
+      <div class="portfolio-info">
+        <h4>{{ item.title }}</h4>
+        <p>{{ item.description }}</p>
+        <a href="{{ item.image.url }}" title="{{ item.title }}"
+           data-gallery="portfolio-gallery-{{ item.category }}" class="glightbox preview-link"><i
+              class="bi bi-zoom-in"></i></a>
+        <a href="{{ item.image.url }}" title="More Details" class="details-link"><i
+              class="bi bi-link-45deg"></i></a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="pagination">
+    {% if gallery_items.has_previous %}
+    <a href="?page=1">&laquo; First</a>
+    <a href="?page={{ gallery_items.previous_page_number }}">Previous</a>
+    {% endif %}
+    <span class="current">Page {{ gallery_items.number }} of {{ gallery_items.paginator.num_pages }}</span>
+    {% if gallery_items.has_next %}
+    <a href="?page={{ gallery_items.next_page_number }}">Next</a>
+    <a href="?page={{ gallery_items.paginator.num_pages }}">Last &raquo;</a>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  // Floating logo scroll effect
+  document.addEventListener('DOMContentLoaded', () => {
+    const logo = document.querySelector('.floating-logo');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      logo.style.transform = `translateY(${Math.min(scrollY * 0.2, 20)}px) rotate(${Math.min(scrollY * 0.05, 5)}deg)`;
+    });
+  });
+
+  // Search filter
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('search-input');
+    var items = document.querySelectorAll('.portfolio-item');
+    var noResultsMessage = document.getElementById('no-results');
+    input.addEventListener('input', function() {
+      var query = input.value.toLowerCase();
+      var found = false;
+      items.forEach(function(item) {
+        var title = item.querySelector('h4').textContent.toLowerCase();
+        var description = item.querySelector('p').textContent.toLowerCase();
+        if (title.includes(query) || description.includes(query)) {
+          item.style.display = '';
+          found = true;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      if (found) {
+        noResultsMessage.style.display = 'none';
+      } else {
+        noResultsMessage.style.display = 'block';
+      }
+    });
+    input.addEventListener('keypress', function(event) {
+      if (event.keyCode === 13) {
+        input.blur();
+      }
+    });
+  });
+</script>
+{% endblock %}

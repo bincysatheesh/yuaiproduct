@@ -1,0 +1,185 @@
+{% extends 'landing/fcbase.html' %}
+{% load static %}
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap');
+  
+  :root {
+    --primary: #1a365d;
+    --accent: #f7b733;
+    --light: #f8f9fa;
+    --dark: #032b51;
+    --blue-dark: #145073;
+    --blue-light: #3d6a95;
+    --yellow: #f4cb27;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  /* Reset Container */
+  .reset-container {
+    max-width: 450px;
+    margin: 10rem auto;
+    padding: 2.5rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reset-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+  }
+
+  .reset-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .reset-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--blue-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .reset-header p {
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  /* Form Elements */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: #f8f9fa;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(247, 183, 51, 0.2);
+  }
+
+  /* Button Styling */
+  .btn-reset {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-light) 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 1rem;
+  }
+
+  .btn-reset:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(26, 54, 93, 0.3);
+  }
+
+  /* Messages */
+  .messages {
+    padding: 12px 15px;
+    border-radius: 5px;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    text-align: center;
+  }
+
+  .ok-button {
+    background-color: var(--blue-dark);
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+    display: inline-block;
+  }
+
+  .ok-button:hover {
+    background-color: var(--primary);
+    transform: translateY(-1px);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .reset-container {
+      margin: 8rem auto;
+      padding: 1.5rem;
+    }
+
+    .reset-header h3 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<div class="reset-container">
+  <div class="reset-header">
+    <h3>Forgotten your password?</h3>
+    <p>Enter your e-mail address to obtain a new password</p>
+  </div>
+
+  <form id="resetForm" action="{% url 'forgetpassword' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <input id="emailInput" type="email" class="form-control" placeholder="Enter your email" name="username" required>
+    </div>
+    
+    <button type="submit" class="btn-reset">Reset Password</button>
+    
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        {{ message }}
+        <br>
+      {% endfor %}
+      <button class="ok-button" onclick="clearInputAndRedirect()">OK</button>
+    </div>
+    {% endif %}
+  </form>
+</div>
+
+<script>
+  function clearInputAndRedirect() {
+    var input = document.getElementById('emailInput');
+    input.value = ''; // Clear input field
+    window.location.href = '/'; // Redirect to home page
+  }
+</script>
+
+<br><br><br>
+{% endblock %}

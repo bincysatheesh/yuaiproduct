@@ -1,0 +1,307 @@
+{% extends 'landing/fcbase.html' %}
+{% load static %}
+{% block content %}
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap');
+  
+  :root {
+    --primary: #1a365d;
+    --accent: #f7b733;
+    --light: #f8f9fa;
+    --dark: #032b51;
+  }
+
+  /* Hero Section */
+  .blog-hero {
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary) 0%, #153a6e 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+    margin-bottom: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('{% static "img/abstract-bg.jpg" %}') center/cover;
+    opacity: 0.15;
+    z-index: 1;
+  }
+
+  .blog-hero-content {
+    z-index: 2;
+    text-align: center;
+  }
+
+  .blog-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: var(--light);
+    margin: 0;
+    letter-spacing: -1.5px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    animation: fadeIn 1s ease-out;
+  }
+
+  .blog-hero-subtitle {
+    color: var(--accent);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .blog-hero-subtitle a {
+    color: rgba(247, 183, 51, 0.9);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .blog-hero-subtitle a:hover {
+    color: #fff;
+    transform: translateX(3px);
+  }
+
+  /* Floating Logo */
+  .floating-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: -60px auto 2rem;
+    display: block;
+    border: 4px solid white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    background: white;
+  }
+
+  .floating-logo:hover {
+    transform: translateY(-10px) rotate(5deg);
+    box-shadow: 0 15px 40px rgba(247, 183, 51, 0.25);
+  }
+
+  /* Blog Content Section */
+  .blog-content {
+    max-width: 1200px;
+    margin: 0 auto 6rem;
+    padding: 0 2rem;
+  }
+
+  .post-item {
+    margin-bottom: 30px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+  }
+
+  .post-img img {
+    height: 350px;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .post-content {
+    background: linear-gradient(to bottom, rgb(205, 222, 230), #ffffff);
+    padding: 20px;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 12px rgba(26,54,93,0.1);
+    transition: all 0.3s ease;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-item:hover {
+    transform: translateY(-10px);
+  }
+
+  .post-item:hover .post-img img {
+    transform: scale(1.05);
+  }
+
+  .post-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .post-date {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: var(--accent);
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+  }
+
+  .meta {
+    margin-top: 10px;
+    color: #555;
+    font-size: 0.9rem;
+  }
+
+  .meta i {
+    color: var(--accent);
+    margin-right: 5px;
+  }
+
+  .readmore {
+    margin-top: auto;
+    display: inline-block;
+    color: white;
+    background-color: var(--accent);
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+  }
+
+  .readmore:hover {
+    background-color: var(--primary);
+  }
+
+  @media (max-width: 1200px) {
+    .post-item {
+      height: 380px;
+    }
+    .post-img img {
+      height: 330px;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .blog-hero h1 {
+      font-size: 3.5rem;
+    }
+    .post-item {
+      height: 350px;
+    }
+    .post-img img {
+      height: 300px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .blog-hero h1 {
+      font-size: 2.8rem;
+    }
+    .floating-logo {
+      width: 100px;
+      height: 100px;
+      margin-top: -50px;
+    }
+    .post-item {
+      height: 320px;
+    }
+    .post-img img {
+      height: 270px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .post-item {
+      height: auto;
+    }
+    .post-img img {
+      height: 250px;
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<!-- Hero Section -->
+<div class="blog-hero">
+  <div class="blog-hero-content">
+    <h1>Blog</h1>
+    <div class="blog-hero-subtitle">
+      <a href="/">Home</a>
+      <span style="color: rgba(255,255,255,0.7); margin: 0 8px;">/</span>
+      <span style="color: var(--light);">Blog</span>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Logo -->
+<img src="{% static 'img/logo.jpg' %}" alt="ZMCA Logo" class="floating-logo">
+
+<!-- Blog Content Section -->
+<div class="blog-content">
+  <div class="row gy-5">
+    {% for blog in b %}
+    {% if blog.status == 'Published' %}
+    <div class="col-xl-4 col-md-6 post-item" data-aos="fade-up" data-aos-delay="100">
+      <div class="post-item position-relative h-100">
+        <div class="post-img position-relative overflow-hidden">
+          <img src="{{ blog.image.url }}" class="img-fluid" alt="{{blog.title}}">
+          <span class="post-date">{{ blog.date }}</span>
+        </div>
+        <div class="post-content d-flex flex-column">
+          <h3 class="post-title">{{ blog.title }}</h3>
+          <div class="meta d-flex align-items-center">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-person"></i> <span class="ps-2">{{ blog.author_name}}</span>
+            </div>
+            <span class="px-3 text-black-50">/</span>
+            <div class="d-flex align-items-center">
+              <i class="bi bi-folder2"></i> <span class="ps-2">{{blog.subtitle}}</span>
+            </div>
+          </div>
+          <hr>
+          <p>{{blog.description|truncatewords:10}}</p>
+          <a href="{% url 'blogsdetail' blog.id %}" class="readmore stretched-link"><span>Read More</span><i
+             class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  // Floating logo scroll effect
+  document.addEventListener('DOMContentLoaded', () => {
+    const logo = document.querySelector('.floating-logo');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      logo.style.transform = `translateY(${Math.min(scrollY * 0.2, 20)}px) rotate(${Math.min(scrollY * 0.05, 5)}deg)`;
+    });
+  });
+
+  // Blog post click effect
+  document.addEventListener('DOMContentLoaded', function() {
+    const postItems = document.querySelectorAll('.post-item');
+    postItems.forEach(postItem => {
+      postItem.addEventListener('click', function() {
+        this.classList.toggle('zoomed');
+      });
+    });
+  });
+</script>
+  
+{% endblock %}

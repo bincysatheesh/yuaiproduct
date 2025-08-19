@@ -1,0 +1,455 @@
+{% extends 'member/customerbase.html' %}
+{% load static %}
+{% block content %}    
+
+<style>   table {
+  width: 100%; /* Set the width of the table to 100% */
+}
+.customers .card-body .table-responsive {
+  max-width: 100%; /* Set your desired maximum width */
+  overflow-x: auto; /* Add horizontal scroll if needed */
+}
+.customers .card-body {
+  max-width: 350px; /* Set the maximum width for the Enquiries section */
+}
+
+/* Add this style for the hover effect */
+table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Style for the link container */
+.link-container {
+  display: inline-block;
+  padding: 1px 2px;
+  background-color: #3d6a95;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.link-container:hover {
+  background-color: #2b3348;
+}
+
+.recent-grid {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-gap: 2rem; /* Adjust the gap between the two grids */
+  grid-template-columns: 75% auto; /* Adjust the width of each grid */
+}
+
+
+/* ----------------------button style */
+
+.paragraph-wrapper {
+  margin-top: 20px; /* Add some margin at the top */
+  line-height: 2.5; /* Adjust line height as needed */
+}
+
+.paragraph-wrapper p {
+text-align: justify; /* Justify the text */
+  padding: 10px; /* Add padding to the paragraph */
+  background-color: #f5f5f5; /* Set background color */
+  border-radius: 5px; /* Add border radius */
+  overflow-y: auto; /* Add vertical scrolling if needed */
+  max-height: 300px; /* Set maximum height for scrolling */
+  transition: transform 0.1s; /* Add transition effect for zoom */
+}
+/* ---------------------------------------- */
+table {
+        border-collapse: collapse;
+        width: 100%;
+        text-transform: uppercase;
+    }
+
+    table thead tr {
+        background-color: #3d6a95;
+        color: #fff;
+    }
+
+    table tbody tr {
+        transition: transform 0.2s ease-in-out;
+    }
+
+    table tbody tr:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Zoom effect on hover */
+    table tbody tr:hover {
+        transform: scale(1.01);
+    }
+    
+    table th,
+    table td {
+        padding: 10px; /* Adjust the padding as needed */
+        text-align:left ; /* Align text to the left */
+    }
+    
+/* Style for the link container */
+.link-container {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #3d6a95;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.link-container:hover {
+    background-color: #2b3348;
+}
+
+/* Style for the progress bars */
+.progress-bar {
+    display: flex; /* Make progress bars display horizontally */
+    justify-content: space-between; /* Distribute space between progress bars */
+    height: 20px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 10px; /* Make the progress bar rounded */
+    overflow: hidden; /* Ensure overflow is hidden to maintain rounded corners */
+    background-color: #f3f3f3; /* Background color of the progress bar */
+}
+
+/* Style for individual progress bars */
+
+.progress {
+    flex: 1; /* Expand to fill the available space */
+    height: 100%; /* Ensure the progress bar fills the entire height of the cell */
+    background-color: #28a745; /* Default color for progress bar */
+}
+
+/* Style for the success (green) progress bar */
+.bg-success {
+    background-color: #28a745 !important; /* Set background color to green */
+}
+
+/* Style for the danger (red) progress bar */
+.bg-danger {
+    background-color: #dc3545 !important; /* Set background color to red */
+}
+
+
+.total {
+    color: #dd3a8e !important;
+}
+
+/* ----li item zoom hover--- */
+/* CSS for sidebar list items */
+.sidebar-menu ul li {
+    list-style: none; /* Remove default list styles */
+    transition: transform 0.3s ease; /* Add transition effect for zoom */
+}
+
+/* Zoom effect on hover */
+.sidebar-menu ul li:hover {
+    transform: scale(1.05); /* Increase size on hover */
+}
+
+
+/* Hover effect */
+.sidebar-menu ul li a:hover {
+  background-color:#ffffff;
+  color:#2b3348;
+
+}
+
+/* Style for the tooltip */
+.sidebar-menu ul li a[title]:hover:after {
+  content: attr(title); /* Display the title attribute as a tooltip */
+  display: block;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7); /* Background color for the tooltip */
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%); /* Center the tooltip horizontally */
+}
+
+
+
+
+
+
+
+</style>
+    
+    <input type="checkbox" id="nav-toggle">
+    <div class="sidebar"> 
+      <div class="sidebar-brand">
+        <h2><span class="las la-user-circle"></span><span style="text-transform: uppercase;">{{ufn}}&nbsp;{{uln}}</span></h2>
+
+      </div>
+      <div class="sidebar-menu">
+        <ul>
+          <li>
+            <a href="{% url 'customerindex' %}" class="active"><span class="fas fa-home"></span>
+            <span>Home</span></a>
+          </li>
+          <!-- <li>
+            <a href="{% url 'customerindex' %}"><span class="fas fa-home"></span>
+            <span>Home</span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'memberaboutus' %}"><span class="fas fa-info-circle"></span>
+
+            <span>About Us</span></a>
+          </li>
+          <li>
+            <a href="{% url 'committemembers' %}"><span class="las la-users"></span>
+            <span>Committe Members&nbsp;({{ccount}})</span></a>
+          </li>
+          <li>
+            <a href="{% url 'members_view1' %}"><span class="las la-home"></span>
+            <span>Families&nbsp;({{uacount}})</span></a>
+          </li>
+          <li>
+            <a href="{% url 'birthdaydetails' %}"><span class="fas fa-birthday-cake"></span>
+            <span>Birthday</span></a>
+          </li>
+          <li>
+            <a href="{% url 'bloodgroup' %}"><span class="fas fa-tint" style="color: red;"></span>
+            <span>Blood Group</span></a>
+          </li>
+
+          <li>
+            <a href="{% url 'payments1' %}">
+            <span class="fas fa-id-badge"></span>
+            <span>Membership</span></a>
+          </li>
+
+          <li>
+            <!-- <a href=""><span class="las la-question-circle"></span>
+            <span>Enqueries</span></a> -->
+            <!-- <ul class="submenu">
+              <li></li>
+              <li><a href="{% url 'allenquiry_list' %}"><span class="fas fa-envelope"></span><span>(All)</span></a></li>            
+          
+           </ul> -->
+          </li>
+          <!-- <li>
+            <a href=""><span class="las la-user-plus"></span>
+            <span>Registration</span></a>
+            <ul class="submenu">
+              <li></li>
+              <li><a href="#"><span class="fa fa-gallery" style="color: #fff;"></span>
+
+                Gallery</a></li>
+              <li><a href="#">Submenu Item 2</a></li>
+          
+           </ul>
+          </li> -->
+          <!-- <li>
+            <a href=""><span class="las la-blog"></span>
+            <span>Blog</span></a>
+          </li> -->
+          <li>
+            <a href="{% url 'cevents' %}"><span class="fa fa-bell"></span>
+            <span>Events&nbsp;({{teventscount}})</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- --------end link---------- -->
+    <div class="main-content">
+      <header>
+           
+        <h2> 
+          <label for="nav-toggle">
+            <span class="las la-bars"></span>
+          </label>Welcome To<span style="color: #3d6a95;text-transform: uppercase;">  {{fn}}     
+      &nbsp;<span class="fas fa-users"></span></span>
+        </h2>
+        <div class="search-wrapper">
+            <!-- Add the form element with id="search-form" -->
+            <form method="GET" action="{% url 'members_view1' %}" id="search-form">
+                <span class="las la-search"></span>
+                <input type="search" id="search-input" name="q" placeholder="Search here" value="{{ request.GET.q|default_if_none:'' }}"/>
+            </form>
+        </div>
+        
+
+        <div class="user-wrapper">
+          <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+        
+          <div>
+            <!-- <h4>ZMCA</h4> -->
+            <h4>        <a href="{% url 'logout' %}" style="font-size: 16px;"> <i class="fa-solid fa-right-from-bracket"></i></a>
+            </h4>
+            <small>{{email}}</small>
+
+          </div>
+
+          
+        </div>
+
+      </header>
+      <!-- ----------end header---------- -->
+      <main>
+        
+        
+
+        <!-- -------------------endcards------------- -->
+<div class="recent-grid">
+  <div class="projects" >
+    <div class="card" style="width: 130%;">
+      <div class="card-header">
+        <h2><span class="las la-users" style="color: #3d6a95;"></span>
+            <span style="text-transform: uppercase;">Association Members : {{t}}</span></h2>
+        <!-- <button>See all<span class="las la-arrow-right"></span></button> -->
+
+      </div>
+      <div class="card-body">
+
+        <!-- --------------begincardbody-------- -->
+
+        <div class="table-responsive">
+            <table width="100%">
+                <thead  style="background-color:#3d6a95;">
+                    <tr>
+                      <td style="color: #fff;">Id</td>
+                        <td  style="color: #fff;">Member Name</td>  
+                                         
+                        <td style="color: #fff;">Family Name</td>
+                        <td style="color: #fff;">Email</td>
+                        <td style="color: #fff;">Contact Number</td>
+                        <!-- <td  style="color: #fff;">Registration Progress</td>   -->
+                        <td style="color: #fff;">Action</td>
+
+                     
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                    {% for member in members_info %}
+                        <tr>
+                          <td>{{ forloop.counter }}</td>
+                          <td>{{member.firstname}}&nbsp;{{member.lastname}}&nbsp;(<span class="total">{{ member.total }}</span>)</td>
+                            <!-- <td>
+                              {% with owner_detail=owner|first %}
+                                  {% if owner_detail.up_id == member.id %}
+                                      {{ owner_detail.owner_first_name }} {{ owner_detail.owner_last_name }}
+                                  {% else %}
+                                      <span>{{ member.firstname }}&nbsp;&nbsp;{{ member.lastname }}</span>
+                                  {% endif %}
+                              {% endwith %}
+                          </td> -->
+                         
+
+
+                            <td>{{ member.familyname }}</td>
+                            <td style="text-transform: lowercase;" >{{ member.email }}</td>
+                            <td>{{ member.phonenumber }} &nbsp;{{ member.owner_complete }}</td>
+
+                            <!-- <td> -->
+                              <!-- <div class="progress-bar">
+                                <div class="progress {% if member.owner_complete %}bg-success{% else %}bg-danger{% endif %}" style="width: {{ member.owner_completion_percentage }}%;">O</div>
+                                <div class="progress {% if member.spouse_complete  %}bg-success{% else %}bg-danger{% endif %}" style="width: {{ member.spouse_completion_percentage }}%;">S</div>
+                                <div class="progress {% if member.child_complete  %}bg-success{% else %}bg-danger{% endif %}" style="width: {{ member.child_completion_percentage }}%;">C</div>
+                                <div class="progress {% if member.other_complete  %}bg-success{% else %}bg-danger{% endif %}" style="width: {{ member.other_completion_percentage }}%;">G</div>
+                                <div class="progress {% if member.photo_complete  %}bg-success{% else %}bg-danger{% endif %}" style="width: {{ member.photor_completion_percentage }}%;">P</div>
+
+                              </div> -->
+                            
+
+<!-- </td> -->
+              
+                            <td>  
+                              
+                              <a href="{% url 'view_family1' user_id=member.id %}" class="link-container" > 
+                                  <span class="las la-eye" style="height: 20px;height: 20px;"></span> 
+                                   <!-- <span class="las la-check-circle"></span>   
+                                    <span class="las la-thumbs-up"></span> <span class="las la-thumbs-down"></span>  -->
+                                  </a> 
+                                  <!-- &nbsp;&nbsp; 
+                                  <a href="{% url 'deletefamily' f_id=member.id %}" class="link-container"> 
+                                    <span class="las la-trash-alt" style="height: 20px;height: 20px;"></span>
+                                </a>
+                                 -->
+                                
+                                </td>
+                           
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+       <!-- -----------endcardbody------------------ -->
+       <!-- -----------Paginator------------------ -->
+       <!-- Display pagination links -->
+<div class="pagination">
+  <span class="step-links">
+      {% if members_info.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ members_info.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+          Page {{ members_info.number }} of {{ members_info.paginator.num_pages }}.
+      </span>
+
+      {% if members_info.has_next %}
+          <a href="?page={{ members_info.next_page_number }}">next</a>
+          <a href="?page={{ members_info.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+  </span>
+</div>
+       <!-- ----------------endpaginator--------------- -->
+      </div>
+
+
+    </div>
+
+  </div>
+<!-- -------------endof table---------------------- -->
+</div>        
+      </main>
+    </div>
+
+    <!-- ------------progressbar------------ -->
+    <!-- Include Bootstrap JS (optional) -->
+<!-- ----------------search script---------------- -->
+<script>
+  // Get the search input element
+  var searchInput = document.getElementById("search-input");
+
+  // Variable to store the timeout
+  var timeout = null;
+
+  // Add an event listener to detect keypress events
+  searchInput.addEventListener("keypress", function(event) {
+      // Check if the Enter key was pressed
+      if (event.key === 'Enter') {
+          // Prevent the default form submission behavior
+          event.preventDefault();
+      }
+  });
+
+  // Add an event listener to detect changes in the input field
+  searchInput.addEventListener("input", function() {
+      // Clear the previous timeout to avoid rapid submission
+      clearTimeout(timeout);
+
+      // Set a timeout to delay form submission
+      timeout = setTimeout(function() {
+          // Get the search form element
+          var searchForm = document.getElementById("search-form");
+          
+          // Submit the form
+          searchForm.submit();
+      }, 1000); // Adjust the delay time (in milliseconds) as needed
+  });
+</script>
+
+
+<!-- -------------------search----------------- -->
+
+    {% endblock %}    
