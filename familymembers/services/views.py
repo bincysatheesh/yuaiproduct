@@ -182,6 +182,8 @@ def add_staff(request):
                 agency=agency,
                 full_name=form_data.get('full_name'),
                 age=form_data.get('age'),
+                email = form_data.get('email'),
+                contact_no = form_data.get('contact_no'),
                 address=form_data.get('address'),
                 service_type=form_data.get('service_type'),
                 skills_duties=form_data.get('skills_duties'),
@@ -189,7 +191,7 @@ def add_staff(request):
                 languages=form_data.get('languages'),
                 availability=form_data.get('availability'),
                 notes=form_data.get('notes'),
-                status='Submitted'
+                status='Pending'
             )
 
             if 'photo' in files:

@@ -349,7 +349,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for staff in recent_staff %}
+                    {% for staff in staff_list %}
                     <tr>
                         <td>
                             <div class="staff-name">
@@ -366,7 +366,7 @@
                         <td>{{ staff.created_at|date:"M d, Y" }}</td>
                         <td>
                             <div class="actions">
-                                <a href="{% url 'staff_detail' staff.id %}" class="action-btn" title="View">
+                                <a href="{% url 'view_staff' staff.id %}" class="action-btn" title="View">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <a href="{% url 'edit_staff' staff.id %}" class="action-btn" title="Edit">
