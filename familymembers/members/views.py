@@ -558,7 +558,7 @@ def mlogin(request):
             # Check for agency user
             try:
                 agency_profile = Agency.objects.get(user=user)
-                if agency_profile.status == 'Submitted':
+                if agency_profile.status == 'Approved':
                     return redirect('agency_dashboard')  # Create this URL/View
                 else:
                     messages.error(request, 'Your agency account is pending approval.')

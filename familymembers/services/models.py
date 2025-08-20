@@ -79,8 +79,6 @@ class Staff(models.Model):
     STAFF_STATUS = (
         ('Submitted', 'Submitted'),
         ('Approved', 'Approved'),
-        ('Rejected', 'Rejected'),
-        ('Suspended', 'Suspended'),
     )
     agency = models.ForeignKey(Agency, on_delete=models.CASCADE, related_name='agency')
 

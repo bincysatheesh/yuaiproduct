@@ -96,6 +96,45 @@
   margin-bottom: 1rem;
 }
 
+.button-group {
+  display: flex;
+  gap: 15px; /* space between buttons */
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  color: #fff;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-member {
+  background-color: #28a745; /* green */
+}
+
+.btn-member:hover {
+  background-color: #218838;
+}
+
+.btn-agency {
+  background-color: #007bff; /* blue */
+}
+
+.btn-agency:hover {
+  background-color: #0056b3;
+}
+
 
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
@@ -131,9 +170,11 @@
           <p style="text-align: justify;">
             Only registered and verified members can access full helper details or submit new listings. Our aim is to create a safe space for families to connect with verified individuals through community-based recommendations.
           </p>
-          <a href="{% url 'msignup' %}" class="cta-button mt-3">Become a Member</a>  |
-          <a href="{% url 'agency_signup' %}" class="cta-button mt-3">  are you run a agency</a>
-        </div>
+          <div class="button-group">
+  <a href="{% url 'msignup' %}" class="btn btn-member">Become a Member</a>
+  <a href="{% url 'agency_signup' %}" class="btn btn-agency">Register Your Agency</a>
+</div>
+    </div>
         <div class="col-lg-6 d-flex justify-content-center" data-aos="fade-left">
           <div class="image-section">
             <img src="{% static 'img/alt-services.jpg' %}" width="550px" height="500px" alt="Domestic Helper Service">

@@ -1,0 +1,532 @@
+{% extends 'admin/adminbase.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  /* ---- same style you provided, kept intact ---- */
+  .card-single {
+    transition: transform 0.3s;
+  }
+
+  .card-single:hover {
+    transform: scale(1.1);
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .customers .card-body .table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .customers .card-body {
+    max-width: 350px;
+  }
+
+  table tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+
+  .link-container {
+    display: inline-block;
+    padding: 1px 2px;
+    background-color: #3d6a95;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+
+  .link-container:hover {
+    background-color: #2b3348;
+  }
+
+  .recent-grid {
+    margin-top: 3.5rem;
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: 100%;
+  }
+
+  .delete-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #3d6a95;
+  }
+
+  .delete-button:hover {
+    color: #cd0c0c;
+  }
+
+  .button-spacing {
+    margin-right: 10px;
+  }
+
+  .approve-button {
+    background-color: #28a745;
+    /* green */
+    color: white;
+    padding: 6px 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+
+  .approve-button:hover {
+    background-color: #218838;
+  }
+
+  .reject-button {
+    background-color: #dc3545;
+    /* red */
+    color: white;
+    padding: 6px 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+
+  .reject-button:hover {
+    background-color: #c82333;
+  }
+
+  .view-button {
+    color: #007bff;
+    font-size: 20px;
+    margin: 0 5px;
+    text-decoration: none;
+  }
+
+  .suspend-button {
+    background-color: #fd7e14;
+    /* orange */
+    color: white;
+    padding: 6px 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+
+  .suspend-button:hover {
+    background-color: #e8590c;
+  }
+
+  .view-button:hover {
+    color: #0056b3;
+  }
+
+  .uppercase-text {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .sidebar-menu {
+    overflow: auto;
+  }
+
+  .view-button {
+    color: #007bff;
+    /* normal blue */
+    font-size: 20px;
+    margin: 0 5px;
+    text-decoration: none;
+  }
+
+  .view-button:hover {
+    color: #0056b3;
+    /* darker blue on hover */
+  }
+</style>
+<input type="checkbox" id="nav-toggle">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <h2><span class="las la-user-circle"></span><span>ZMCA</span></h2>
+
+  </div>
+
+  <div class="sidebar-menu">
+    <ul>
+      <li>
+        <a href="{% url 'adminindex' %}" class="active"><span class="fas fa-home"></span>
+          <span>Home</span></a>
+      </li>
+      <!-- <li>
+            <a href="{% url 'adminindex' %}"><span class="fas fa-home"></span>
+            <span></span></a>
+          </li> -->
+      <li>
+        <a href="{% url 'members_view' %}"><span class="las la-home"></span>
+          <span>Families</span></a>
+      <li>
+        <a href="{% url 'committe' %}"><span class="las la-users"></span>
+          <span>Committee Members</span></a>
+      </li>
+      <li>
+        <a href="{% url 'fam_view' %}">
+          <span class="fas fa-id-badge"></span>
+          <span>Membership</span></a>
+      </li>
+
+      <li>
+        <a href="{% url 'enquiry_list' %}"><span class="fas fa-envelope"></span>
+          <span>Enqueries</span></a>
+        <!-- <ul class="submenu">
+              <li></li>
+              <li><a href="{% url 'allenquiry_list' %}"><span class="fas fa-envelope"></span><span>(All)</span></a></li>            
+           -->
+    </ul>
+    </li>
+    <li>
+      <a href="{% url 'bloodgroupadmin' %}">
+        <span class="fas fa-tint" style="color: red;"></span>
+        <span>Blood Group</span></a>
+    </li>
+    <li>
+      <a href="{% url 'birthdaydetails1' %}">
+        <span class="fas fa-birthday-cake"></span>
+        <span>Birthday</span></a>
+    </li>
+
+    <li>
+      <a href="{% url 'agency_list' %}">
+        <span class="fas fa-handshake"></span>
+        <span>Agency list</span></a>
+    </li>
+
+    </li>
+    <li>
+      <a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-image"></span>
+        <span>Gallery</span></a>
+      <ul class="submenu">
+        <!-- <li></li>
+              <li><a href="{% url 'addgalleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Add Gallery</a></li>
+              <li><a href="{% url 'galleryview' %}"><span class="fa-solid fa-images" style="color: #f1f2f3;"></span>
+
+                Gallery</a></li> -->
+
+
+      </ul>
+    <li>
+      <a href="{% url 'addhomegallery' %}"><span class="fa-solid fa-image"></span>
+        <span>Home Gallery</span></a>
+
+      </ul>
+    </li>
+    <li>
+      <a href="{% url 'admin_services_posts' %}"><span class="fa fa-bell"></span>
+        <span>Service Requests</span></a>
+    </li>
+    <li>
+      <a href="{% url 'addblogview' %}"><span class="las la-blog"></span>
+        <span>Blog</span></a>
+    </li>
+    <li>
+      <a href="{% url 'eventview' %}"><span class="fa fa-bell"></span>
+        <span>Events</span></a>
+    </li>
+
+    </ul>
+  </div>
+
+</div>
+<div class="main-content">
+  <header>
+    <h2>
+      <label for="nav-toggle"><span class="las la-bars"></span></label>
+      ZMCA Admin
+    </h2>
+
+    <div class="search-wrapper">
+      <form method="GET" action="{% url 'agency_list' %}">
+        <span class="las la-search"></span>
+        <input type="search" id="searchInput" name="q" placeholder="Search Agencies"
+          value="{{ request.GET.q|default_if_none:'' }}" />
+      </form>
+    </div>
+
+    <div class="user-wrapper">
+      <img src="{% static 'img/logo.jpg' %}" width="60px" height="60px" alt="">
+      <div>
+        <h4><a href="{% url 'logout' %}" style="font-size: 16px;"><i class="fa-solid fa-right-from-bracket"></i></a>
+        </h4>
+        <small>Super Admin</small>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="recent-grid">
+      <div class="projects">
+        <div class="card" style="width: 100%;">
+          <div class="card-header">
+            <h3><span class="las la-building" style="color: #3d6a95;"></span>&nbsp;Agencies</h3>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table width="100%">
+                <thead style="background-color:#3d6a95;">
+                  <tr>
+                    <td style="color:#fff;" class="uppercase-text">#</td>
+                    <td style="color:#fff;" class="uppercase-text">Agency Name</td>
+                    <td style="color:#fff;" class="uppercase-text">Type</td>
+                    <td style="color:#fff;" class="uppercase-text">Categories</td>
+                    <td style="color:#fff;" class="uppercase-text">Owner</td>
+                    <td style="color:#fff;" class="uppercase-text">Contact</td>
+                    <td style="color:#fff;" class="uppercase-text">Status</td>
+                    <td style="color:#fff;" class="uppercase-text">Actions</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for agency in agencies %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td class="uppercase-text">{{ agency.agency_name }}</td>
+                    <td>{{ agency.agency_type|join:", " }}</td>
+                    <td>{{ agency.service_categories|join:", " }}</td>
+                    <td>{{ agency.owner_contact_person }}</td>
+                    <td>
+                      <strong>{{ agency.contact_number }}</strong><br>
+                      <small>{{ agency.email }}</small>
+                    </td>
+                    <td>
+                      <span style="
+                                  font-weight: bolder; 
+                                  color: {% if agency.status == 'Submitted' %}orange
+                                        {% elif agency.status == 'Approved' %}green
+                                        {% elif agency.status == 'Rejected' %}red
+                                        {% elif agency.status == 'Suspended' %}gray
+                                        {% else %}black{% endif %};
+                                ">
+                        {{ agency.status }}
+                      </span>
+                    </td>
+                    <td>
+                      <!-- View button (always visible) -->
+                      <a href="#" class="view-button" title="View Agency" data-toggle="modal"
+                        data-target="#viewAgencyModal{{ agency.id }}">
+                        <i class="fa-solid fa-eye"></i>
+                      </a>
+                      {% if agency.status == 'Submitted' %}
+                      <!-- Approve button -->
+                      <form method="post" action="{% url 'approve_agency' agency.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="approve-button"
+                          onclick="return confirm('Approve this agency?')">APPROVE</button>
+                      </form>
+                      <span class="button-spacing"></span>
+
+                      <!-- Reject button -->
+                      <form method="post" action="{% url 'reject_agency' agency.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="reject-button"
+                          onclick="return confirm('Reject this agency?')">REJECT</button>
+                      </form>
+
+                      {% elif agency.status == 'Approved' %}
+                      <!-- Suspend button -->
+                      <form method="post" action="{% url 'suspend_agency' agency.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="suspend-button"
+                          onclick="return confirm('Suspend this agency?')">SUSPEND</button>
+                      </form>
+                      <span class="button-spacing"></span>
+
+                      <!-- Delete button -->
+                      <form method="post" action="{% url 'delete_agency' agency.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button" onclick="return confirm('Delete this agency?')">
+                          <i class="fa-solid fa-trash" style="font-size:20px;"></i>
+                        </button>
+                      </form>
+
+                      {% elif agency.status == 'Suspended' %}
+                      <!-- Approve button again -->
+                      <form method="post" action="{% url 'approve_agency' agency.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="approve-button"
+                          onclick="return confirm('Approve this agency?')">APPROVE</button>
+                      </form>
+                      <span class="button-spacing"></span>
+
+                      <!-- Delete button -->
+                      <form method="post" action="{% url 'delete_agency' agency.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button" onclick="return confirm('Delete this agency?')">
+                          <i class="fa-solid fa-trash" style="font-size:20px;"></i>
+                        </button>
+                      </form>
+
+                      {% elif agency.status == 'Rejected' %}
+                      <!-- Delete only -->
+                      <form method="post" action="{% url 'delete_agency' agency.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button" onclick="return confirm('Delete this agency?')">
+                          <i class="fa-solid fa-trash" style="font-size:20px;"></i>
+                        </button>
+                      </form>
+                      {% endif %}
+
+
+                    </td>
+
+                    <!-- Modal for single view  -->
+
+<div class="modal fade" id="viewAgencyModal{{ agency.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content shadow-lg">
+      
+      <!-- Header -->
+      <div class="modal-header" style="background:#3d6a95; color:#fff;">
+        <h5 class="modal-title">
+          <i class="fa-solid fa-building"></i> {{ agency.agency_name }}
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body p-4">
+        <div class="row">
+
+          <!-- Left Column -->
+          <div class="col-md-6 mb-3">
+            <h6 class="text-secondary">Basic Info</h6>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><strong>Agency Type:</strong> {{ agency.agency_type|join:", " }}</li>
+              <li class="list-group-item"><strong>Service Categories:</strong> {{ agency.service_categories|join:", " }}</li>
+              <li class="list-group-item"><strong>Status:</strong> 
+                <span class="badge 
+                  {% if agency.status == 'Submitted' %}badge-warning
+                  {% elif agency.status == 'Approved' %}badge-success
+                  {% elif agency.status == 'Rejected' %}badge-danger
+                  {% elif agency.status == 'Suspended' %}badge-secondary
+                  {% else %}badge-dark{% endif %}">
+                  {{ agency.status }}
+                </span>
+              </li>
+              <li class="list-group-item"><strong>Created:</strong> {{ agency.created_at|date:"M d, Y H:i" }}</li>
+              <li class="list-group-item"><strong>Updated:</strong> {{ agency.updated_at|date:"M d, Y H:i" }}</li>
+            </ul>
+          </div>
+
+          <!-- Right Column -->
+          <div class="col-md-6 mb-3">
+            <h6 class="text-secondary">Contact Details</h6>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><strong>Owner:</strong> {{ agency.owner_contact_person }}</li>
+              <li class="list-group-item"><strong>Phone:</strong> {{ agency.contact_number }}</li>
+              <li class="list-group-item"><strong>Email:</strong> {{ agency.email }}</li>
+              <li class="list-group-item"><strong>Address:</strong> {{ agency.office_address }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <hr>
+
+        <!-- Extra Details Row -->
+        <div class="row mt-3">
+          <div class="col-md-6 mb-3">
+            <h6 class="text-secondary">Operational Details</h6>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><strong>Years in Operation:</strong> {{ agency.years_in_operation }}</li>
+              <li class="list-group-item"><strong>Number of Staff:</strong> {{ agency.number_of_staff }}</li>
+              <li class="list-group-item"><strong>Preferred Area:</strong> {{ agency.preferred_service_area }}</li>
+              <li class="list-group-item"><strong>Availability:</strong> {{ agency.availability }}</li>
+            </ul>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <h6 class="text-secondary">Other Information</h6>
+            <div class="card p-3 shadow-sm">
+              <p><strong>Description:</strong><br>{{ agency.short_description }}</p>
+              {% if agency.verification_documents %}
+                <p><strong>Verification Docs:</strong> 
+                  <a href="{{ agency.verification_documents.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                    View File
+                  </a>
+                </p>
+              {% endif %}
+              <p><strong>Consent Agreed:</strong> 
+                {% if agency.consent_agreed %}
+                  ✅ Yes
+                {% else %}
+                  ❌ No
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+                  </tr>
+                  {% empty %}
+                  <tr>
+                    <td colspan="8" style="text-align:center;">No agencies found</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <span class="step-links">
+        {% if agencies.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ agencies.previous_page_number }}">previous</a>
+        {% endif %}
+        <span class="current">Page {{ agencies.number }} of {{ agencies.paginator.num_pages }}.</span>
+        {% if agencies.has_next %}
+        <a href="?page={{ agencies.next_page_number }}">next</a>
+        <a href="?page={{ agencies.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  </main>
+</div>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', function () {
+    const searchText = this.value.trim().toLowerCase();
+    const table = document.querySelector('.table-responsive table');
+    const rows = table.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+      const rowText = row.textContent.toLowerCase();
+      row.style.display = rowText.includes(searchText) ? '' : 'none';
+    });
+  });
+</script>
+
+{% endblock %}

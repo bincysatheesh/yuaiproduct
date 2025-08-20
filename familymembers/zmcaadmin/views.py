@@ -2219,3 +2219,46 @@ def deletehgallery(request, gid):
 
 def admin_services_posts(request):
     return render(request, 'admin/admin-post.html')
+
+
+
+from services.models import Agency
+
+def agency_list(request):
+    q = request.GET.get('q', '')
+    agencies = Agency.objects.all()
+    if q:
+        agencies = agencies.filter(agency_name__icontains=q)
+    paginator = Paginator(agencies, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'admin/agencylist.html', {'agencies': page_obj})
+
+def approve_agency(request, pk):
+    agency = get_object_or_404(Agency, pk=pk)
+    agency.status = 'Approved'
+    agency.save()
+    messages.success(request, f"Agency '{agency.agency_name}' has been approved ✅")
+    return redirect('agency_list')
+
+def suspend_agency(request, pk):
+    agency = get_object_or_404(Agency, pk=pk)
+    agency.status = 'Suspended'
+    agency.save()
+    messages.warning(request, f"Agency '{agency.agency_name}' has been suspended ⚠️")
+    return redirect('agency_list')
+
+
+def reject_agency(request, pk):
+    agency = get_object_or_404(Agency, pk=pk)
+    agency.status = 'Rejected'
+    agency.save()
+    messages.warning(request, f"Agency '{agency.agency_name}' has been rejected ⚠️")
+    return redirect('agency_list')
+
+def delete_agency(request, pk):
+    agency = get_object_or_404(Agency, pk=pk)
+    agency_name = agency.agency_name
+    agency.delete()
+    messages.error(request, f"Agency '{agency_name}' has been deleted 🗑️")
+    return redirect('agency_list')

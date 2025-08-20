@@ -103,7 +103,15 @@ urlpatterns = [
     path('edithgallery/<int:gid>/', views.edithgallery, name='edithgallery'),
     path('deletehgallery/<int:gid>/', views.deletehgallery, name='deletehgallery'),
 
+
     path('admin-job-posts/', views.admin_services_posts, name='admin_services_posts'),
+    path('admin-agency-list/', views.agency_list, name='agency_list'),
+    path('agencies/<int:pk>/approve/', views.approve_agency, name='approve_agency'),
+    path('agencies/<int:pk>/reject/', views.reject_agency, name='reject_agency'),
+    path('agencies/<int:pk>/delete/', views.delete_agency, name='delete_agency'),
+    path('agencies/<int:pk>/suspend/', views.suspend_agency, name='suspend_agency'),
+
+
 
 
 
