@@ -77,8 +77,8 @@ class Staff(models.Model):
     )
 
     STAFF_STATUS = (
-        ('Submitted', 'Submitted'),
-        ('Approved', 'Approved'),
+        ('Pending', 'Pending'),
+        ('Active', 'Active'),
     )
     agency = models.ForeignKey(Agency, on_delete=models.CASCADE, related_name='agency')
 
@@ -92,7 +92,10 @@ class Staff(models.Model):
     languages = models.CharField(max_length=255, help_text="Comma-separated list of languages")
     availability = models.CharField(max_length=100, help_text="E.g. Mon–Fri, 8am–5pm")
     notes = models.TextField(blank=True, null=True)
-    status = models.CharField(max_length=20, choices=STAFF_STATUS, default='Submitted')
+    status = models.CharField(max_length=20, choices=STAFF_STATUS, default='Pending')
+    contact_number = models.CharField(max_length=20)
+    email = models.EmailField()
+
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
