@@ -221,7 +221,8 @@
         <p class="form-subtitle">Share job opportunities or help requests with the community</p>
       </div>
       
-      <form class="job-form">
+<form class="job-form" method="post" action="{% url 'create_post' %}">
+    {% csrf_token %}
         <div class="form-group">
           <label class="form-label">Post Type</label>
           <div class="radio-group">
@@ -242,17 +243,17 @@
         
         <div class="form-group">
           <label for="title" class="form-label">Title</label>
-          <input type="text" id="title" class="form-control" placeholder="e.g. Looking for a Driver">
+          <input type="text" name="title" id="title" class="form-control" placeholder="e.g. Looking for a Driver">
         </div>
         
         <div class="form-group">
           <label for="description" class="form-label">Description</label>
-          <textarea id="description" class="form-control" placeholder="Provide details about the job or help needed..."></textarea>
+          <textarea id="description" name="description" class="form-control" placeholder="Provide details about the job or help needed..."></textarea>
         </div>
         
         <div class="form-group">
           <label for="contact" class="form-label">Contact Information</label>
-          <input type="text" id="contact" class="form-control" placeholder="Phone number or email">
+          <input type="text" id="contact" name="contact" class="form-control" placeholder="Phone number or email">
           <small class="text-muted">This will be visible to other members</small>
         </div>
         

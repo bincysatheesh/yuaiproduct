@@ -19,20 +19,11 @@ urlpatterns = [
     path('cevents/', views.cevents, name='cevents'),
 
 
-
     path('famview1/',views.fam_view1, name='fam_view1'),
     path('view-family1/<int:user_id>/',views.view_family1, name='view_family1'),
     path('committemembers/',views.committemembers, name='committemembers'),
     path('birthdaydetails/',views.birthdaydetails, name='birthdaydetails'),
     path('bloodgroup/',views.bloodgroup, name='bloodgroup'),
-
-
-
-
-    
-
-
-
 
     # path('',views.loadindex,name='loadindex'), 
     path('customerindex/',views.customerindex,name='customerindex'),
@@ -70,9 +61,6 @@ urlpatterns = [
 
 
 
-
-
-
     # path('password_reset/',auth_views.PasswordResetView.as_view(),name='password_reset'),
 
     # path('password_reset/done/',auth_views.PasswordResetDoneView.as_view(),name='password_reset_done'),
@@ -81,8 +69,12 @@ urlpatterns = [
 
     # path('reset/done/',auth_views.PasswordResetCompleteView.as_view(),name='password_reset_complete'),
     path('job-posts/', views.job_posts, name='job_posts'),
-    path('create-job-post/', views.create_job_post, name='create_job_post'),
+    path('create-job-post/', views.create_post, name='create_post'),
 
     path('community-services/', views.community_services, name='community_services'),
 
+    path('agency-posts/', views.agency_posts, name='agency_posts'),
+   
+    path("staff/<int:staff_id>/request/", views.request_staff, name="request_staff"),
+    # path('agency-post/<int:post_id>/', views.agency_post_detail, name='agency_post_detail'),
 ]

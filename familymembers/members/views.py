@@ -2307,6 +2307,7 @@ def payments1(request):
 @login_required
 def job_posts(request):
     user_profile = UserProfile.objects.get(userid=request.user)
+    posts = Post.objects.filter(is_active=False)
     
     context = {
         'ufn': user_profile.firstname,
@@ -2316,26 +2317,76 @@ def job_posts(request):
         'teventscount': EventNotification.objects.filter(status__in=['Active', 'Pending']).count(),
         'ccount': CommitteeMember.objects.filter(status='Active').count(),
         'uacount': UserProfile.objects.filter(status__in=[2, 3]).count(),
+        'posts':posts,
     }
     return render(request, 'member/post-list.html', context)
 
 @login_required
-def create_job_post(request):
+def create_post(request):
+    if request.method == "POST":
+        post_type = request.POST.get("post_type")
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        contact_info = request.POST.get("contact")
 
-    
-    user_profile = UserProfile.objects.get(userid=request.user)
-    context = {
-        
-        'ufn': user_profile.firstname,
-        'uln': user_profile.lastname,
-        'fn': user_profile.familyname,
-        'email': user_profile.email,
-        'teventscount': EventNotification.objects.filter(status__in=['Active', 'Pending']).count(),
-        'ccount': CommitteeMember.objects.filter(status='Active').count(),
-        'uacount': UserProfile.objects.filter(status__in=[2, 3]).count(),
-    }
-    return render(request, 'member/create-post.html', context)
+        if not (title and description and contact_info):
+            messages.error(request, "Please fill in all required fields.")
+            return redirect("job_posts")
 
+        post = Post.objects.create(
+            post_type=post_type,
+            title=title,
+            description=description,
+            contact_info=contact_info,
+            status="Open",  # default
+            is_active=False  # active by default
+        )
+
+        messages.success(request, f"Post '{post.title}' created successfully ✅")
+        return redirect("job_posts")  # change this to your post listing view name
+
+    return render(request, "member/create-post.html")
     
 def community_services(request):
     return render(request, 'landing/community-service.html')
+
+
+from services.models import Staff
+def agency_posts(request):
+    staff_list = Staff.objects.filter(status="Pending").order_by("-created_at")    
+    context = {
+        'staff_list': staff_list
+    }
+    return render(request, 'member/agencypost.html', context)
+
+from services.models import StaffRequest
+
+@login_required
+def request_staff(request, staff_id):
+    staff = get_object_or_404(Staff, id=staff_id)
+    try:
+        user_profile = UserProfile.objects.get(userid=request.user)
+    except UserProfile.DoesNotExist:
+        messages.error(request, "[REQUEST] You need a profile to request staff.")
+        return redirect("agency_posts")  # or wherever
+
+    # Check if a request already exists for this staff by this user
+    existing_request = StaffRequest.objects.filter(
+        requester=user_profile,
+        staff=staff
+    ).first()
+
+    if existing_request:
+        messages.warning(request, f"[REQUEST] You already submitted a request for {staff.full_name}.")
+        return redirect("agency_posts")
+
+    # Create a new request
+    StaffRequest.objects.create(
+        requester=user_profile,
+        agency=staff.agency,
+        staff=staff,
+        status="Pending"
+    )
+    messages.success(request, f"[REQUEST] Your request for {staff.full_name} has been submitted.")
+    return redirect("agency_posts")
+

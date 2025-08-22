@@ -246,7 +246,7 @@
     <div class="job-container">
       <div class="page-header">
         <h1 class="page-title">My Job Posts</h1>
-        <a href="{% url 'create_job_post' %}" class="create-btn">
+        <a href="{% url 'create_post' %}" class="create-btn">
           <span class="las la-plus"></span>
           Create New Post
         </a>
@@ -254,46 +254,32 @@
       
       <div class="job-grid">
         <!-- Sample Job Post 1 -->
+         {% for post in posts %}
         <div class="job-card">
           <div class="job-header">
-            <h3 class="job-title">Looking for a Cook</h3>
-            <span class="job-type">Help Wanted</span>
+            <h3 class="job-title">{{post.title}}</h3>
+            <span class="job-type">{{post.post_type}}</span>
           </div>
           <div class="job-body">
             <p class="job-description">
-              We need an experienced cook for our family restaurant. Must have 3+ years experience in Indian cuisine. Accommodation can be provided.
+              {{post.description}}
             </p>
+
+            <h5> <strong>  Contact: </strong> {{post.contact_info}}</h5>
           </div>
           <div class="job-footer">
-            <span class="job-date">Posted on: May 15, 2023</span>
+            <span class="job-date">Posted on: {{ post.created_at }}</span>
             <span class="job-status status-approved">Approved</span>
           </div>
         </div>
-        
-        <!-- Sample Job Post 2 -->
-        <div class="job-card">
-          <div class="job-header">
-            <h3 class="job-title">Driver Needed</h3>
-            <span class="job-type">Job Opportunity</span>
-          </div>
-          <div class="job-body">
-            <p class="job-description">
-              Looking for a reliable driver with own vehicle for school pickups. Must have clean driving record. Competitive salary offered.
-            </p>
-          </div>
-          <div class="job-footer">
-            <span class="job-date">Posted on: June 2, 2023</span>
-            <span class="job-status status-pending">Pending</span>
-          </div>
-        </div>
-        
+        {% endfor %}
         <!-- Empty State (for when no posts exist) -->
         <!-- <div class="empty-state">
           <div class="empty-icon">
             <span class="las la-briefcase"></span>
           </div>
           <h3 class="empty-text">You haven't created any posts yet</h3>
-          <a href="{% url 'create_job_post' %}" class="create-btn">
+          <a href="{% url 'create_post' %}" class="create-btn">
             <span class="las la-plus"></span>
             Create Your First Post
           </a>

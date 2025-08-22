@@ -126,59 +126,30 @@ class Familyphoto(models.Model):
 
 
 
+from django.db import models
 
-class HelperProfile(models.Model):
-    STATUS_CHOICES = [
-        ('SUBMITTED', 'Submitted'),
-        ('APPROVED', 'Approved'),
-        ('REJECTED', 'Rejected'),
-    ]
 
-    LIVE_IN_CHOICES = [
-        ('LIVE_IN', 'Live-in'),
-        ('LIVE_OUT', 'Live-out'),
-    ]
-
-    SKILL_CHOICES = [
-        ('Cleaning', 'Cleaning'),
-        ('Cooking', 'Cooking'),
-        ('Childcare', 'Childcare'),
-        ('Elderly care', 'Elderly care'),
-    ]
-
-    name = models.CharField(max_length=100)
-    area = models.CharField(max_length=100)
-
-    skills = models.CharField(
-        max_length=50,
-        choices=SKILL_CHOICES
+class Post(models.Model):
+    POST_TYPES = (
+        ('Job Opportunity', 'Job Opportunity'),
+        ('Help Wanted', 'Help Wanted'),
+        ('Other', 'Other'),
+    )
+    STATUS_CHOICES = (
+        ('Open', 'Open'),          # Still valid / accepting
+        ('Closed', 'Closed'),      # Successfully filled / done
     )
 
-    live_in_status = models.CharField(
-        max_length=10,
-        choices=LIVE_IN_CHOICES
-    )
+    post_type = models.CharField(max_length=50, choices=POST_TYPES)
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    contact_info = models.CharField(max_length=255)
 
-    days_hours = models.CharField(max_length=200, help_text="e.g. Mon–Fri, 8am–5pm")
-    experience = models.PositiveIntegerField(help_text="Years of experience")
-    languages = models.CharField(max_length=200, help_text="e.g. English, Bemba")
-    salary_range = models.CharField(max_length=100, blank=True, help_text="Optional")
-    availability_date = models.DateField()
-    contact_phone = models.CharField(max_length=20)
-    contact_email = models.EmailField()
-    status = models.CharField(
-        max_length=20,
-        choices=STATUS_CHOICES,
-        default='SUBMITTED'
-    )
-    nrc_document = models.FileField(
-        upload_to='nrc_documents/',
-        blank=True,
-        help_text="Upload NRC document (PDF or image)"
-    )
-    submitted_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Open')
+    is_active = models.BooleanField(default=False) 
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
-
-
+        return f"{self.title} ({self.post_type}) - {self.status}"

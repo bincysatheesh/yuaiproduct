@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
+from members.models import UserProfile
 
 
 
@@ -77,8 +78,8 @@ class Staff(models.Model):
     )
 
     STAFF_STATUS = (
-        ('Pending', 'Pending'),
-        ('Active', 'Active'),
+        ('Pending', 'Pending'),  #active for work
+        ('Active', 'Active'),     #at a work
     )
     agency = models.ForeignKey(Agency, on_delete=models.CASCADE, related_name='agency')
 
@@ -107,3 +108,28 @@ class Staff(models.Model):
 
     def __str__(self):
         return f"{self.full_name} - {self.service_type}"
+
+
+class StaffRequest(models.Model):
+    REQUEST_STATUS = (
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected'),
+ 
+    )
+
+    requester = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="staff_requests")
+    agency = models.ForeignKey(Agency, on_delete=models.CASCADE, related_name="staff_requests")
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE, related_name="requests")
+
+    status = models.CharField(max_length=20, choices=REQUEST_STATUS, default='Pending')
+    message = models.TextField(blank=True, null=True, help_text="Additional info from requester")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Staff Request"
+        verbose_name_plural = "Staff Requests"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Request by {self.requester.username} for {self.staff.full_name} ({self.status})"

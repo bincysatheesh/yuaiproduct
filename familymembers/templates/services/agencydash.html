@@ -372,6 +372,7 @@
                                 <a href="{% url 'edit_staff' staff.id %}" class="action-btn" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
+                                
                             </div>
                         </td>
                     </tr>
@@ -390,45 +391,27 @@
         <!-- Full Staff List Section -->
         <div class="section">
             <div class="section-header">
-                <h3><i class="fas fa-list"></i> All Staff Members</h3>
+                <h3><i class="fas fa-list"></i> All Peoples Post</h3>
             </div>
             
             <table class="staff-table">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Service</th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Contact</th>
+                        <th>Description</th>
                         <th>Status</th>
-                        <th>Added</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for staff in staff_page %}
+                    {% for post in posts %}
                     <tr>
-                        <td>
-                            <div class="staff-name">
-                                {% if staff.photo %}
-                                    <img src="{{ staff.photo.url }}" alt="{{ staff.full_name }}" class="thumb">
-                                {% else %}
-                                    <div class="thumb-initial">{{ staff.full_name|first }}</div>
-                                {% endif %}
-                                {{ staff.full_name }}
-                            </div>
-                        </td>
-                        <td>{{ staff.service_type }}</td>
-                        <td><span class="badge {{ staff.status|lower }}">{{ staff.status }}</span></td>
-                        <td>{{ staff.created_at|date:"M d, Y" }}</td>
-                        <td>
-                            <div class="actions">
-                                <a href="{% url 'staff_detail' staff.id %}" class="action-btn" title="View">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="{% url 'edit_staff' staff.id %}" class="action-btn" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                            </div>
-                        </td>
+                        <td>{{post.title}}</td>
+                        <td>{{ post.post_type }}</td>
+                        <td>{{post.contact_info}}</td>
+                        <td>{{ post.created_at|date:"M d, Y" }}</td>
+                        <td> {{ post.status }} </td>
                     </tr>
                     {% empty %}
                     <tr>

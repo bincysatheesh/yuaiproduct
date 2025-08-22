@@ -292,6 +292,19 @@
                         {{ staff.skills_duties|linebreaks }}
                     </div>
                 </div>
+
+                <!-- Contact Information Card -->
+<div class="info-card">
+    <h3><i class="fas fa-address-card"></i> Contact Information</h3>
+    <div class="info-content">
+        <p><strong>Email:</strong> 
+            <a href="mailto:{{ staff.email }}">{{ staff.email }}</a>
+        </p>
+        <p><strong>Phone:</strong> 
+            <a href="tel:{{ staff.contact_number }}">{{ staff.contact_number }}</a>
+        </p>
+    </div>
+</div>
                 
                 <!-- Notes Card -->
                 {% if staff.notes %}
@@ -312,6 +325,39 @@
                         <!-- You could add more status history here if you track it -->
                     </div>
                 </div>
+
+                <!-- Action Card -->
+<div class="info-card">
+    <h3><i class="fas fa-cogs"></i> Actions</h3>
+    <div class="info-content">
+        {% if staff.status == "Pending" %}
+            <form method="post" action="{% url 'activate_staff' staff.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-check"></i> Mark as Active
+                </button>
+            </form>
+        {% elif staff.status == "Active" %}
+            <form method="post" action="{% url 'deactivate_staff' staff.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning">
+                    <i class="fas fa-pause"></i> Set Pending
+                </button>
+            </form>
+        {% endif %}
+
+        <!-- Delete button always visible -->
+        <form method="post" action="{% url 'delete_staff' staff.id %}" 
+              style="display:inline;" 
+              onsubmit="return confirm('Are you sure you want to delete {{ staff.full_name }}?');">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+        </form>
+    </div>
+</div>
+
             </div>
         </div>
     </div>

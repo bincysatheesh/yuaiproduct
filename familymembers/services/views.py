@@ -86,13 +86,14 @@ def agency_signup(request):
     return render(request, 'services/agencysignup.html', context)
 
 
-
+from members.models import *
 
 
 def agency_dashboard(request):
     agency = Agency.objects.get(user=request.user)
     all_staff = Staff.objects.filter(agency=agency)
-    
+    posts = Post.objects.filter(is_active=False)
+
     total_staff = all_staff.count()
     approved_staff = all_staff.filter(status='Approved').count()
     pending_staff = all_staff.filter(status='Submitted').count()
@@ -108,6 +109,8 @@ def agency_dashboard(request):
         'pending_staff': pending_staff,
         'rejected_staff': rejected_staff,
         'staff_list': staff_list,
+        'posts':posts,
+ 
         'notifications': [],  # You can add actual notifications here
     }
     return render(request, 'services/agencydash.html', context)
@@ -142,18 +145,12 @@ def staff_list(request):
         )
     
     status_counts = staff_queryset.values('status').annotate(count=Count('status'))
-    staff_count = {
-        'submitted': 0,
-        'approved': 0,
-        'pending': 0,
-        'rejected': 0,
-        'suspended': 0,
-    }
-    
+
+    # initialize counts
+    staff_count = {choice[0]: 0 for choice in Staff.STAFF_STATUS}
+
     for item in status_counts:
-        status_lower = item['status'].lower()
-        if status_lower in staff_count:
-            staff_count[status_lower] = item['count']
+        staff_count[item['status']] = item['count']
     
     paginator = Paginator(staff_queryset.order_by('-created_at'), 25)  # 25 items per page
     page_number = request.GET.get('page')
@@ -218,6 +215,8 @@ def edit_staff(request, staff_id):
         try:
             staff.full_name = form_data.get('full_name', staff.full_name)
             staff.age = form_data.get('age', staff.age)
+            staff.email = form_data.get('email', staff.email)
+            staff.contact_number = form_data.get('contact_no', staff.contact_number)
             staff.address = form_data.get('address', staff.address)
             staff.service_type = form_data.get('service_type', staff.service_type)
             staff.skills_duties = form_data.get('skills_duties', staff.skills_duties)
@@ -238,49 +237,31 @@ def edit_staff(request, staff_id):
 
     context = {
         'staff': staff,
+        'service_types': Staff.SERVICE_TYPES,   
         'edit_mode': True
     }
     return render(request, 'services/staffedit.html', context)
 
-
-def delete_staff(request, staff_id):
-    agency = Agency.objects.get(user=request.user)
-    
-    if request.method == 'POST':
-        staff = get_object_or_404(Staff, id=staff_id, agency=agency)
-        staff.delete()
-        return JsonResponse({'success': True})
-    return JsonResponse({'success': False, 'error': 'Invalid request method'})
+def activate_staff(request, pk):
+    staff = get_object_or_404(Staff, pk=pk)
+    staff.status = 'Active'
+    staff.save()
+    messages.success(request, f"Staff '{staff.full_name}' is now Active ✅")
+    return redirect('staff_list')
 
 
-    query = request.GET.get('q', '')
-    status_filter = request.GET.get('status', 'all')
-    
-    staff_list = Staff.objects.filter(agency=request.user)
-    
-    if query:
-        staff_list = staff_list.filter(
-            Q(full_name__icontains=query) |
-            Q(address__icontains=query) |
-            Q(service_type__icontains=query) |
-            Q(skills_duties__icontains=query)
-        )
-    
-    if status_filter != 'all':
-        staff_list = staff_list.filter(status=status_filter)
-    
-    # Return as JSON for AJAX requests
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        data = [{
-            'id': staff.id,
-            'full_name': staff.full_name,
-            'service_type': staff.service_type,
-            'experience_years': staff.experience_years,
-            'availability': staff.availability,
-            'status': staff.status,
-            'photo_url': staff.photo.url if staff.photo else ''
-        } for staff in staff_list]
-        return JsonResponse({'staff': data})
-    
-    # For regular requests, return HTML
-    return render(request, 'agency/staff_list_partial.html', {'staff_list': staff_list})
+def deactivate_staff(request, pk):
+    staff = get_object_or_404(Staff, pk=pk)
+    staff.status = 'Pending'
+    staff.save()
+    messages.warning(request, f"Staff '{staff.full_name}' has been set to Pending ⏸️")
+    return redirect('staff_list')
+
+
+def delete_staff(request, pk):
+    staff = get_object_or_404(Staff, pk=pk)
+    staff_name = staff.full_name
+    staff.delete()
+    messages.error(request, f"Staff '{staff_name}' has been deleted ❌")
+    return redirect('staff_list')
+

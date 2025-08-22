@@ -127,6 +127,8 @@
         
         input[type="text"],
         input[type="number"],
+        input[type="email"],
+        input[type="tel"],
         select,
         textarea {
             width: 100%;
@@ -345,11 +347,29 @@
                 <div class="form-row">
                     <div class="form-col">
                         <div class="form-group">
+                            <label for="email" class="required">Email</label>
+                            <input type="email" id="email" name="email" value="{{ staff.email }}" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="contact_no" class="required">Contact Number</label>
+                            <input type="tel" id="contact_no" name="contact_no" pattern="[0-9]{10}"
+                                placeholder="Enter 10-digit number" value="{{ staff.contact_number }}" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
                             <label for="service_type" class="required">Service Type</label>
-                            <select id="service_type" name="service_type" required>
-                                {% for value, label in service_types %}
-                                    <option value="{{ value }}" {% if staff.service_type == value %}selected{% endif %}>{{ label }}</option>
-                                {% endfor %}
+                           <select id="service_type" name="service_type" required>
+    {% for value, label in service_types %}
+        <option value="{{ value }}" {% if staff.service_type == value %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+</select>
+
                             </select>
                         </div>
                     </div>
@@ -386,18 +406,7 @@
                     <textarea id="notes" name="notes">{{ staff.notes|default:"" }}</textarea>
                 </div>
 
-                <div class="form-group">
-                    <label class="required">Status</label>
-                    <div class="status-options">
-                        {% for value, label in status_choices %}
-                            <div class="status-option {{ value|lower }}">
-                                <input type="radio" id="status_{{ value }}" name="status" value="{{ value }}" 
-                                    {% if staff.status == value %}checked{% endif %} required>
-                                <label for="status_{{ value }}">{{ label }}</label>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
+         
 
                 <div class="form-actions">
                     <div class="delete-section">
