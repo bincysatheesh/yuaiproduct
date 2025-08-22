@@ -5,6 +5,9 @@ urlpatterns = [
 
     path('agency/signup/', views.agency_signup, name='agency_signup'),
     path('agency/dashboard/', views.agency_dashboard, name='agency_dashboard'),
+    path("requests/<int:agency_id>/", views.agency_requests_view, name="agency_request"),
+    path("request/<int:request_id>/approve/", views.approve_request_view, name="approve_request"),
+    path("request/<int:request_id>/reject/", views.reject_request_view, name="reject_request"),
 
     path('staff/list', views.staff_list, name='staff_list'),
     
@@ -15,6 +18,5 @@ urlpatterns = [
     path('staff/<int:pk>/delete/', views.delete_staff, name='delete_staff'),
     path('staff/<int:pk>/activate/', views.activate_staff, name='activate_staff'),
     path('staff/<int:pk>/deactivate/', views.deactivate_staff, name='deactivate_staff'),
-
 
 ]

@@ -2299,7 +2299,6 @@ def payments1(request):
         'uacount':uacount,
     }
 
-    # Render the payments1.html template with the context data
     return render(request, 'member/payments1.html', context)
 
 
@@ -2338,12 +2337,12 @@ def create_post(request):
             title=title,
             description=description,
             contact_info=contact_info,
-            status="Open",  # default
-            is_active=False  # active by default
+            status="Open", 
+            is_active=False  
         )
 
-        messages.success(request, f"Post '{post.title}' created successfully ✅")
-        return redirect("job_posts")  # change this to your post listing view name
+        messages.success(request, f"Post '{post.title}' created successfully ")
+        return redirect("job_posts")  
 
     return render(request, "member/create-post.html")
     
@@ -2368,9 +2367,8 @@ def request_staff(request, staff_id):
         user_profile = UserProfile.objects.get(userid=request.user)
     except UserProfile.DoesNotExist:
         messages.error(request, "[REQUEST] You need a profile to request staff.")
-        return redirect("agency_posts")  # or wherever
+        return redirect("agency_posts") 
 
-    # Check if a request already exists for this staff by this user
     existing_request = StaffRequest.objects.filter(
         requester=user_profile,
         staff=staff

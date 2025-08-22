@@ -2202,17 +2202,12 @@ def edithgallery(request, gid):
 
 
 def deletehgallery(request, gid):
-    # Fetch the member object corresponding to the given ID
     g = get_object_or_404(CarouselImage, pk=gid)
 
-    # Check if the request method is POST
     if request.method == 'POST':
-        # Delete the member object
         g.delete()
-        # Redirect to a URL after successful deletion
         return redirect('addhomegallery')  # Adjust the URL name as needed
 
-    # Render a template for confirmation or provide a response
     return render(request, 'admin/addhomegallery.html', {'g': g})
 
 

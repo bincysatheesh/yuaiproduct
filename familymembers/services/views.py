@@ -1,17 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Agency
+
 from multiselectfield import MultiSelectField
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .models import Staff
+
 from django.shortcuts import render
 from django.core.paginator import Paginator
-from .models import Staff
+from .models import *
 from django.db.models import Count
 
 
@@ -20,12 +20,11 @@ def agency_signup(request):
     service_categories = Agency._meta.get_field('service_categories').choices
     if request.method == 'POST':
         try:
-            username = request.POST.get('email')  # Using email as username
+            username = request.POST.get('email')  
             email = request.POST.get('email')
             password = request.POST.get('password')
             cpassword = request.POST.get('cpassword')
             
-            # Password validation
             if password != cpassword:
                 messages.error(request, "Passwords do not match!")
                 return redirect('agency_signup')
@@ -34,14 +33,12 @@ def agency_signup(request):
                 messages.error(request, "An account with this email already exists!")
                 return redirect('agency_signup')
                 
-            # Create the user
             user = User.objects.create_user(
                 username=username,
                 email=email,
                 password=password
             )
             
-            # Handle agency data
             agency_name = request.POST.get('agency_name')
             owner_contact_person = request.POST.get('owner_contact_person')
             contact_number = request.POST.get('contact_number')
@@ -66,13 +63,12 @@ def agency_signup(request):
                 status='Submitted'
             )
             
-            # Handle file upload
             if 'verification_documents' in request.FILES:
                 agency.verification_documents = request.FILES['verification_documents']
                 agency.save()
             
             messages.success(request, "Agency registration successful! Your account will be activated after verification.")
-            return redirect('mlogin')  # Redirect to login page
+            return redirect('mlogin')  
             
         except Exception as e:
             messages.error(request, f"Error during registration: {str(e)}")
@@ -100,7 +96,7 @@ def agency_dashboard(request):
     rejected_staff = all_staff.filter(status='Rejected').count()
     
     page = request.GET.get('page', 1)
-    paginator = Paginator(all_staff, 10)  # Show 10 staff per page
+    paginator = Paginator(all_staff, 10) 
     staff_list = paginator.get_page(page)
     
     context = {
@@ -110,8 +106,9 @@ def agency_dashboard(request):
         'rejected_staff': rejected_staff,
         'staff_list': staff_list,
         'posts':posts,
+        'agency': agency,
  
-        'notifications': [],  # You can add actual notifications here
+        'notifications': [],  
     }
     return render(request, 'services/agencydash.html', context)
 
@@ -229,8 +226,7 @@ def edit_staff(request, staff_id):
                 staff.photo = files['photo']
 
             staff.save()
-            return redirect('staff_list')  # Redirect to staff list page after update
-
+            return redirect('staff_list')  
         except Exception as e:
             context = {'error': str(e), 'staff': staff, 'edit_mode': True}
             return render(request, 'services/staff_form.html', context)
@@ -246,7 +242,7 @@ def activate_staff(request, pk):
     staff = get_object_or_404(Staff, pk=pk)
     staff.status = 'Active'
     staff.save()
-    messages.success(request, f"Staff '{staff.full_name}' is now Active ✅")
+    messages.success(request, f"Staff '{staff.full_name}' is now Active ")
     return redirect('staff_list')
 
 
@@ -265,3 +261,52 @@ def delete_staff(request, pk):
     messages.error(request, f"Staff '{staff_name}' has been deleted ❌")
     return redirect('staff_list')
 
+def agency_requests_view(request, agency_id):
+    agency = get_object_or_404(Agency, id=agency_id)
+
+    if request.user != agency.user:
+        messages.error(request, "[REQUEST] You are not allowed to view these requests.")
+        return redirect("dashboard")
+
+    requests_qs = StaffRequest.objects.filter(agency=agency).order_by("-created_at")
+
+
+    stats = {
+        "pending": requests_qs.filter(status="Pending").count(),
+        "approved": requests_qs.filter(status="Approved").count(),
+        "rejected": requests_qs.filter(status="Rejected").count(),
+    }
+
+    return render(
+        request,
+        "services/cust_requests.html",  
+        {"agency": agency, "requests": requests_qs, "stats": stats},
+    )
+
+
+@login_required
+def approve_request_view(request, request_id):
+    staff_request = get_object_or_404(StaffRequest, id=request_id)
+
+    if request.user != staff_request.agency.user:
+        messages.error(request, "You are not allowed to approve this request.")
+        return redirect("agency_request", agency_id=staff_request.agency.id)
+
+    staff_request.status = "Approved"
+    staff_request.save()
+    messages.success(request, f"Request for {staff_request.staff.full_name} has been approved.")
+    return redirect("agency_request", agency_id=staff_request.agency.id)
+
+
+@login_required
+def reject_request_view(request, request_id):
+    staff_request = get_object_or_404(StaffRequest, id=request_id)
+
+    if request.user != staff_request.agency.user:
+        messages.error(request, "You are not allowed to reject this request.")
+        return redirect("agency_request", agency_id=staff_request.agency.id)
+
+    staff_request.status = "Rejected"
+    staff_request.save()
+    messages.warning(request, f"Request for {staff_request.staff.full_name} has been rejected.")
+    return redirect("agency_request", agency_id=staff_request.agency.id)
