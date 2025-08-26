@@ -2388,3 +2388,15 @@ def request_staff(request, staff_id):
     messages.success(request, f"[REQUEST] Your request for {staff.full_name} has been submitted.")
     return redirect("agency_posts")
 
+def my_requested_staff(request):
+
+    requests = StaffRequest.objects.filter(
+        requester=request.user.userprofile,  
+        status="Approved"
+    ).select_related("staff", "agency") 
+
+    context = {
+        "requests": requests
+    }
+    return render(request, "member/my_requested_staff.html", context)
+

@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff List - Agency Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
+{% extends 'services/agencybase.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
         :root {
             --primary: #3498db;
             --success: #2ecc71;
@@ -267,6 +265,12 @@
             margin-bottom: 10px;
         }
         
+        /* Filter Match Highlight */
+        .highlight {
+            background-color: rgba(255, 255, 0, 0.2);
+            border-bottom: 2px solid var(--warning);
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .filters {
@@ -300,8 +304,7 @@
             }
         }
     </style>
-</head>
-<body>
+
     <div class="container">
         <!-- Dashboard Header -->
         <div class="header">
@@ -316,20 +319,19 @@
             <div class="section-header">
                 <h3><i class="fas fa-list"></i> Staff List</h3>
                 <div>
-                    <span class="badge submitted">{{ staff_count.Pending }} Open for Work</span>
-                    <span class="badge approved">{{ staff_count.Active }} Currently Working</span>
-
+                    <span class="badge submitted" id="pending-count">{{ staff_count.Pending }} Open for Work</span>
+                    <span class="badge approved" id="active-count">{{ staff_count.Active }} Currently Working</span>
                 </div>
             </div>
             
             <!-- Filters -->
-            <form method="get" class="filters">
+            <div class="filters">
                 <div class="filter-group">
                     <label for="service_type">Service Type</label>
                     <select name="service_type" id="service_type">
                         <option value="">All Services</option>
                         {% for value, label in service_types %}
-                            <option value="{{ value }}" {% if request.GET.service_type == value %}selected{% endif %}>{{ label }}</option>
+                            <option value="{{ value }}">{{ label }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -339,28 +341,28 @@
                     <select name="status" id="status">
                         <option value="">All Statuses</option>
                         {% for value, label in status_choices %}
-                            <option value="{{ value }}" {% if request.GET.status == value %}selected{% endif %}>{{ label }}</option>
+                            <option value="{{ value }}">{{ label }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 
                 <div class="filter-group">
                     <label for="search">Search</label>
-                    <input type="text" name="search" id="search" placeholder="Name or skills..." value="{{ request.GET.search }}">
+                    <input type="text" name="search" id="search" placeholder="Name or skills...">
                 </div>
                 
                 <div class="filter-actions">
-                    <button type="submit" class="btn">
+                    <button type="button" id="filter-btn" class="btn">
                         <i class="fas fa-filter"></i> Filter
                     </button>
-                    <a href="{% url 'staff_list' %}" class="btn btn-secondary">
+                    <button type="button" id="reset-btn" class="btn btn-secondary">
                         <i class="fas fa-sync-alt"></i> Reset
-                    </a>
+                    </button>
                 </div>
-            </form>
+            </div>
             
             <!-- Staff Table -->
-            <table class="staff-table">
+            <table class="staff-table" id="staff-table">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -371,9 +373,9 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="staff-tbody">
                     {% for staff in staff_page %}
-                    <tr>
+                    <tr data-service="{{ staff.service_type }}" data-status="{{ staff.status }}" data-search="{{ staff.full_name|lower }} {{ staff.skills|default:''|lower }}">
                         <td>
                             <div class="staff-name">
                                 {% if staff.photo %}
@@ -381,13 +383,13 @@
                                 {% else %}
                                     <div class="thumb-initial">{{ staff.full_name|first }}</div>
                                 {% endif %}
-                                {{ staff.full_name }}
+                                <span class="staff-name-text">{{ staff.full_name }}</span>
                             </div>
                         </td>
-                        <td>{{ staff.service_type }}</td>
-                        <td>{{ staff.age }}</td>
-                        <td><span class="badge {{ staff.status|lower }}">{{ staff.get_status_display }}</span></td>
-                        <td>{{ staff.created_at|date:"M d, Y" }}</td>
+                        <td class="staff-service">{{ staff.service_type }}</td>
+                        <td class="staff-age">{{ staff.age }}</td>
+                        <td><span class="badge {{ staff.status|lower }} staff-status">{{ staff.get_status_display }}</span></td>
+                        <td class="staff-date">{{ staff.created_at|date:"M d, Y" }}</td>
                         <td>
                             <div class="actions">
                                 <a href="{% url 'view_staff' staff.id %}" class="action-btn" title="View">
@@ -403,39 +405,185 @@
                         </td>
                     </tr>
                     {% empty %}
-                    <tr>
+                    <tr id="no-results">
                         <td colspan="6" class="empty-state">
                             <i class="fas fa-user-slash"></i>
-                            No staff members found matching your criteria
+                            No staff members found
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             
-            <!-- Pagination -->
-            {% if staff_page.has_other_pages %}
-            <div class="pagination">
-                {% if staff_page.has_previous %}
-                    <a href="?page=1{% if request.GET.service_type %}&service_type={{ request.GET.service_type }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="page-link">&laquo;</a>
-                    <a href="?page={{ staff_page.previous_page_number }}{% if request.GET.service_type %}&service_type={{ request.GET.service_type }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="page-link">&lsaquo;</a>
-                {% endif %}
-                
-                {% for num in staff_page.paginator.page_range %}
-                    {% if staff_page.number == num %}
-                        <span class="current-page">{{ num }}</span>
-                    {% elif num > staff_page.number|add:'-3' and num < staff_page.number|add:'3' %}
-                        <a href="?page={{ num }}{% if request.GET.service_type %}&service_type={{ request.GET.service_type }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="page-link">{{ num }}</a>
+            <!-- Pagination (hidden when filtering) -->
+            <div class="pagination" id="pagination">
+                {% if staff_page.has_other_pages %}
+                    {% if staff_page.has_previous %}
+                        <a href="?page=1" class="page-link">&laquo;</a>
+                        <a href="?page={{ staff_page.previous_page_number }}" class="page-link">&lsaquo;</a>
                     {% endif %}
-                {% endfor %}
-                
-                {% if staff_page.has_next %}
-                    <a href="?page={{ staff_page.next_page_number }}{% if request.GET.service_type %}&service_type={{ request.GET.service_type }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="page-link">&rsaquo;</a>
-                    <a href="?page={{ staff_page.paginator.num_pages }}{% if request.GET.service_type %}&service_type={{ request.GET.service_type }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="page-link">&raquo;</a>
+                    
+                    {% for num in staff_page.paginator.page_range %}
+                        {% if staff_page.number == num %}
+                            <span class="current-page">{{ num }}</span>
+                        {% elif num > staff_page.number|add:'-3' and num < staff_page.number|add:'3' %}
+                            <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if staff_page.has_next %}
+                        <a href="?page={{ staff_page.next_page_number }}" class="page-link">&rsaquo;</a>
+                        <a href="?page={{ staff_page.paginator.num_pages }}" class="page-link">&raquo;</a>
+                    {% endif %}
                 {% endif %}
             </div>
-            {% endif %}
         </div>
     </div>
-</body>
-</html>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all staff rows and convert to array for filtering
+            const staffRows = Array.from(document.querySelectorAll('#staff-tbody tr'));
+            const noResultsRow = document.getElementById('no-results');
+            const pagination = document.getElementById('pagination');
+            
+            // Store original staff data for resetting
+            const originalStaffData = staffRows.map(row => {
+                if (row.id !== 'no-results') {
+                    return row.outerHTML;
+                }
+                return null;
+            }).filter(Boolean);
+            
+            // Get filter elements
+            const serviceTypeFilter = document.getElementById('service_type');
+            const statusFilter = document.getElementById('status');
+            const searchFilter = document.getElementById('search');
+            const filterBtn = document.getElementById('filter-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const staffTbody = document.getElementById('staff-tbody');
+            
+            // Function to filter staff
+            function filterStaff() {
+                const serviceTypeValue = serviceTypeFilter.value;
+                const statusValue = statusFilter.value;
+                const searchValue = searchFilter.value.toLowerCase().trim();
+                
+                let hasVisibleRows = false;
+                let pendingCount = 0;
+                let activeCount = 0;
+                
+                // Filter each row
+                staffRows.forEach(row => {
+                    if (row.id === 'no-results') {
+                        row.style.display = 'none';
+                        return;
+                    }
+                    
+                    const serviceMatch = !serviceTypeValue || row.getAttribute('data-service') === serviceTypeValue;
+                    const statusMatch = !statusValue || row.getAttribute('data-status') === statusValue;
+                    const searchMatch = !searchValue || row.getAttribute('data-search').includes(searchValue);
+                    
+                    // Show or hide row based on filters
+                    if (serviceMatch && statusMatch && searchMatch) {
+                        row.style.display = '';
+                        hasVisibleRows = true;
+                        
+                        // Update counts
+                        const status = row.getAttribute('data-status');
+                        if (status === 'Pending') pendingCount++;
+                        if (status === 'Active') activeCount++;
+                        
+                        // Highlight search matches
+                        if (searchValue) {
+                            const nameElement = row.querySelector('.staff-name-text');
+                            const serviceElement = row.querySelector('.staff-service');
+                            
+                            // Remove previous highlights
+                            nameElement.innerHTML = nameElement.textContent;
+                            serviceElement.innerHTML = serviceElement.textContent;
+                            
+                            // Highlight matching text
+                            highlightText(nameElement, searchValue);
+                            highlightText(serviceElement, searchValue);
+                        }
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                
+                // Show no results message if no rows visible
+                if (!hasVisibleRows) {
+                    noResultsRow.style.display = '';
+                    noResultsRow.innerHTML = '<td colspan="6" class="empty-state"><i class="fas fa-user-slash"></i>No staff members found matching your criteria</td>';
+                } else {
+                    noResultsRow.style.display = 'none';
+                }
+                
+                // Update counts
+                document.getElementById('pending-count').textContent = `${pendingCount} Open for Work`;
+                document.getElementById('active-count').textContent = `${activeCount} Currently Working`;
+                
+                // Hide pagination when filtering
+                if (serviceTypeValue || statusValue || searchValue) {
+                    pagination.style.display = 'none';
+                } else {
+                    pagination.style.display = 'flex';
+                }
+            }
+            
+            // Function to highlight matching text
+            function highlightText(element, searchText) {
+                const text = element.textContent;
+                const regex = new RegExp(`(${searchText})`, 'gi');
+                element.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
+            }
+            
+            // Function to reset filters
+            function resetFilters() {
+                serviceTypeFilter.value = '';
+                statusFilter.value = '';
+                searchFilter.value = '';
+                
+                // Restore original staff data
+                staffTbody.innerHTML = originalStaffData.join('');
+                
+                // Update counts to original values
+                document.getElementById('pending-count').textContent = '{{ staff_count.Pending }} Open for Work';
+                document.getElementById('active-count').textContent = '{{ staff_count.Active }} Currently Working';
+                
+                // Show pagination
+                pagination.style.display = 'flex';
+                
+                // Reinitialize staffRows array after reset
+                staffRows.length = 0;
+                Array.from(document.querySelectorAll('#staff-tbody tr')).forEach(row => {
+                    if (row.id !== 'no-results') {
+                        staffRows.push(row);
+                    }
+                });
+            }
+            
+            // Event listeners
+            filterBtn.addEventListener('click', filterStaff);
+            resetBtn.addEventListener('click', resetFilters);
+            
+            // Filter as you type with a slight delay
+            let searchTimeout;
+            searchFilter.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(filterStaff, 300);
+            });
+            
+            // Filter when dropdowns change
+            serviceTypeFilter.addEventListener('change', filterStaff);
+            statusFilter.addEventListener('change', filterStaff);
+            
+            // Initialize - hide no results row if there are staff members
+            if (staffRows.length > 0 && noResultsRow) {
+                noResultsRow.style.display = 'none';
+            }
+        });
+    </script>
+
+    {% endblock %}

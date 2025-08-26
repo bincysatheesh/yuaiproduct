@@ -118,7 +118,7 @@ def view_staff(request, staff_id):
     agency = Agency.objects.get(user=request.user)
 
     staff = get_object_or_404(Staff, id=staff_id, agency=agency)
-    return render(request, 'services/staffview.html', {'staff': staff})
+    return render(request, 'services/staffview.html', {'staff': staff,'agency': agency})
 
 def staff_list(request):
     agency = Agency.objects.get(user=request.user)
@@ -158,6 +158,7 @@ def staff_list(request):
         'service_types': Staff.SERVICE_TYPES,
         'status_choices': Staff.STAFF_STATUS,
         'staff_count': staff_count,
+        'agency': agency
     }
     
     return render(request, 'services/stafflist.html', context)
@@ -196,7 +197,8 @@ def add_staff(request):
             return redirect('staff_list')  
 
         except Exception as e:
-            context = {'error': str(e)}
+            context = {'error': str(e),
+                       'agency': agency}
             return render(request, 'services/addstaff.html', context)
 
     return render(request, 'services/addstaff.html')
@@ -228,13 +230,14 @@ def edit_staff(request, staff_id):
             staff.save()
             return redirect('staff_list')  
         except Exception as e:
-            context = {'error': str(e), 'staff': staff, 'edit_mode': True}
+            context = {'error': str(e), 'staff': staff, 'edit_mode': True,'agency': agency}
             return render(request, 'services/staff_form.html', context)
 
     context = {
         'staff': staff,
         'service_types': Staff.SERVICE_TYPES,   
-        'edit_mode': True
+        'edit_mode': True,
+        'agency': agency
     }
     return render(request, 'services/staffedit.html', context)
 

@@ -77,4 +77,5 @@ urlpatterns = [
    
     path("staff/<int:staff_id>/request/", views.request_staff, name="request_staff"),
     # path('agency-post/<int:post_id>/', views.agency_post_detail, name='agency_post_detail'),
+    path("my-requests/", views.my_requested_staff, name="my_requested_staff"),
 ]
